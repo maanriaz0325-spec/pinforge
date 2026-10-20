@@ -1,0 +1,200 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Settings {
+  id                  String   @id @default("default")
+  userId              String?
+  runwareKeyEnc       String?
+  openrouterKeyEnc    String?
+  defaultTextModel    String   @default("google/gemini-2.0-flash-exp:free")
+  defaultImageModel   String   @default("runware:100@1")
+  currency            String   @default("USD")
+  timezone            String   @default("UTC")
+  monthlyBudget       Float?   @default(50.0)
+  maxConcurrency      Int      @default(3)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Niche {
+  id        String     @id @default(uuid())
+  userId    String?
+  name      String     @unique
+  isCustom  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  templates Template[]
+}
+
+model Template {
+  id                String         @id @default(uuid())
+  userId            String?
+  nicheId           String
+  niche             Niche          @relation(fields: [nicheId], references: [id], onDelete: Cascade)
+  name              String
+  systemPrompt      String
+  styleNotes        String?
+  forbiddenElements String?        // JSON string array
+  keywordSeeds      String?        // JSON string array
+  defaultPinTypes   String?        // JSON string array or ratio object
+  version           Int            @default(1)
+  isDeleted         Boolean        @default(false)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  ideaHistories     IdeaHistory[]
+  pins              Pin[]
+}
+
+model BrandKit {
+  id               String   @id @default(uuid())
+  userId           String?
+  kitName          String
+  brandName        String
+  websiteUrl       String?
+  styleVibe        String?
+  customAdjectives String?  // JSON array
+  referenceImage   String?
+  logoPng          String?
+  logoPosition     String   @default("bottom_right")
+  logoOpacity      Float    @default(0.9)
+  googleFontUrl    String?
+  fontFamily       String   @default("Playfair Display")
+  overlayPreset    String   @default("scrim_editorial")
+  palette          String?  // JSON array of 5 hex colors
+  negativePrompt   String?
+  brandVoice       String?
+  ctaPresets       String?  // JSON array
+  defaultAspect    String   @default("2:3")
+  defaultModel     String?
+  defaultTextModel String?
+  utmTemplate      String?  @default("?utm_source=pinterest&utm_campaign={niche}")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  pins             Pin[]
+}
+
+model Job {
+  id               String     @id @default(uuid())
+  userId           String?
+  mode             String     // 'prompt' | 'auto'
+  inputLines       String     // JSON string array
+  settingsSnapshot String     // JSON object snapshot of template, kit, model, etc.
+  status           String     @default("QUEUED") // DRAFT, ESTIMATED, QUEUED, RUNNING, COMPLETED, PARTIAL, FAILED, CANCELLED, PAUSED
+  totalItems       Int        @default(0)
+  estimatedCost    Float      @default(0.0)
+  actualCost       Float      @default(0.0)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  items            JobItem[]
+  costEvents       CostEvent[]
+}
+
+model JobItem {
+  id             String   @id @default(uuid())
+  jobId          String
+  job            Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  lineIndex      Int
+  variationIndex Int      @default(0)
+  pinType        String
+  finalPrompt    String?
+  rawImagePath   String?
+  overlayJson    String?  // JSON
+  seoJson        String?  // JSON
+  itemKey        String   @unique // deterministic hash(job_id, line_index, variation_index)
+  status         String   @default("QUEUED") // QUEUED, PROMPTING, IMAGING, TEXTING, SEO, SAVING, DONE, FAILED
+  retries        Int      @default(0)
+  error          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  pin            Pin?
+}
+
+model Pin {
+  id                 String     @id @default(uuid())
+  userId             String?
+  jobItemId          String?    @unique
+  jobItem            JobItem?   @relation(fields: [jobItemId], references: [id], onDelete: SetNull)
+  templateId         String?
+  template           Template?  @relation(fields: [templateId], references: [id], onDelete: SetNull)
+  brandKitId         String?
+  brandKit           BrandKit?  @relation(fields: [brandKitId], references: [id], onDelete: SetNull)
+  imageUrl           String     // final composite
+  rawImageUrl        String?    // clean underlying image without overlay
+  width              Int        @default(1000)
+  height             Int        @default(1500)
+  modelUsed          String
+  cost               Float      @default(0.0)
+  title              String
+  description        String
+  altText            String
+  hashtags           String     // JSON array
+  targetKeyword      String
+  secondaryKeywords  String?    // JSON array
+  destinationUrl     String?
+  pinType            String     @default("Inspiration / Aesthetic")
+  textMode           String     @default("canvas") // canvas, in_image, none
+  overlayText        String?
+  overlayJson        String?    // JSON representation of canvas elements
+  scheduleDate       String?    // ISO YYYY-MM-DD
+  scheduleTime       String?    // HH:MM
+  status             String     @default("DRAFT") // DRAFT, SCHEDULED, DUE, PUBLISHED
+  used               Boolean    @default(false)
+  usedAt             DateTime?
+  isDeleted          Boolean    @default(false)
+  pinterestBoardId   String?
+  pinterestPinId     String?
+  publishedVia       String?    @default("manual") // manual, api
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  costEvents         CostEvent[]
+}
+
+model CostEvent {
+  id        String   @id @default(uuid())
+  jobId     String?
+  job       Job?     @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  pinId     String?
+  pin       Pin?     @relation(fields: [pinId], references: [id], onDelete: SetNull)
+  kind      String   // 'image' | 'text'
+  model     String
+  amount    Float
+  createdAt DateTime @default(now())
+}
+
+model IdeaHistory {
+  id         String   @id @default(uuid())
+  templateId String
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  ideaText   String
+  ideaHash   String   // SHA-256 or fast hash
+  createdAt  DateTime @default(now())
+}
+
+model ModelRegistry {
+  id                     String  @id // e.g. "flux-schnell"
+  label                  String  // e.g. "FLUX.1 Schnell"
+  tier                   String  // "Draft", "Standard", "Premium", "GPT Image 2", "Eco"
+  runwareModelId         String  // e.g. "runware:100@1"
+  pricePerImage          Float   // e.g. 0.0019
+  supportsSeedImage      Boolean @default(false)
+  supportsNegativePrompt Boolean @default(true)
+  nativeSizes            String? // JSON array of {w, h}
+  avgSeconds             Int     @default(3)
+  maxPromptLength        Int     @default(1000)
+  notes                  String?
+}
+
+model PinType {
+  id              String  @id // e.g. "listicle"
+  name            String  // e.g. "Listicle"
+  compositionRule String
+  defaultOverlay  String  // e.g. "number_pop"
+  titleFormulas   String  // JSON array
+  hookPatterns    String  // JSON array
+  defaultTextMode String  @default("canvas")
+}

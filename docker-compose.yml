@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pinforge-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: pinforge
+      POSTGRES_PASSWORD: pinforge_secret_pw
+      POSTGRES_DB: pinforge
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: pinforge-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  pgdata:
+  redisdata:
