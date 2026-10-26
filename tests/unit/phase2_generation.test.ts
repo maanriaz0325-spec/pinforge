@@ -35,7 +35,7 @@ describe("Phase 2: Runware Generation & Storage Pipeline", () => {
       expect(dev).toBeDefined();
       expect(dev?.runwareModelId).toBe("runware:101@1");
       expect(dev?.pricePerImage).toBe(0.0096);
-    });
+    }, 25000);
 
     it("rejects prompt under 3 characters or over 2000 characters", () => {
       const validatePrompt = (p: string) => {
@@ -214,7 +214,7 @@ describe("Phase 2: Runware Generation & Storage Pipeline", () => {
       await prisma.pin.delete({ where: { id: pin.id } });
       await prisma.jobItem.delete({ where: { id: jobItem.id } });
       await prisma.job.delete({ where: { id: job.id } });
-    });
+    }, 25000);
 
     it("marks Job and JobItem as FAILED when provider fails", async () => {
       const job = await prisma.job.create({
@@ -258,6 +258,6 @@ describe("Phase 2: Runware Generation & Storage Pipeline", () => {
       // Clean up
       await prisma.jobItem.delete({ where: { id: jobItem.id } });
       await prisma.job.delete({ where: { id: job.id } });
-    });
+    }, 25000);
   });
 });

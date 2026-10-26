@@ -1769,6 +1769,41 @@ export default function GeneratePage() {
                     </option>
                   ))}
                 </select>
+
+                {/* Selected Preset Visual Card */}
+                {(() => {
+                  const selIdx = OVERLAY_PRESET_OPTIONS.findIndex((p) => p.id === overlayPreset);
+                  const pNum = selIdx !== -1 ? selIdx + 1 : 1;
+                  const currentOpt = OVERLAY_PRESET_OPTIONS[selIdx] || OVERLAY_PRESET_OPTIONS[0];
+                  return (
+                    <div className="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-2">
+                      <div className="w-12 h-18 rounded overflow-hidden shrink-0 bg-black border border-slate-700 relative aspect-[2/3]">
+                        <img
+                          src={`/presets/exact/preset_${pNum}.jpg`}
+                          alt={currentOpt.label}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-bold text-white truncate">
+                            Preset #{pNum}: {currentOpt.label.split("(")[0].replace(/^\d+\.\s*/, "")}
+                          </span>
+                          <Link
+                            href="/presets"
+                            className="text-[10px] text-red-400 hover:text-red-300 font-medium shrink-0 flex items-center gap-1"
+                          >
+                            <span>Browse All 18</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </Link>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-2">
+                          {currentOpt.label.includes("(") ? currentOpt.label.split("(")[1].replace(")", "") : ""}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })()}
               </div>
 
               <div className="space-y-1.5">

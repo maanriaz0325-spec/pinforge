@@ -274,7 +274,7 @@ export default function PresetsShowcasePage() {
   const [activeGroup, setActiveGroup] = useState<number | 0>(0); // 0 = all
   const [searchQuery, setSearchQuery] = useState("");
   const [previewTopic, setPreviewTopic] = useState("35 Christmas Decor Ideas 2026");
-  const [bgMode, setBgMode] = useState<"photo" | "none">("photo");
+  const [viewMode, setViewMode] = useState<"exact" | "live" | "transparent">("exact");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [inspectPreset, setInspectPreset] = useState<PresetItem | null>(null);
   const [showRefSheets, setShowRefSheets] = useState(false);
@@ -301,6 +301,20 @@ export default function PresetsShowcasePage() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const getPresetImageSrc = (preset: PresetItem) => {
+    if (viewMode === "exact") {
+      return `/presets/exact/preset_${preset.num}.jpg`;
+    }
+    if (viewMode === "live") {
+      return `/api/presets/preview?preset=${preset.id}&topic=${encodeURIComponent(
+        previewTopic || preset.defaultTopic
+      )}&bg=photo`;
+    }
+    return `/api/presets/preview?preset=${preset.id}&topic=${encodeURIComponent(
+      previewTopic || preset.defaultTopic
+    )}&bg=none`;
+  };
+
   return (
     <div className="min-w-0 flex-1 bg-slate-950 text-slate-100 min-h-screen">
       {/* Top Banner / Navigation Header */}
@@ -319,7 +333,7 @@ export default function PresetsShowcasePage() {
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              Exact 1:1 Pinterest overlay presets matching the uploaded reference pins. Fully live with real SVG typography, washi tape, and brush strokes.
+              Exact 1:1 Pinterest overlay presets matching the uploaded reference pins. View the authentic designs or test dynamic adaptation with any prompt.
             </p>
           </div>
 
@@ -333,7 +347,7 @@ export default function PresetsShowcasePage() {
               }`}
             >
               <Eye className="w-3.5 h-3.5" />
-              <span>{showRefSheets ? "Hide Original Sheets" : "View Original Reference Sheets"}</span>
+              <span>{showRefSheets ? "Hide Reference Sheets" : "View Reference Sheets (4 Sheets)"}</span>
             </button>
 
             <Link
@@ -358,7 +372,7 @@ export default function PresetsShowcasePage() {
                   Original Reference Sheets Provided
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  The exact design source images for all 18 presets: Ref 1 (Presets 1–8), Ref 2 (Presets 9–16), Ref 3 (Preset 17), Ref 4 (Preset 18).
+                  The exact design source images: Ref 1 (Presets 1–8), Ref 2 (Presets 9–16), Ref 3 (Preset 17), Ref 4 (Preset 18).
                 </p>
               </div>
               <button
@@ -468,27 +482,37 @@ export default function PresetsShowcasePage() {
               />
             </div>
 
-            {/* Background Mode Toggle */}
+            {/* View Mode Switcher */}
             <div className="flex items-center bg-slate-950 border border-slate-800 rounded-lg p-1 shrink-0">
               <button
-                onClick={() => setBgMode("photo")}
+                onClick={() => setViewMode("exact")}
                 className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                  bgMode === "photo"
-                    ? "bg-slate-800 text-white font-semibold shadow-sm"
+                  viewMode === "exact"
+                    ? "bg-red-600 text-white font-semibold shadow-sm"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                Finished Pin View
+                Exact Reference Design
               </button>
               <button
-                onClick={() => setBgMode("none")}
+                onClick={() => setViewMode("live")}
                 className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                  bgMode === "none"
+                  viewMode === "live"
                     ? "bg-slate-800 text-white font-semibold shadow-sm"
                     : "text-slate-400 hover:text-slate-200"
                 }`}
               >
-                Isolated Overlay
+                Live Dynamic Topic
+              </button>
+              <button
+                onClick={() => setViewMode("transparent")}
+                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                  viewMode === "transparent"
+                    ? "bg-slate-800 text-white font-semibold shadow-sm"
+                    : "text-slate-400 hover:text-slate-200"
+                }`}
+              >
+                Isolated Layer
               </button>
             </div>
           </div>
@@ -539,9 +563,7 @@ export default function PresetsShowcasePage() {
         {/* 18 Presets Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredPresets.map((preset) => {
-            const previewUrl = `/api/presets/preview?preset=${preset.id}&topic=${encodeURIComponent(
-              previewTopic || preset.defaultTopic
-            )}&bg=${bgMode}`;
+            const imgSrc = getPresetImageSrc(preset);
 
             return (
               <div
@@ -563,12 +585,12 @@ export default function PresetsShowcasePage() {
                   </span>
                 </div>
 
-                {/* Live SVG Render Container (Standard 2:3 Pinterest Canvas) */}
+                {/* Preset Image Container (Standard 2:3 Pinterest Canvas) */}
                 <div className="relative aspect-[2/3] bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800/80">
                   <img
-                    src={previewUrl}
+                    src={imgSrc}
                     alt={preset.name}
-                    className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
 
@@ -586,7 +608,7 @@ export default function PresetsShowcasePage() {
                       className="px-3.5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Generate</span>
+                      <span>Use In Generator</span>
                     </Link>
                   </div>
                 </div>
@@ -643,7 +665,7 @@ export default function PresetsShowcasePage() {
                       )}`}
                       className="px-3 py-1.5 bg-red-600/90 hover:bg-red-500 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
                     >
-                      <span>Use In Studio</span>
+                      <span>Select Preset</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
@@ -662,11 +684,9 @@ export default function PresetsShowcasePage() {
             <div className="md:w-1/2 bg-slate-950 flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-slate-800">
               <div className="relative aspect-[2/3] w-full max-w-[360px] rounded-xl overflow-hidden shadow-2xl border border-slate-800">
                 <img
-                  src={`/api/presets/preview?preset=${inspectPreset.id}&topic=${encodeURIComponent(
-                    previewTopic || inspectPreset.defaultTopic
-                  )}&bg=${bgMode}`}
+                  src={getPresetImageSrc(inspectPreset)}
                   alt={inspectPreset.name}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
