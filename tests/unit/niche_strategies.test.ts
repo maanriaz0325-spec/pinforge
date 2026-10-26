@@ -71,4 +71,28 @@ describe("Standalone Niche Strategy Engine", () => {
     expect(decorOverlay.mainTitle).toContain("Scandi Living");
     expect(decorOverlay.footerBullets?.length).toBe(3);
   });
+
+  it("dynamically adapts preset text and numbers to customized user niches", () => {
+    // 1. Preset 17 (bold_center_badge) with Christmas prompt
+    const xmasPreset = getNicheOverlayContent("35 Christmas Decor Ideas 2026", {
+      preset: "bold_center_badge",
+    });
+    expect(xmasPreset.mainTitle.toLowerCase()).toContain("christmas decor ideas");
+    expect(xmasPreset.kicker).toMatch(/2026|CHRISTMAS/);
+    expect(xmasPreset.footerBullets).toContain("MORE IDEAS");
+
+    // 2. Preset 18 (editorial_tall_script) with Nails prompt
+    const nailsPreset = getNicheOverlayContent("20 Dark Purple Almond Nails That Take Minutes", {
+      preset: "editorial_tall_script",
+    });
+    expect(nailsPreset.mainTitle.toLowerCase()).toContain("dark purple almond nails");
+    expect(nailsPreset.footerBullets).toContain("THAT TAKE MINUTES");
+
+    // 3. Preset 1 (classic_clean_travel) with Home Decor prompt (replaces "in Canada")
+    const homePreset1 = getNicheOverlayContent("Scandinavian Living Room Inspo", {
+      preset: "classic_clean_travel",
+    });
+    expect(homePreset1.accentScript).not.toBe("in Canada");
+  });
 });
+

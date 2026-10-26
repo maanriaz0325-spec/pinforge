@@ -10,6 +10,7 @@ import {
   distributePinModes,
   EIGHTEEN_PRESETS_CYCLE,
   SIXTEEN_PRESETS_CYCLE,
+  resolveAdaptivePalette,
 } from "../../src/server/engine/overlay";
 import {
   calculateSeoScore,
@@ -140,6 +141,45 @@ describe("Phase 3: Text, Canvas Overlay & SEO Engine", () => {
       expect(lines.length).toBeLessThanOrEqual(4);
       // Last line should not be an empty string
       expect(lines[lines.length - 1].trim().length).toBeGreaterThan(0);
+    });
+
+    it("dynamically resolves niche palettes and adapts preset decor colors", () => {
+      // 1. Christmas prompt resolves to christmas_holiday palette
+      const xmasPal = resolveAdaptivePalette("auto", "35 Christmas Decor Ideas 2026");
+      expect(xmasPal.id).toBe("christmas_holiday");
+      expect(xmasPal.brushOrBadgeBg).toBe("#14402a");
+
+      // 2. Nails prompt resolves to luxury_plum_nails palette
+      const nailPal = resolveAdaptivePalette("auto", "20 Dark Purple Almond Nails");
+      expect(nailPal.id).toBe("luxury_plum_nails");
+      expect(nailPal.brushOrBadgeBg).toBe("#4a154b");
+
+      // 3. Hair prompt resolves to salon_caramel_hair palette
+      const hairPal = resolveAdaptivePalette("auto", "Caramel Balayage Wavy Hair");
+      expect(hairPal.id).toBe("salon_caramel_hair");
+
+      // 4. Kitchen / Dusty Blue prompt resolves to dusty_blue_home palette
+      const kitchenPal = resolveAdaptivePalette("auto", "Dusty Blue Kitchen Cabinets with Walnut Island");
+      expect(kitchenPal.id).toBe("dusty_blue_home");
+
+      // 5. Preset 17 SVG with Christmas adapts background to holiday evergreen
+      const xmasSvg = renderOverlaySvg({
+        canvas: { w: 768, h: 1152 },
+        text: {
+          content: "35 Christmas Decor Ideas 2026",
+          preset: "bold_center_badge",
+          fontFamily: "sans-serif",
+          weight: 700,
+          color: "#ffffff",
+          align: "center",
+          maxLines: 3,
+          box: { x: 0.08, y: 0.65, w: 0.84, h: 0.28 },
+        },
+        background: { type: "scrim" },
+      });
+      expect(xmasSvg).toContain("#14402a");
+      expect(xmasSvg).toContain("35");
+      expect(xmasSvg).toContain("CHRISTMAS");
     });
   });
 

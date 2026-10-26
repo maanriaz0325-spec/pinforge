@@ -472,7 +472,13 @@ export type PresetColorPalette =
   | "dark_cinematic"
   | "blush_craft"
   | "clean_slate"
-  | "playful_pastel";
+  | "playful_pastel"
+  | "christmas_holiday"
+  | "luxury_plum_nails"
+  | "salon_caramel_hair"
+  | "dusty_blue_home"
+  | "terracotta_boho"
+  | "rose_skincare";
 
 export interface AdaptiveColorPalette {
   id: string;
@@ -495,6 +501,120 @@ export interface AdaptiveColorPalette {
 }
 
 export const COLOR_PALETTES: Record<string, AdaptiveColorPalette> = {
+  christmas_holiday: {
+    id: "christmas_holiday",
+    name: "Festive Christmas & Gold",
+    primary: "#ffffff",
+    accent: "#facc15",
+    brushOrBadgeBg: "#14402a",       // Deep evergreen
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#991b1b",     // Rich holiday crimson
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#123724",
+    cardBorder: "#276749",
+    cardText: "#ffffff",
+    washiTape: "#b91c1c",
+    scrimColor: "#051f15",
+    scrimOpacity: 0.85,
+    highlightLine: "#eab308",
+    iconColor: "#facc15",
+    isLightMode: false,
+  },
+  luxury_plum_nails: {
+    id: "luxury_plum_nails",
+    name: "Luxury Plum & Rose Gold",
+    primary: "#ffffff",
+    accent: "#fbcfe8",
+    brushOrBadgeBg: "#4a154b",       // Rich luxury plum
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#be185d",     // Deep rose
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#faf5f0",
+    cardBorder: "#f3e8e2",
+    cardText: "#3b0764",
+    washiTape: "#c084fc",
+    scrimColor: "#1e0b24",
+    scrimOpacity: 0.82,
+    highlightLine: "#f472b6",
+    iconColor: "#f472b6",
+    isLightMode: false,
+  },
+  salon_caramel_hair: {
+    id: "salon_caramel_hair",
+    name: "Salon Caramel & Mocha",
+    primary: "#ffffff",
+    accent: "#fde68a",
+    brushOrBadgeBg: "#78350f",       // Warm caramel mocha
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#b45309",     // Golden amber
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#fefce8",
+    cardBorder: "#fef08a",
+    cardText: "#451a03",
+    washiTape: "#d97706",
+    scrimColor: "#1c1008",
+    scrimOpacity: 0.85,
+    highlightLine: "#f59e0b",
+    iconColor: "#fde68a",
+    isLightMode: false,
+  },
+  dusty_blue_home: {
+    id: "dusty_blue_home",
+    name: "Coastal Dusty Blue & Walnut",
+    primary: "#ffffff",
+    accent: "#93c5fd",
+    brushOrBadgeBg: "#2c4866",       // Dusty coastal blue
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#78350f",     // Warm walnut accent
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#f0f4f8",
+    cardBorder: "#d1dce5",
+    cardText: "#0f2337",
+    washiTape: "#64748b",
+    scrimColor: "#0b1926",
+    scrimOpacity: 0.85,
+    highlightLine: "#60a5fa",
+    iconColor: "#93c5fd",
+    isLightMode: false,
+  },
+  terracotta_boho: {
+    id: "terracotta_boho",
+    name: "Warm Terracotta & Sand",
+    primary: "#ffffff",
+    accent: "#fed7aa",
+    brushOrBadgeBg: "#9a3412",       // Sun-baked terracotta
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#c2410c",     // Burnt rust
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#fff7ed",
+    cardBorder: "#fed7aa",
+    cardText: "#431407",
+    washiTape: "#ea580c",
+    scrimColor: "#1e0b04",
+    scrimOpacity: 0.85,
+    highlightLine: "#fb923c",
+    iconColor: "#fed7aa",
+    isLightMode: false,
+  },
+  rose_skincare: {
+    id: "rose_skincare",
+    name: "Soft Rose & Petal Blush",
+    primary: "#ffffff",
+    accent: "#f43f5e",
+    brushOrBadgeBg: "#fb7185",       // Soft blush rose
+    brushOrBadgeText: "#ffffff",
+    secondaryBadgeBg: "#059669",     // Botanical jade
+    secondaryBadgeText: "#ffffff",
+    cardBg: "#fff1f2",
+    cardBorder: "#fecdd3",
+    cardText: "#881337",
+    washiTape: "#fda4af",
+    scrimColor: "#1f0a10",
+    scrimOpacity: 0.80,
+    highlightLine: "#fb7185",
+    iconColor: "#fb7185",
+    isLightMode: false,
+  },
   warm_peach: {
     id: "warm_peach",
     name: "Warm Peach & Coffee",
@@ -668,21 +788,60 @@ export function resolveAdaptivePalette(
   const t = (textContext || "").toLowerCase();
   let selected = COLOR_PALETTES.warm_peach;
 
-  if (/canada|santorini|travel|explore|cliff|beach|ocean|sea|flight|destination|wanderlust|lake|mountain|road\s*trip|scenic/i.test(t)) {
+  // 1. Christmas / Holiday Decor
+  if (/christmas|xmas|holiday|noel|wreath|mantel|santa|winter\s*decor|advent|fir\s*tree|pine\s*garland/i.test(t)) {
+    selected = COLOR_PALETTES.christmas_holiday;
+  }
+  // 2. Nails & Manicure (Purple, Plum, Rose, French, Almond)
+  else if (/nail|manicure|almond\s*nail|french\s*tip|gel\s*nail|acrylic\s*nail|cuticle|nail\s*art|polish/i.test(t)) {
+    selected = COLOR_PALETTES.luxury_plum_nails;
+  }
+  // 3. Hairstyles & Haircare (Caramel, Balayage, Blonde, Curls)
+  else if (/hair|balayage|curls|blonde|brunette|hairstyle|haircut|updo|bob\s*cut|salon|highlights/i.test(t)) {
+    selected = COLOR_PALETTES.salon_caramel_hair;
+  }
+  // 4. Kitchen & Bathroom (Dusty Blue, Walnut, Modern Remodel)
+  else if (/kitchen|dusty\s*blue|cabinet|walnut|bathroom|bath|shower|tub|vanity/i.test(t)) {
+    selected = COLOR_PALETTES.dusty_blue_home;
+  }
+  // 5. Terracotta / Boho / Pottery / Clay
+  else if (/terracotta|boho|clay|pottery|ceramic|rustic|bohemian/i.test(t)) {
+    selected = COLOR_PALETTES.terracotta_boho;
+  }
+  // 6. Skincare & Beauty Routine
+  else if (/skincare|skin\s*routine|serum|facial|glow|beauty\s*routine|cosmetics|dewy/i.test(t)) {
+    selected = COLOR_PALETTES.rose_skincare;
+  }
+  // 7. Travel & Ocean Escapes
+  else if (/canada|santorini|travel|explore|cliff|beach|ocean|sea|flight|destination|wanderlust|lake|mountain|road\s*trip|scenic/i.test(t)) {
     selected = COLOR_PALETTES.ocean_azure;
-  } else if (/salad|healthy\s*eating|breakfast|snack|recipe|fresh\s*food|sunny|sunshine|quinoa/i.test(t)) {
+  }
+  // 8. Healthy Eating & Fresh Food
+  else if (/salad|healthy\s*eating|breakfast|snack|recipe|fresh\s*food|sunny|sunshine|quinoa/i.test(t)) {
     selected = COLOR_PALETTES.golden_amber;
-  } else if (/coffee|latte|croissant|cafe|espresso|roast|baking|dinner|cozy\s*food|pastry/i.test(t)) {
+  }
+  // 9. Coffee & Bakery
+  else if (/coffee|latte|croissant|cafe|espresso|roast|baking|pastry|dessert/i.test(t)) {
     selected = COLOR_PALETTES.warm_peach;
-  } else if (/smoothie|habits|healthy\s*habits|green|plants|wellness|living\s*room|cozy\s*home|home\s*inspiration|organic|herbs|lime/i.test(t)) {
+  }
+  // 10. Plants / Sage Home / Scandinavian Living Room / Bedroom
+  else if (/smoothie|habits|healthy\s*habits|green|plants|wellness|living\s*room|cozy\s*home|home\s*inspiration|organic|herbs|lime|bedroom/i.test(t)) {
     selected = COLOR_PALETTES.sage_forest;
-  } else if (/fitness|gym|workout|stronger|weights|active|energy|daisy|minimal|exercise/i.test(t)) {
+  }
+  // 11. Fitness & Workout
+  else if (/fitness|gym|workout|stronger|weights|active|energy|daisy|minimal|exercise/i.test(t)) {
     selected = COLOR_PALETTES.clean_slate;
-  } else if (/diy|craft|art|pottery|creative|handmade|hidden\s*gems|stationery|journal|watercolor/i.test(t)) {
+  }
+  // 12. Crafts & Handmade DIY
+  else if (/diy|craft|art|creative|handmade|hidden\s*gems|stationery|journal|watercolor/i.test(t)) {
     selected = COLOR_PALETTES.blush_craft;
-  } else if (/kids|play|playroom|little\s*moments|joy|rainbow|baby|nursery|toddler|toys/i.test(t)) {
+  }
+  // 13. Kids & Playroom
+  else if (/kids|play|playroom|little\s*moments|joy|rainbow|baby|nursery|toddler|toys/i.test(t)) {
     selected = COLOR_PALETTES.playful_pastel;
-  } else if (/moody|dusk|night|luxury|dark|dramatic|highway/i.test(t)) {
+  }
+  // 14. Dark / Moody / Twilight / Luxury
+  else if (/moody|dusk|night|luxury|dark|dramatic|highway/i.test(t)) {
     selected = COLOR_PALETTES.dark_cinematic;
   }
 
@@ -862,7 +1021,7 @@ export function renderOverlaySvg(config: OverlayConfig): string {
     const scrimY = isPortraitSubject ? Math.round(h * 0.50) : 0;
     const scrimH = isPortraitSubject ? Math.round(h * 0.50) : Math.round(h * 0.55);
 
-    const isTravelSky = /canada|santorini|travel|sky|destination|flight/i.test(lowerSubject);
+    const isTravelSky = /canada|santorini|travel|sky|destination|flight|trip|wanderlust|vacation|lake|beach|mountain|scenic/i.test(lowerSubject);
     const isLightMode = pal.isLightMode || isTravelSky;
     const titleColor = isLightMode ? "#0c2340" : "#ffffff";
     const kickerColor = isLightMode ? "#334155" : "#ffffff";
@@ -884,7 +1043,12 @@ export function renderOverlaySvg(config: OverlayConfig): string {
         <path d="M ${Math.round(w * 0.65)} ${kickerY - 4} Q ${Math.round(w * 0.75)} ${kickerY - 24} ${Math.round(w * 0.84)} ${kickerY - 14}" fill="none" stroke="${titleColor}" stroke-width="2" stroke-dasharray="4,4"/>
         <polygon points="${Math.round(w * 0.86)},${kickerY - 12} ${Math.round(w * 0.84)},${kickerY - 20} ${Math.round(w * 0.82)},${kickerY - 14}" fill="${titleColor}"/>
       </g>
-    ` : "";
+    ` : `
+      <g opacity="0.85">
+        <line x1="${Math.round(w * 0.68)}" y1="${kickerY - 4}" x2="${Math.round(w * 0.86)}" y2="${kickerY - 4}" stroke="${pal.highlightLine || titleColor}" stroke-width="2"/>
+        <circle cx="${Math.round(w * 0.87)}" cy="${kickerY - 4}" r="3" fill="${pal.highlightLine || titleColor}"/>
+      </g>
+    `;
 
     return `
       <svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
@@ -906,11 +1070,11 @@ export function renderOverlaySvg(config: OverlayConfig): string {
           <tspan x="${Math.round(w * 0.08)}" dy="0">${escapeXml(titleLine1)}</tspan>
           ${titleLine2 ? `<tspan x="${Math.round(w * 0.08)}" dy="44">${escapeXml(titleLine2)}</tspan>` : ""}
         </text>
-        <!-- Cursive Script Accent (e.g. in Canada) -->
-        <text x="${Math.round(w * 0.08)}" y="${subY + (titleLine2 ? 44 : 0)}" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="38" font-weight="700" fill="${titleColor}">
-          ${escapeXml(accentScript || "in Canada")}
+        <!-- Cursive Script Accent -->
+        <text x="${Math.round(w * 0.08)}" y="${subY + (titleLine2 ? 44 : 0)}" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="38" font-weight="700" fill="${pal.accent || titleColor}">
+          ${escapeXml(accentScript || (isTravelSky ? "in Canada" : "Ideas & Styling"))}
         </text>
-        <!-- Descriptive Subtitle / Bullets (e.g. NATURE • ADVENTURE • BEAUTY) -->
+        <!-- Descriptive Subtitle / Bullets -->
         <text x="${Math.round(w * 0.08)}" y="${subY + (titleLine2 ? 44 : 0) + 38}" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="${subColor}" letter-spacing="3">
           ${escapeXml(bullets.slice(0, 3).join(" • "))}
         </text>
@@ -1270,10 +1434,15 @@ export function renderOverlaySvg(config: OverlayConfig): string {
           </linearGradient>
         </defs>
         <rect x="0" y="${scrimY}" width="${w}" height="${scrimH}" fill="url(#scrim_ces)"/>
-        <!-- Dotted Flight Trail with Airplane Icon -->
+        <!-- Dotted Flight Trail or Celestial Flourish -->
         <g opacity="0.9">
-          <path d="M ${Math.round(w * 0.55)} ${kickerY - 4} Q ${Math.round(w * 0.68)} ${kickerY - 26} ${Math.round(w * 0.82)} ${kickerY - 14}" fill="none" stroke="${titleColor}" stroke-width="2" stroke-dasharray="4,4"/>
-          <text x="${Math.round(w * 0.84)}" y="${kickerY - 10}" font-size="20" fill="${titleColor}">✈</text>
+          ${/canada|santorini|travel|sky|destination|flight|trip|wanderlust|vacation|lake|beach|mountain|ocean/i.test(lowerSubject) ? `
+            <path d="M ${Math.round(w * 0.55)} ${kickerY - 4} Q ${Math.round(w * 0.68)} ${kickerY - 26} ${Math.round(w * 0.82)} ${kickerY - 14}" fill="none" stroke="${titleColor}" stroke-width="2" stroke-dasharray="4,4"/>
+            <text x="${Math.round(w * 0.84)}" y="${kickerY - 10}" font-size="20" fill="${titleColor}">✈</text>
+          ` : `
+            <line x1="${Math.round(w * 0.55)}" y1="${kickerY - 4}" x2="${Math.round(w * 0.80)}" y2="${kickerY - 4}" stroke="${pal.highlightLine || titleColor}" stroke-width="2" stroke-dasharray="4,4"/>
+            <text x="${Math.round(w * 0.82)}" y="${kickerY - 2}" font-size="16" fill="${pal.highlightLine || titleColor}">✦</text>
+          `}
         </g>
         <!-- Category Kicker -->
         <text x="${textX}" y="${kickerY}" font-family="Inter, sans-serif" font-size="14" letter-spacing="5" font-weight="600" fill="${kickerColor}">
@@ -1530,28 +1699,28 @@ export function renderOverlaySvg(config: OverlayConfig): string {
           </filter>
         </defs>
         <g filter="url(#sage_shadow)">
-          <!-- Translucent Sage Green Frosted Card -->
-          <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="#3d5a45" fill-opacity="0.90" stroke="#52795d" stroke-width="1.5"/>
-          <!-- Crisp White Sans Title -->
-          <text x="${cardX + 24}" y="${cardY + 44}" font-family="'Inter', sans-serif" font-size="30" font-weight="900" fill="#ffffff" letter-spacing="1">
+          <!-- Translucent Card with Adaptive Niche Colors -->
+          <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="12" fill="${pal.cardBg}" fill-opacity="0.92" stroke="${pal.cardBorder}" stroke-width="1.5"/>
+          <!-- Crisp Sans Title -->
+          <text x="${cardX + 24}" y="${cardY + 44}" font-family="'Inter', sans-serif" font-size="30" font-weight="900" fill="${pal.primary}" letter-spacing="1">
             ${escapeXml(mainTitle)}
           </text>
           <!-- Botanical Leaf Sprig Illustration in Top Right -->
-          <g stroke="#ffffff" stroke-width="1.8" fill="none" opacity="0.9">
+          <g stroke="${pal.accent}" stroke-width="1.8" fill="none" opacity="0.95">
             <path d="M ${cardX + cardW - 18} ${cardY + 20} Q ${cardX + cardW - 35} ${cardY + 45} ${cardX + cardW - 48} ${cardY + 75}"/>
-            <ellipse cx="${cardX + cardW - 28}" cy="${cardY + 32}" rx="6" ry="3" transform="rotate(-30 ${cardX + cardW - 28} ${cardY + 32})" fill="#ffffff" opacity="0.8"/>
-            <ellipse cx="${cardX + cardW - 38}" cy="${cardY + 52}" rx="6" ry="3" transform="rotate(30 ${cardX + cardW - 38} ${cardY + 52})" fill="#ffffff" opacity="0.8"/>
+            <ellipse cx="${cardX + cardW - 28}" cy="${cardY + 32}" rx="6" ry="3" transform="rotate(-30 ${cardX + cardW - 28} ${cardY + 32})" fill="${pal.accent}" opacity="0.85"/>
+            <ellipse cx="${cardX + cardW - 38}" cy="${cardY + 52}" rx="6" ry="3" transform="rotate(30 ${cardX + cardW - 38} ${cardY + 52})" fill="${pal.accent}" opacity="0.85"/>
           </g>
           <!-- Underline Divider -->
-          <line x1="${cardX + 24}" y1="${cardY + 64}" x2="${cardX + 180}" y2="${cardY + 64}" stroke="#ffffff" stroke-width="2.5"/>
-          <!-- 3 Outline Icons with Labels -->
-          <g fill="#ffffff">
-            <circle cx="${cardX + 34}" cy="${cardY + 102}" r="7" stroke="#ffffff" stroke-width="2" fill="none"/>
-            <text x="${cardX + 54}" y="${cardY + 107}" font-family="Inter, sans-serif" font-size="14" font-weight="600">Cozy Spaces</text>
-            <circle cx="${cardX + 34}" cy="${cardY + 142}" r="7" stroke="#ffffff" stroke-width="2" fill="none"/>
-            <text x="${cardX + 54}" y="${cardY + 147}" font-family="Inter, sans-serif" font-size="14" font-weight="600">Smart Ideas</text>
-            <circle cx="${cardX + 34}" cy="${cardY + 182}" r="7" stroke="#ffffff" stroke-width="2" fill="none"/>
-            <text x="${cardX + 54}" y="${cardY + 187}" font-family="Inter, sans-serif" font-size="14" font-weight="600">Better Living</text>
+          <line x1="${cardX + 24}" y1="${cardY + 64}" x2="${cardX + 180}" y2="${cardY + 64}" stroke="${pal.highlightLine}" stroke-width="2.5"/>
+          <!-- Dynamic 3 Checklist Items with Icons -->
+          <g fill="${pal.primary}">
+            <circle cx="${cardX + 34}" cy="${cardY + 102}" r="7" stroke="${pal.accent}" stroke-width="2" fill="none"/>
+            <text x="${cardX + 54}" y="${cardY + 107}" font-family="Inter, sans-serif" font-size="14" font-weight="600">${escapeXml(bullets[0] || "Curated Inspo")}</text>
+            <circle cx="${cardX + 34}" cy="${cardY + 142}" r="7" stroke="${pal.accent}" stroke-width="2" fill="none"/>
+            <text x="${cardX + 54}" y="${cardY + 147}" font-family="Inter, sans-serif" font-size="14" font-weight="600">${escapeXml(bullets[1] || "Smart Ideas")}</text>
+            <circle cx="${cardX + 34}" cy="${cardY + 182}" r="7" stroke="${pal.accent}" stroke-width="2" fill="none"/>
+            <text x="${cardX + 54}" y="${cardY + 187}" font-family="Inter, sans-serif" font-size="14" font-weight="600">${escapeXml(bullets[2] || "Better Living")}</text>
           </g>
         </g>
         ${logoSvg}
@@ -1578,23 +1747,23 @@ export function renderOverlaySvg(config: OverlayConfig): string {
           </filter>
         </defs>
         <g transform="rotate(2 ${centerX} ${cardY + 100})" filter="url(#craft_shadow)">
-          <!-- Blush Peach Torn Note -->
-          <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="4" fill="#fae8e0"/>
+          <!-- Niche Adaptive Note Card -->
+          <rect x="${cardX}" y="${cardY}" width="${cardW}" height="${cardH}" rx="4" fill="${pal.cardBg}" stroke="${pal.cardBorder}" stroke-width="1"/>
           <!-- Top Washi Tape -->
-          <rect x="${centerX - 45}" y="${cardY - 12}" width="90" height="22" rx="2" fill="#fde2d8" opacity="0.9" transform="rotate(-2 ${centerX} ${cardY})"/>
+          <rect x="${centerX - 45}" y="${cardY - 12}" width="90" height="22" rx="2" fill="${pal.washiTape}" opacity="0.9" transform="rotate(-2 ${centerX} ${cardY})"/>
           <!-- Small Category Stamp -->
-          <text x="${centerX}" y="${cardY + 44}" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="800" fill="#78350f" letter-spacing="3">
+          <text x="${centerX}" y="${cardY + 44}" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="800" fill="${pal.accent}" letter-spacing="3">
             ${escapeXml((kicker || "DIY").toUpperCase())}
           </text>
           <!-- Big Fluid Brush Calligraphy -->
-          <text x="${centerX}" y="${cardY + 95}" text-anchor="middle" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="42" font-weight="800" fill="#292524">
+          <text x="${centerX}" y="${cardY + 95}" text-anchor="middle" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="42" font-weight="800" fill="${pal.cardText}">
             ${escapeXml(mainTitle)}
           </text>
-          <text x="${centerX}" y="${cardY + 138}" text-anchor="middle" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="34" font-weight="700" fill="#292524">
+          <text x="${centerX}" y="${cardY + 138}" text-anchor="middle" font-family="'Dancing Script', 'Caveat', cursive" font-style="italic" font-size="34" font-weight="700" fill="${pal.accent}">
             ${escapeXml(accentScript || "Ideas")} \u2661
           </text>
           <!-- Dotted Footer -->
-          <text x="${centerX}" y="${cardY + 180}" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#57534e" letter-spacing="2">
+          <text x="${centerX}" y="${cardY + 180}" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="${pal.cardText}" opacity="0.75" letter-spacing="2">
             ${escapeXml(bullets.slice(0, 3).join(" • "))}
           </text>
         </g>
@@ -1630,10 +1799,13 @@ export function renderOverlaySvg(config: OverlayConfig): string {
     // Split headline into 2 balanced lines if long
     const headlineLines = balancedWrap(headlineText.toUpperCase(), 18, 2);
 
-    // Accent color & card color (default deep slate green #334539 as in image)
+    // Accent color & card color (default deep slate green #334539 as in image or dynamic niche palette)
     const cardColor = pal.brushOrBadgeBg && pal.brushOrBadgeBg !== "#ffffff" && pal.brushOrBadgeBg !== "#fae8e0"
       ? pal.brushOrBadgeBg
       : "#334539";
+    const buttonBg = pal.cardBg && pal.cardBg !== "#18181b" ? pal.cardBg : "#ffffff";
+    const buttonText = pal.cardText && pal.cardText !== "#ffffff" ? pal.cardText : "#1e293b";
+    const buttonLabel = bullets[0] && bullets[0].length <= 14 ? bullets[0].toUpperCase() : "MORE IDEAS.";
 
     return `
       <svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
@@ -1663,11 +1835,11 @@ export function renderOverlaySvg(config: OverlayConfig): string {
             ${escapeXml(kicker && kicker !== "AESTHETIC" && kicker !== "HOME DESIGN" ? kicker.slice(0, 8) : "2026")}
           </text>
 
-          <!-- Bottom Pill Button [ MORE IDEAS. ] -->
+          <!-- Bottom Pill Button [ MORE IDEAS. / DYNAMIC LABEL ] -->
           <g transform="translate(${centerX - 95}, ${cardY + cardH - 32})">
-            <rect x="0" y="0" width="190" height="34" rx="17" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
-            <text x="95" y="22" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="800" fill="#1e293b" letter-spacing="1.5">
-              MORE IDEAS.
+            <rect x="0" y="0" width="190" height="34" rx="17" fill="${buttonBg}" stroke="${pal.highlightLine || "#1e293b"}" stroke-width="1.5"/>
+            <text x="95" y="22" text-anchor="middle" font-family="'Inter', sans-serif" font-size="13" font-weight="800" fill="${buttonText}" letter-spacing="1.5">
+              ${escapeXml(buttonLabel)}
             </text>
           </g>
         </g>
@@ -1692,6 +1864,8 @@ export function renderOverlaySvg(config: OverlayConfig): string {
     const plumColor = pal.brushOrBadgeBg && pal.brushOrBadgeBg !== "#ffffff" && pal.brushOrBadgeBg !== "#fae8e0"
       ? pal.brushOrBadgeBg
       : "#421b38";
+    const ribbonTextColor = pal.brushOrBadgeText || "#ffffff";
+    const kickerColor = pal.accent || "#fbcfe8";
 
     // Text elements extraction
     let cleanKicker = kicker && kicker !== "AESTHETIC" && kicker !== "HOME DESIGN" ? kicker : "Dark Purple";
@@ -1744,7 +1918,7 @@ export function renderOverlaySvg(config: OverlayConfig): string {
             <path d="M 12 0 C 4 3, 0 8, 0 18 C 0 28, 4 33, 14 36 L 245 36 C 255 33, 260 28, 260 18 C 260 8, 255 3, 245 0 Z" fill="${plumColor}" opacity="0.95"/>
             <!-- Brush Edge Flourishes -->
             <path d="M -4 14 Q 4 18 10 16 M -2 22 Q 6 24 12 21 M 258 14 Q 266 18 270 16" stroke="${plumColor}" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <text x="130" y="24" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="17" font-weight="700" fill="#ffffff" letter-spacing="0.5">
+            <text x="130" y="24" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-size="17" font-weight="700" fill="${ribbonTextColor}" letter-spacing="0.5">
               ${escapeXml(bullets[0] ? bullets[0].toLowerCase().replace(/(^|\s)\S/g, l => l.toUpperCase()) : "That Take Minutes")}
             </text>
           </g>

@@ -756,11 +756,28 @@ export function getNicheOverlayContent(
     ];
   }
 
-  // Adjust if listicle pin type
-  if (options.pinType?.toLowerCase().includes("listicle")) {
-    kicker = "10+ IDEAS";
-    mainTitle = `${primaryKw}`;
-    accentScript = "Decor Ideas";
+  // Dedicated Preset Layout Tailoring (Ensure exact slot alignment for all 18 presets)
+  if (options.preset === "bold_center_badge") {
+    const numMatch = cleanSubject.match(/\b(\d{1,3})\b/);
+    const num = numMatch ? numMatch[1] : "35";
+    const topicWithoutNum = cleanSubject.replace(new RegExp(`\\b${num}\\b`, "i"), "").replace(/\s+/g, " ").trim();
+    if (topicWithoutNum) {
+      mainTitle = topicWithoutNum;
+    }
+    if (!kicker || kicker === "IDEAS & INSPO" || kicker === "HOME DESIGN") {
+      kicker = cleanSubject.toLowerCase().includes("christmas") ? "2026" : "GUIDE";
+    }
+  } else if (options.preset === "editorial_tall_script") {
+    const numMatch = cleanSubject.match(/\b(\d{1,3})\b/);
+    const num = numMatch ? numMatch[1] : "20";
+    const topicWithoutNum = cleanSubject.replace(new RegExp(`\\b${num}\\b`, "i"), "").replace(/\s+/g, " ").trim();
+    if (topicWithoutNum) {
+      mainTitle = topicWithoutNum;
+    }
+  } else if (options.preset === "classic_clean_travel" && !/travel|trip|canada|santorini|flight|destination|explore/i.test(cleanSubject)) {
+    if (accentScript === "in Canada") {
+      accentScript = "Ideas & Styling";
+    }
   }
 
   const generatedHook = buildPunchy5to6WordHook(cleanSubject, strategy.id, options.pinType);
