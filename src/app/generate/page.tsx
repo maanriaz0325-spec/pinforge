@@ -19,7 +19,9 @@ import {
   ListPlus,
   RefreshCw,
   RotateCcw,
+  Upload,
 } from "lucide-react";
+import { PresetCustomizerEditor } from "@/components/PresetCustomizerEditor";
 
 interface ModelOption {
   id: string;
@@ -205,8 +207,8 @@ interface BrandKitOption {
 }
 
 export default function GeneratePage() {
-  // Mode selector: "way1" (Prompt Mode), "bulk" (Bulk Multi-Line Prompts), "way2a" (Auto-Idea Zero Input), "way2b" (Single-line expansion)
-  const [activeWay, setActiveWay] = useState<"way1" | "bulk" | "way2a" | "way2b">("way1");
+  // Mode selector: "way1" (Prompt Mode), "bulk" (Bulk Multi-Line Prompts), "way2a" (Auto-Idea Zero Input), "way2b" (Single-line expansion), "custom_preset" (Studio Customizer & Upload)
+  const [activeWay, setActiveWay] = useState<"way1" | "bulk" | "way2a" | "way2b" | "custom_preset">("way1");
 
   // Aspect ratio state
   const [selectedAspect, setSelectedAspect] = useState<"2:3" | "9:16" | "1:1" | "4:5" | "16:9">("2:3");
@@ -328,7 +330,11 @@ export default function GeneratePage() {
       const presetParam = params.get("preset");
       const topicParam = params.get("topic");
       const headlineParam = params.get("headline");
+      const modeParam = params.get("mode");
 
+      if (modeParam === "upload" || modeParam === "custom" || modeParam === "editor") {
+        setActiveWay("custom_preset");
+      }
       if (presetParam) {
         setOverlayPreset(presetParam);
         setTextMode("canvas");
@@ -983,11 +989,11 @@ export default function GeneratePage() {
       </div>
 
       {/* Mode Switcher Tabs */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
         <button
           type="button"
           onClick={() => setActiveWay("way1")}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
             activeWay === "way1"
               ? "bg-red-500/10 border-red-500 text-white shadow-md shadow-red-500/10"
               : "bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700"
@@ -1003,7 +1009,7 @@ export default function GeneratePage() {
         <button
           type="button"
           onClick={() => setActiveWay("bulk")}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
             activeWay === "bulk"
               ? "bg-emerald-500/10 border-emerald-500 text-white shadow-md shadow-emerald-500/10"
               : "bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700"
@@ -1018,8 +1024,24 @@ export default function GeneratePage() {
 
         <button
           type="button"
+          onClick={() => setActiveWay("custom_preset")}
+          className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
+            activeWay === "custom_preset"
+              ? "bg-amber-500/10 border-amber-500 text-white shadow-md shadow-amber-500/10"
+              : "bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700"
+          }`}
+        >
+          <div className="flex items-center justify-between mb-1">
+            <span className="font-semibold text-sm">Preset Studio & Upload</span>
+            <Sliders className="w-4 h-4 text-amber-400" />
+          </div>
+          <p className="text-xs text-slate-400">Upload your image & customize fonts, colors & text.</p>
+        </button>
+
+        <button
+          type="button"
           onClick={() => setActiveWay("way2a")}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
             activeWay === "way2a"
               ? "bg-purple-500/10 border-purple-500 text-white shadow-md shadow-purple-500/10"
               : "bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700"
@@ -1035,7 +1057,7 @@ export default function GeneratePage() {
         <button
           type="button"
           onClick={() => setActiveWay("way2b")}
-          className={`p-4 rounded-xl border text-left transition-all ${
+          className={`p-4 rounded-xl border text-left transition-all cursor-pointer ${
             activeWay === "way2b"
               ? "bg-blue-500/10 border-blue-500 text-white shadow-md shadow-blue-500/10"
               : "bg-slate-900/40 border-slate-800 text-slate-400 hover:border-slate-700"
@@ -1115,34 +1137,58 @@ export default function GeneratePage() {
         </div>
       )}
 
+      {/* Mode: Preset Customizer & Photo Upload */}
+      {activeWay === "custom_preset" && (
+        <PresetCustomizerEditor
+          onApplyAI={(config) => {
+            setPrompt(config.prompt);
+            setCustomOverlayText(config.headline);
+            setOverlayPreset(config.templateId);
+            setTextMode("canvas");
+            setActiveWay("way1");
+          }}
+          onSavePinSuccess={(pin) => {
+            setGeneratedResult({
+              pinId: pin.id,
+              imageUrl: pin.imageUrl,
+              title: pin.title,
+              cost: 0,
+              model: pin.modelUsed,
+            });
+          }}
+        />
+      )}
+
       {/* Template Selector Bar (Spec Section 12 & 32) */}
-      <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-red-400" />
-          <span className="text-xs font-semibold text-white">Niche Template:</span>
-        </div>
+      {activeWay !== "custom_preset" && (
+        <div className="p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Layers className="w-4 h-4 text-red-400" />
+            <span className="text-xs font-semibold text-white">Niche Template:</span>
+          </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <select
-            value={selectedTemplateId}
-            onChange={(e) => setSelectedTemplateId(e.target.value)}
-            className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-red-500/50 w-full sm:w-64"
-          >
-            {templates.map((t) => (
-              <option key={t.id} value={t.id}>
-                {t.niche?.name}: {t.name}
-              </option>
-            ))}
-          </select>
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <select
+              value={selectedTemplateId}
+              onChange={(e) => setSelectedTemplateId(e.target.value)}
+              className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-red-500/50 w-full sm:w-64"
+            >
+              {templates.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.niche?.name}: {t.name}
+                </option>
+              ))}
+            </select>
 
-          <Link
-            href="/templates"
-            className="text-xs text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 shrink-0"
-          >
-            Manage
-          </Link>
+            <Link
+              href="/templates"
+              className="text-xs text-slate-400 hover:text-white px-2 py-1 bg-slate-800 rounded border border-slate-700 shrink-0"
+            >
+              Manage
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Mode A: Way 1 Prompt Form */}
       {activeWay === "way1" && (
@@ -1508,7 +1554,9 @@ export default function GeneratePage() {
         </div>
       )}
 
-      {/* Aspect Ratio Selector */}
+      {activeWay !== "custom_preset" && (
+        <>
+          {/* Aspect Ratio Selector */}
       <div className="space-y-3">
         <label className="text-sm font-semibold text-white flex items-center justify-between">
           <span className="flex items-center gap-2">
@@ -1883,8 +1931,10 @@ export default function GeneratePage() {
           </select>
         </div>
       </div>
+    </>
+  )}
 
-      {/* Generate Button for Way 1 */}
+  {/* Generate Button for Way 1 */}
       {activeWay === "way1" && (
         <div className="p-4 rounded-xl border border-slate-800 bg-slate-900 flex items-center justify-between">
           <div className="flex items-center gap-3">

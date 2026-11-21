@@ -29,3 +29,58 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 }
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const {
+      imageUrl,
+      rawImageUrl,
+      title = "Custom Designed Pin",
+      description = "Created with PinForge Custom Preset Studio",
+      altText = "Pinterest Pin",
+      targetKeyword = "pin inspiration",
+      hashtags = ["#pininspiration", "#custompin"],
+      pinType = "Custom Design",
+      textMode = "canvas",
+      overlayText,
+      overlayJson,
+      modelUsed = "Custom Upload / Editor",
+      cost = 0.0,
+      width = 1000,
+      height = 1500,
+    } = body;
+
+    if (!imageUrl) {
+      return NextResponse.json({ success: false, error: "Image URL is required" }, { status: 400 });
+    }
+
+    const pin = await prisma.pin.create({
+      data: {
+        imageUrl,
+        rawImageUrl: rawImageUrl || imageUrl,
+        title,
+        description,
+        altText,
+        targetKeyword,
+        hashtags: JSON.stringify(hashtags),
+        pinType,
+        textMode,
+        overlayText: overlayText || null,
+        overlayJson: overlayJson ? (typeof overlayJson === "string" ? overlayJson : JSON.stringify(overlayJson)) : null,
+        modelUsed,
+        cost,
+        width,
+        height,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: pin,
+    });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Failed to save pin";
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
+  }
+}

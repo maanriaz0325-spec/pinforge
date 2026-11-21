@@ -27,6 +27,25 @@ export interface TemplatePreviewData {
   headlinePreview?: string;
   primaryCategory?: string;
   visualConfig?: VisualConfig;
+  // Dynamic user customization overrides:
+  customImages?: string[];
+  customFont?: string;
+  customTextColor?: string;
+  customAccentColor?: string;
+  customBandColor?: string;
+  customBadgeBg?: string;
+  customBadgeText?: string;
+  customBadgeShape?: string;
+  customLines?: string[];
+  customKicker?: string;
+  customScriptWord?: string;
+  customWebsite?: string;
+  fontStyle?: {
+    uppercase?: boolean;
+    bold?: boolean;
+    italic?: boolean;
+    letterSpacing?: string;
+  };
 }
 
 // Curated high-aesthetic royalty-free Unsplash photos by niche
@@ -81,18 +100,54 @@ export function PinTemplateVisualPreview({
   const layout = template.layoutId || "single";
   const config = template.visualConfig || {};
   const photoTheme = config.photoTheme || "lifestyle";
-  const photos = NICHE_PHOTOS[photoTheme] || NICHE_PHOTOS.lifestyle;
+  const defaultPhotos = NICHE_PHOTOS[photoTheme] || NICHE_PHOTOS.lifestyle;
 
-  const primaryFont = template.fonts?.[0] || "Montserrat, sans-serif";
-  const accentColor = config.accentColor || template.colors?.[1] || "#EE1A5B";
-  const bandColor = config.bandColor || "#FFFFFF";
+  // Use user-uploaded images if available, else fallback to niche royalty-free photography
+  const hasCustomImages = Boolean(template.customImages && template.customImages.length > 0);
+  const userImages = template.customImages || [];
+
+  const getPhoto = (idx: number) => {
+    if (hasCustomImages && userImages.length > 0) {
+      if (userImages[idx]) return userImages[idx];
+      return userImages[0];
+    }
+    return defaultPhotos[idx] || defaultPhotos[0];
+  };
+
+  // Typography & Styling Overrides
+  const primaryFont = template.customFont || template.fonts?.[0] || "Montserrat, sans-serif";
+  const accentColor = template.customAccentColor || config.accentColor || template.colors?.[1] || "#EE1A5B";
+  const bandColor = template.customBandColor || config.bandColor || "#FFFFFF";
   const blockStyle = config.blockStyle || "clean-overlay";
-  const badge = config.badge;
 
-  // Split headline lines
-  const lines = template.layerTexts && template.layerTexts.length > 0
+  // Badge configuration
+  const defaultBadge = config.badge;
+  const hasBadge = Boolean(defaultBadge || template.customBadgeText);
+  const badgeText = template.customBadgeText || defaultBadge?.text || "NEW";
+  const badgeBg = template.customBadgeBg || defaultBadge?.bg || accentColor;
+  const badgeColor = defaultBadge?.color || "#FFFFFF";
+  const badgeShape = template.customBadgeShape || defaultBadge?.shape || "circle";
+
+  // Split headline lines or use user custom lines
+  const rawLines = template.layerTexts && template.layerTexts.length > 0
     ? template.layerTexts.slice(0, 4)
     : (template.headlinePreview || template.name).split(" ").slice(0, 4);
+
+  const lines = template.customLines && template.customLines.length > 0
+    ? template.customLines
+    : rawLines;
+
+  // Additional customizable content
+  const kicker = template.customKicker || template.primaryCategory || "IDEAS & INSPO";
+  const scriptWord = template.customScriptWord || config.scriptWord || "Ideas ♡";
+  const website = template.customWebsite || "pinforge.app";
+
+  // Font styling options
+  const isUppercase = template.fontStyle?.uppercase !== false;
+  const isBold = template.fontStyle?.bold !== false;
+  const isItalic = template.fontStyle?.italic === true;
+  const letterSpacing = template.fontStyle?.letterSpacing || "tracking-tight";
+  const customTextColor = template.customTextColor;
 
   return (
     <div
@@ -106,8 +161,8 @@ export function PinTemplateVisualPreview({
         {/* Layout: Single Photo */}
         {layout === "single" && (
           <div
-            className="w-full h-full bg-cover bg-center"
-            style={{ backgroundImage: `url(${photos[0]})` }}
+            className="w-full h-full bg-cover bg-center transition-all duration-300"
+            style={{ backgroundImage: `url(${getPhoto(0)})` }}
           >
             <div className="w-full h-full bg-gradient-to-t from-black/85 via-black/35 to-black/30" />
           </div>
@@ -116,11 +171,11 @@ export function PinTemplateVisualPreview({
         {/* Layout: Grid 2x2 */}
         {layout === "grid-2x2" && (
           <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px] bg-white/20">
-            {photos.slice(0, 4).map((img, i) => (
+            {[0, 1, 2, 3].map((idx) => (
               <div
-                key={i}
+                key={idx}
                 className="w-full h-full bg-cover bg-center relative"
-                style={{ backgroundImage: `url(${img})` }}
+                style={{ backgroundImage: `url(${getPhoto(idx)})` }}
               >
                 <div className="absolute inset-0 bg-black/30" />
               </div>
@@ -134,25 +189,25 @@ export function PinTemplateVisualPreview({
             <div className="h-[38%] grid grid-cols-2 gap-[2px]">
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[0]})` }}
+                style={{ backgroundImage: `url(${getPhoto(0)})` }}
               />
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[1]})` }}
+                style={{ backgroundImage: `url(${getPhoto(1)})` }}
               />
             </div>
             <div
-              className="h-[28%] w-full flex items-center justify-center p-2 relative shadow-md z-10"
+              className="h-[28%] w-full flex items-center justify-center p-2 relative shadow-md z-10 transition-colors"
               style={{ backgroundColor: bandColor }}
             />
             <div className="h-[34%] grid grid-cols-2 gap-[2px]">
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[2]})` }}
+                style={{ backgroundImage: `url(${getPhoto(2)})` }}
               />
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[3]})` }}
+                style={{ backgroundImage: `url(${getPhoto(3)})` }}
               />
             </div>
           </div>
@@ -161,32 +216,32 @@ export function PinTemplateVisualPreview({
         {/* Layout: Band 2-3 (2 Top + Center Band + 3 Bottom) */}
         {layout === "band-2-3" && (
           <div className="w-full h-full flex flex-col">
-            <div className="h-[38%] grid grid-cols-2 gap-[2px]">
+            <div className="h-[40%] grid grid-cols-2 gap-[2px]">
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[0]})` }}
+                style={{ backgroundImage: `url(${getPhoto(0)})` }}
               />
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[1]})` }}
+                style={{ backgroundImage: `url(${getPhoto(1)})` }}
               />
             </div>
             <div
-              className="h-[28%] w-full flex items-center justify-center p-2 relative shadow-md z-10"
+              className="h-[25%] w-full flex items-center justify-center p-2 relative shadow-md z-10 transition-colors"
               style={{ backgroundColor: bandColor }}
             />
-            <div className="h-[34%] grid grid-cols-3 gap-[2px]">
+            <div className="h-[35%] grid grid-cols-3 gap-[2px]">
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[2]})` }}
+                style={{ backgroundImage: `url(${getPhoto(2)})` }}
               />
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[3]})` }}
+                style={{ backgroundImage: `url(${getPhoto(3)})` }}
               />
               <div
                 className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[0]})` }}
+                style={{ backgroundImage: `url(${getPhoto(0)})` }}
               />
             </div>
           </div>
@@ -197,15 +252,15 @@ export function PinTemplateVisualPreview({
           <div className="w-full h-full flex flex-col">
             <div
               className="h-[40%] w-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[0]})` }}
+              style={{ backgroundImage: `url(${getPhoto(0)})` }}
             />
             <div
-              className="h-[26%] w-full flex items-center justify-center p-2 relative shadow-md z-10"
+              className="h-[26%] w-full flex items-center justify-center p-2 relative shadow-md z-10 transition-colors"
               style={{ backgroundColor: bandColor }}
             />
             <div
               className="h-[34%] w-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[1]})` }}
+              style={{ backgroundImage: `url(${getPhoto(1)})` }}
             />
           </div>
         )}
@@ -215,11 +270,11 @@ export function PinTemplateVisualPreview({
           <div className="w-full h-full grid grid-cols-2 gap-[2px] bg-white/20">
             <div
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[0]})` }}
+              style={{ backgroundImage: `url(${getPhoto(0)})` }}
             />
             <div
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[1]})` }}
+              style={{ backgroundImage: `url(${getPhoto(1)})` }}
             />
           </div>
         )}
@@ -229,11 +284,11 @@ export function PinTemplateVisualPreview({
           <div className="w-full h-full grid grid-rows-2 gap-[2px] bg-white/20">
             <div
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[0]})` }}
+              style={{ backgroundImage: `url(${getPhoto(0)})` }}
             />
             <div
               className="w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url(${photos[1]})` }}
+              style={{ backgroundImage: `url(${getPhoto(1)})` }}
             />
           </div>
         )}
@@ -249,16 +304,16 @@ export function PinTemplateVisualPreview({
             <div className="w-full h-full flex flex-col">
               <div
                 className="h-[60%] w-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${photos[0]})` }}
+                style={{ backgroundImage: `url(${getPhoto(0)})` }}
               />
               <div className="h-[40%] grid grid-cols-2 gap-[2px]">
                 <div
                   className="w-full h-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${photos[1]})` }}
+                  style={{ backgroundImage: `url(${getPhoto(1)})` }}
                 />
                 <div
                   className="w-full h-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${photos[2]})` }}
+                  style={{ backgroundImage: `url(${getPhoto(2)})` }}
                 />
               </div>
             </div>
@@ -268,7 +323,7 @@ export function PinTemplateVisualPreview({
       {/* ======================================================== */}
       {/* 2. NUMBER BADGE (CIRCLE / SQUARE / PILL) */}
       {/* ======================================================== */}
-      {badge && (
+      {hasBadge && (
         <div
           className={`absolute z-30 flex items-center justify-center font-extrabold shadow-lg transition-transform ${
             layout.startsWith("band-")
@@ -277,19 +332,19 @@ export function PinTemplateVisualPreview({
               ? "top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2"
               : "top-4 left-4"
           } ${
-            badge.shape === "circle"
+            badgeShape === "circle"
               ? "w-11 h-11 rounded-full border-2 border-white/60"
-              : badge.shape === "pill"
+              : badgeShape === "pill"
               ? "px-3 py-1 rounded-full border border-white/50 text-xs"
               : "w-10 h-10 rounded-sm border-2 border-white/60"
           }`}
           style={{
-            backgroundColor: badge.bg,
-            color: badge.color,
+            backgroundColor: badgeBg,
+            color: badgeColor,
           }}
         >
           <span className="text-xs sm:text-sm tracking-tighter leading-none">
-            {badge.text}
+            {badgeText}
           </span>
         </div>
       )}
@@ -308,10 +363,18 @@ export function PinTemplateVisualPreview({
             {lines.map((line, idx) => (
               <span
                 key={idx}
-                className="px-2.5 py-0.5 text-xs sm:text-sm font-black tracking-tight uppercase shadow-sm rounded-[2px]"
+                className={`px-2.5 py-0.5 text-xs sm:text-sm ${
+                  isBold ? "font-black" : "font-semibold"
+                } ${letterSpacing} ${isUppercase ? "uppercase" : ""} ${
+                  isItalic ? "italic" : ""
+                } shadow-sm rounded-[2px] transition-colors`}
                 style={{
-                  backgroundColor: "#FFFFFF",
-                  color: idx === 1 || idx === 2 ? accentColor : "#111111",
+                  backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#FFFFFF",
+                  color: customTextColor
+                    ? customTextColor
+                    : idx === 1 || idx === 2
+                    ? accentColor
+                    : "#111111",
                   fontFamily: primaryFont,
                 }}
               >
@@ -327,10 +390,18 @@ export function PinTemplateVisualPreview({
             {lines.map((line, idx) => (
               <span
                 key={idx}
-                className="px-2.5 py-0.5 text-xs sm:text-sm font-black tracking-tight uppercase shadow-md rounded-[2px]"
+                className={`px-2.5 py-0.5 text-xs sm:text-sm ${
+                  isBold ? "font-black" : "font-semibold"
+                } ${letterSpacing} ${isUppercase ? "uppercase" : ""} ${
+                  isItalic ? "italic" : ""
+                } shadow-md rounded-[2px] transition-colors`}
                 style={{
-                  backgroundColor: "#111111",
-                  color: idx === 1 ? accentColor : "#FFFFFF",
+                  backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#111111",
+                  color: customTextColor
+                    ? customTextColor
+                    : idx === 1
+                    ? accentColor
+                    : "#FFFFFF",
                   fontFamily: primaryFont,
                 }}
               >
@@ -343,17 +414,27 @@ export function PinTemplateVisualPreview({
         {/* C. FRAMED CARD / TEXT PANEL (e.g. cv-framed-box, tr-fashion-capsule-arch) */}
         {blockStyle === "framed-card" && (
           <div
-            className="mx-auto w-[90%] p-3.5 rounded-xl border-2 border-white/80 shadow-2xl flex flex-col items-center text-center backdrop-blur-xs"
+            className="mx-auto w-[90%] p-3.5 rounded-xl border-2 border-white/80 shadow-2xl flex flex-col items-center text-center backdrop-blur-xs transition-colors"
             style={{
               backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#1F1A17ee",
             }}
           >
-            <span className="text-[9px] uppercase tracking-widest text-slate-300 font-semibold mb-1">
-              {template.primaryCategory || "IDEAS & INSPO"}
+            <span
+              className="text-[9px] uppercase tracking-widest font-semibold mb-1"
+              style={{ color: accentColor }}
+            >
+              {kicker}
             </span>
             <div
-              className="text-white text-xs sm:text-sm font-black leading-snug uppercase tracking-tight"
-              style={{ fontFamily: primaryFont }}
+              className={`text-xs sm:text-sm ${
+                isBold ? "font-black" : "font-semibold"
+              } leading-snug ${isUppercase ? "uppercase" : ""} ${
+                isItalic ? "italic" : ""
+              } ${letterSpacing}`}
+              style={{
+                fontFamily: primaryFont,
+                color: customTextColor || "#FFFFFF",
+              }}
             >
               {lines.join(" ")}
             </div>
@@ -364,17 +445,22 @@ export function PinTemplateVisualPreview({
         {blockStyle === "script-accent" && (
           <div className="flex flex-col items-center text-center space-y-0.5">
             <span
-              className="text-base sm:text-lg italic font-serif leading-none"
+              className="text-base sm:text-xl italic font-serif leading-none"
               style={{
                 color: accentColor,
-                fontFamily: "Playfair Display, serif",
+                fontFamily: "Playfair Display, Great Vibes, Dancing Script, serif",
               }}
             >
-              {config.scriptWord || "Chic"}
+              {scriptWord}
             </span>
             <span
-              className="text-xs sm:text-sm font-black uppercase text-white tracking-tight drop-shadow-md"
-              style={{ fontFamily: primaryFont }}
+              className={`text-xs sm:text-sm ${
+                isBold ? "font-black" : "font-semibold"
+              } ${isUppercase ? "uppercase" : ""} ${letterSpacing} drop-shadow-md`}
+              style={{
+                fontFamily: primaryFont,
+                color: customTextColor || "#FFFFFF",
+              }}
             >
               {lines.slice(0, 3).join(" ")}
             </span>
@@ -385,16 +471,25 @@ export function PinTemplateVisualPreview({
         {blockStyle === "brush-banner" && (
           <div className="flex flex-col items-center text-center space-y-1.5">
             <div
-              className="text-xs sm:text-sm font-black uppercase tracking-tight text-white drop-shadow-lg"
-              style={{ fontFamily: primaryFont }}
+              className={`text-xs sm:text-sm ${
+                isBold ? "font-black" : "font-semibold"
+              } ${isUppercase ? "uppercase" : ""} ${letterSpacing} drop-shadow-lg`}
+              style={{
+                fontFamily: primaryFont,
+                color: customTextColor || "#FFFFFF",
+              }}
             >
               {lines.slice(0, 2).join(" ")}
             </div>
             <div
-              className="px-3.5 py-1 bg-white text-slate-900 font-bold text-[11px] rounded-xs shadow-md transform -rotate-1 border border-slate-300"
-              style={{ color: accentColor }}
+              className="px-3.5 py-1 font-bold text-[11px] rounded-xs shadow-md transform -rotate-1 border border-slate-300"
+              style={{
+                backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#FFFFFF",
+                color: accentColor,
+                fontFamily: primaryFont,
+              }}
             >
-              {lines[2] || "TRENDS 2026"}
+              {lines[2] || scriptWord || "TRENDS 2026"}
             </div>
           </div>
         )}
@@ -405,9 +500,15 @@ export function PinTemplateVisualPreview({
             {lines.map((line, idx) => (
               <span
                 key={idx}
-                className="text-xs sm:text-sm font-black tracking-tight uppercase"
+                className={`text-xs sm:text-sm ${
+                  isBold ? "font-black" : "font-semibold"
+                } ${letterSpacing} ${isUppercase ? "uppercase" : ""}`}
                 style={{
-                  color: idx === 1 ? accentColor : "#FFFFFF",
+                  color: customTextColor
+                    ? customTextColor
+                    : idx === 1
+                    ? accentColor
+                    : "#FFFFFF",
                   textShadow:
                     blockStyle === "glow"
                       ? `0 0 12px ${accentColor}`
@@ -425,9 +526,13 @@ export function PinTemplateVisualPreview({
         {(blockStyle === "band-split" || blockStyle === "clean-overlay") && (
           <div className="flex flex-col items-center text-center px-2">
             <div
-              className="text-xs sm:text-sm font-black uppercase leading-tight tracking-tight drop-shadow-md"
+              className={`text-xs sm:text-sm ${
+                isBold ? "font-black" : "font-semibold"
+              } ${isUppercase ? "uppercase" : ""} leading-tight ${letterSpacing} drop-shadow-md`}
               style={{
-                color: layout.startsWith("band-")
+                color: customTextColor
+                  ? customTextColor
+                  : layout.startsWith("band-")
                   ? bandColor === "#FFFFFF" || bandColor === "#F5EFE6"
                     ? "#111111"
                     : "#FFFFFF"
@@ -447,7 +552,7 @@ export function PinTemplateVisualPreview({
       {showWebsite && (
         <div className="absolute bottom-2 inset-x-0 flex justify-center z-20">
           <span className="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-black/60 text-white/90 backdrop-blur-xs border border-white/10">
-            yourwebsite.com
+            {website}
           </span>
         </div>
       )}
