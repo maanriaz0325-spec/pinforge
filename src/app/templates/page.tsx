@@ -24,6 +24,7 @@ import {
   Check,
 } from "lucide-react";
 import Link from "next/link";
+import { PinTemplateVisualPreview } from "@/components/PinTemplateVisualPreview";
 
 interface StudioTemplate {
   id: string;
@@ -41,6 +42,14 @@ interface StudioTemplate {
   colors: string[];
   layerTexts: string[];
   headlinePreview: string;
+  visualConfig?: {
+    badge?: { text: string; shape: string; bg: string; color: string } | null;
+    blockStyle?: string;
+    bandColor?: string;
+    accentColor?: string;
+    scriptWord?: string | null;
+    photoTheme?: string;
+  };
 }
 
 interface NicheItem {
@@ -531,58 +540,25 @@ KEYWORD THEMES: niche ideas, modern niche aesthetic.`);
                     key={t.id}
                     className="group bg-slate-900/70 border border-slate-800 rounded-2xl overflow-hidden hover:border-slate-700 transition-all flex flex-col justify-between hover:shadow-xl hover:shadow-slate-950/50"
                   >
-                    {/* Visual Preview Header Thumbnail */}
-                    <div
-                      className="relative p-6 flex flex-col items-center justify-center text-center overflow-hidden transition-all duration-300 min-h-[190px] border-b border-slate-800/80"
-                      style={{
-                        background: `linear-gradient(145deg, ${bgColor}ee, #0d0f14)`,
-                      }}
-                    >
-                      {/* Layout & Aspect Badges */}
-                      <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-black/60 text-white backdrop-blur-md border border-white/10">
+                    {/* Visual Preview Header Canvas */}
+                    <div className="relative border-b border-slate-800/80 bg-slate-950">
+                      <PinTemplateVisualPreview template={t} className="rounded-t-2xl rounded-b-none" />
+
+                      {/* Layout & Aspect Overlay Badges */}
+                      <div className="absolute top-3 left-3 flex items-center gap-1.5 z-30">
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-black/75 text-white backdrop-blur-md border border-white/20">
                           {t.aspectRatio}
                         </span>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white/10 text-slate-200 backdrop-blur-md border border-white/10">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-black/60 text-slate-200 backdrop-blur-md border border-white/10">
                           {t.layoutId}
                         </span>
                       </div>
 
                       {/* Primary Category Pill */}
-                      <div className="absolute top-3 right-3 z-10">
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 border border-red-500/30">
+                      <div className="absolute top-3 right-3 z-30">
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-red-600/90 text-white border border-red-500/50 shadow-sm">
                           {t.primaryCategory}
                         </span>
-                      </div>
-
-                      {/* Typography Preview Canvas */}
-                      <div className="my-auto space-y-1.5 max-w-[90%] z-10">
-                        {t.layerTexts.length > 0 ? (
-                          t.layerTexts.slice(0, 3).map((line, idx) => (
-                            <div
-                              key={idx}
-                              className="text-white font-extrabold text-sm sm:text-base leading-tight drop-shadow-md tracking-tight uppercase"
-                              style={{
-                                color: idx === 1 ? accentColor : "#FFFFFF",
-                                fontFamily: t.fonts[0] || "Montserrat, sans-serif",
-                              }}
-                            >
-                              {line}
-                            </div>
-                          ))
-                        ) : (
-                          <div
-                            className="text-white font-extrabold text-base leading-tight drop-shadow tracking-tight"
-                            style={{ fontFamily: t.fonts[0] || "Montserrat, sans-serif" }}
-                          >
-                            {t.name}
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Footer Website Watermark Preview */}
-                      <div className="absolute bottom-2.5 text-[9px] uppercase tracking-widest text-slate-400 font-mono opacity-60">
-                        yourwebsite.com
                       </div>
                     </div>
 
@@ -690,6 +666,11 @@ KEYWORD THEMES: niche ideas, modern niche aesthetic.`);
               <p className="text-xs text-slate-400 mt-1">
                 {selectedTemplateDetail.description}
               </p>
+            </div>
+
+            {/* Visual Live Preview */}
+            <div className="flex justify-center py-2 bg-slate-950/60 rounded-xl border border-slate-800/80">
+              <PinTemplateVisualPreview template={selectedTemplateDetail} className="w-48 shadow-2xl rounded-xl overflow-hidden" />
             </div>
 
             {/* Layout & Design Types */}

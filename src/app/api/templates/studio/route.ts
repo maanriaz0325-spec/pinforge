@@ -17,6 +17,14 @@ export interface StudioTemplate {
   colors: string[];
   layerTexts: string[];
   headlinePreview: string;
+  visualConfig?: {
+    badge?: { text: string; shape: string; bg: string; color: string } | null;
+    blockStyle?: string;
+    bandColor?: string;
+    accentColor?: string;
+    scriptWord?: string | null;
+    photoTheme?: string;
+  };
 }
 
 export async function GET(req: NextRequest) {

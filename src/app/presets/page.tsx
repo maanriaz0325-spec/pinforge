@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   Sparkles,
@@ -16,7 +16,13 @@ import {
   Image as ImageIcon,
   Palette,
   ExternalLink,
+  Grid,
+  Filter,
+  LayoutTemplate,
+  Type,
+  Loader2,
 } from "lucide-react";
+import { PinTemplateVisualPreview } from "@/components/PinTemplateVisualPreview";
 
 interface PresetItem {
   id: string;
@@ -29,6 +35,32 @@ interface PresetItem {
   decorElements: string;
   placement: string;
   description: string;
+}
+
+interface StudioTemplate {
+  id: string;
+  name: string;
+  description: string;
+  primaryCategory: string;
+  categories: string[];
+  designTypes: string[];
+  width: number;
+  height: number;
+  aspectRatio: string;
+  layoutId: string;
+  collageGap: number;
+  fonts: string[];
+  colors: string[];
+  layerTexts: string[];
+  headlinePreview: string;
+  visualConfig?: {
+    badge?: { text: string; shape: string; bg: string; color: string } | null;
+    blockStyle?: string;
+    bandColor?: string;
+    accentColor?: string;
+    scriptWord?: string | null;
+    photoTheme?: string;
+  };
 }
 
 const PRESETS: PresetItem[] = [
@@ -78,182 +110,182 @@ const PRESETS: PresetItem[] = [
     defaultTopic: "Changes - Subtle Ways to Flourish",
     typography: "Didot/Bodoni Elegant Serif + Clean Tracked Subtitle",
     decorElements: "Thin Horizontal Accent Divider Line + Category Track",
-    placement: "Top Centered Editorial",
-    description: "Minimalist quiet-luxury aesthetic with fine geometric rules and centered serif typography.",
+    placement: "Top Centered Block",
+    description: "Ultra-clean editorial serif layout with crisp horizontal divider line and airy letter-spacing.",
   },
   {
-    id: "playful_colorful_badge",
+    id: "colorful_tags_steps",
     num: 5,
-    name: "Playful Colorful Tag",
+    name: "Colorful Step Tags",
     refLabel: "Ref 1 (5/8)",
     refGroup: 1,
-    defaultTopic: "Weekend Getaway Ideas",
-    typography: "Inter Black 900 Sans + Rounded Tagline",
-    decorElements: "Dual Stacked Color Badges (Golden Yellow + Salmon Pink) + Sunburst",
-    placement: "Top Left Angle Tag",
-    description: "High-CTR dual stacked pastel badges designed for viral weekend getaways, road trips, and cozy cabins.",
+    defaultTopic: "Top 7 Tips for Mindful Morning Habits",
+    typography: "Ultra-Heavy Grotesk Sans + Number Badge",
+    decorElements: "Multi-Color Rounded Number Pills + Outline Pill Box",
+    placement: "Top Stack Left (<25% footprint)",
+    description: "Punchy, modern listicle style featuring a contrasting number badge and multi-color stacked highlight tags.",
   },
   {
-    id: "dark_cinematic_road",
+    id: "dark_scrim_contrast",
     num: 6,
-    name: "Dark Cinematic Road",
+    name: "Dark Scrim Bold Contrast",
     refLabel: "Ref 1 (6/8)",
     refGroup: 1,
-    defaultTopic: "Must See Places This Year",
-    typography: "High-Contrast White Serif + Golden Cursive Subtitle",
-    decorElements: "Atmospheric Twilight Scrim + Subtle Letter Spacing",
-    placement: "Top Centered Atmospheric",
-    description: "Moody cinematic twilight gradient with crisp white serif and gold script subtitle for atmospheric photography.",
+    defaultTopic: "10 Reasons Why Dogs Bring Pure Joy",
+    typography: "Modernist Geometric Sans + Playful Highlight Word",
+    decorElements: "Radial Dark Vignette Scrim + White Backing Box",
+    placement: "Top Half Banner",
+    description: "High readability dark backdrop overlay with vibrant keyword highlight for maximum CTR.",
   },
   {
-    id: "healthy_habits_icons",
+    id: "healthy_icons_list",
     num: 7,
-    name: "Modern Lifestyle Icons Card",
+    name: "Health & Icons Checklist",
     refLabel: "Ref 1 (7/8)",
     refGroup: 1,
-    defaultTopic: "Healthy Habits - Better You",
-    typography: "Modern Clean Sans + Elegant Italic Subtitle",
-    decorElements: "Card with 3 Circular Lifestyle Action Icons (Diet, Activity, Mind)",
-    placement: "Left Floating Card",
-    description: "Clean informational card with 3 circular icons and bullet points, designed for wellness, smoothies, and routines.",
+    defaultTopic: "Healthy Eating 4 Wholesome Meal Prep Rules",
+    typography: "Rounded Modern Sans + Elegant Serif Script",
+    decorElements: "Mini Line Icons (Apple, Heart, Bowl) + Segment Divider",
+    placement: "Top Left Structured Column",
+    description: "Structured wellness checklist with mini vector iconography and clean segmented dividers.",
   },
   {
-    id: "collage_washi_gems",
+    id: "washi_gem_craft",
     num: 8,
-    name: "Pinned Polaroid & Washi Note",
+    name: "Washi Tape & Gem Craft",
     refLabel: "Ref 1 (8/8)",
     refGroup: 1,
-    defaultTopic: "Hidden Gems Off The Beaten Path",
-    typography: "Casual Cursive Script + Clean Sans Subtitle",
-    decorElements: "Torn Kraft Paper Note + Translucent Grey Washi Tape Strip",
-    placement: "Right Floating Polaroid",
-    description: "Realistic torn craft paper post-it pinned with authentic washi tape, ideal for beach finds and secret spots.",
+    defaultTopic: "Unique Gift Ideas for Creative People",
+    typography: "Organic Serif + Marker Hand Script",
+    decorElements: "Realistic Diagonal Washi Tape Ribbon + Faceted Gem Sparkle",
+    placement: "Top Left Floating Label",
+    description: "Artisan DIY craft feel featuring realistic textured tape ribbon and delicate faceted sparkle icons.",
   },
 
   // --- Reference Image 2: Presets 9 to 16 ---
   {
-    id: "classic_elegant_santorini",
+    id: "santorini_flight_trail",
     num: 9,
-    name: "Classic Elegant Flight",
+    name: "Santorini Flight Trail",
     refLabel: "Ref 2 (1/8)",
     refGroup: 2,
-    defaultTopic: "Dream Destinations in Greece",
-    typography: "Refined Editorial Serif + Spaced Monospace Kicker",
-    decorElements: "Airplane Silhouette + Curved Dotted Flight Trail (✈)",
-    placement: "Top Left Travel Scrim",
-    description: "High-end wanderlust aesthetic featuring an airplane silhouette and dotted flight path across the sky.",
+    defaultTopic: "Santorini Travel Guide: Top 10 Must-Visit Spots",
+    typography: "Tall Editorial Serif + Swash Script Kicker",
+    decorElements: "Curved Airplane Flight Path (✈) + Top Gradient Scrim",
+    placement: "Top Center Editorial Block",
+    description: "Signature luxury wanderlust layout with a graceful looping flight trail and warm Mediterranean aesthetic.",
   },
   {
-    id: "modern_bold_amber",
+    id: "amber_splash_bold",
     num: 10,
-    name: "Modern Bold Amber Splash",
+    name: "Amber Brush Splash",
     refLabel: "Ref 2 (2/8)",
     refGroup: 2,
-    defaultTopic: "Healthy Eating Meal Prep",
-    typography: "Bold Black Sans + Slanted Script Subtitle",
-    decorElements: "Golden-Amber Jagged Painted Backdrop + Sparkle Stars",
-    placement: "Top Left Painted Badge",
-    description: "Warm golden-amber painted splash highlight with distressed typography, tailored for fresh food & bowls.",
+    defaultTopic: "Savory Recipes: Homemade Gourmet Pasta & Sauce",
+    typography: "Textured Heavy Slab + Casual Brush Subtitle",
+    decorElements: "Rich Golden-Amber Paint Splash + Star Sparkles",
+    placement: "Top Left Organic Shape",
+    description: "Warm golden-amber painterly splash backdrop that pops off food and lifestyle photography.",
   },
   {
-    id: "handwritten_torn_desk",
+    id: "pinned_note_desk",
     num: 11,
-    name: "Pinned Kraft Desk Note",
+    name: "Pinned Desk Sticky Note",
     refLabel: "Ref 2 (3/8)",
     refGroup: 2,
-    defaultTopic: "Small Steps Big Dreams",
-    typography: "Casual Handwritten Felt Pen + Soft Drop Shadow",
-    decorElements: "Off-white Torn Paper Note + Top Centered Washi Strip",
-    placement: "Top Floating Note",
-    description: "Warm office desk notepad pinned to the pin canvas with a grey washi tape strip, perfect for motivation and advice.",
+    defaultTopic: "Productivity Hacks: 5 Daily Morning Routines",
+    typography: "Casual Felt-Pen Marker + Crisp Sans Monospace",
+    decorElements: "Realistic Push Pin (📌) + Cast Drop Shadow Note",
+    placement: "Top Left Realistic Stationery",
+    description: "Realistic desk stationery aesthetic with pushpin fastener, gentle rotation, and realistic drop shadow.",
   },
   {
-    id: "minimal_clean_fitness",
+    id: "frosted_glass_gym",
     num: 12,
-    name: "Frosted Fitness & Metric Card",
+    name: "Frosted Glass Gym Card",
     refLabel: "Ref 2 (4/8)",
     refGroup: 2,
-    defaultTopic: "Stronger Every Day Workout Routine",
-    typography: "Geometric High-Weight Sans + Spaced Numbers",
-    decorElements: "Frosted Glassmorphism Card + 3 Circular Action Icons",
-    placement: "Top Right Floating Card",
-    description: "Translucent frosted glass card displaying 3 circular activity metric icons for workouts and gym aesthetics.",
+    defaultTopic: "Full Body Workout: Build Core Strength in 20 Mins",
+    typography: "High-Impact Condensed Sans + Neon Accent Tag",
+    decorElements: "Backdrop Blur Acrylic Glass + Neon Cyan Accent Strip",
+    placement: "Top Centered Float Card",
+    description: "Modern frosted glassmorphic card with dynamic neon accent line, engineered for high-energy fitness pins.",
   },
   {
-    id: "playful_pastel_rainbow",
+    id: "pastel_cloud_wellness",
     num: 13,
-    name: "Playful Pastel Rainbow Card",
+    name: "Pastel Cloud Mindful Habits",
     refLabel: "Ref 2 (5/8)",
     refGroup: 2,
-    defaultTopic: "Little Moments Big Joy Nursery",
-    typography: "Playful Multi-Tone Pastel Sans + Rounded Cloud Badge",
-    decorElements: "Scalloped Cloud Card + Illustrated Mini Rainbow & Confetti",
-    placement: "Top Center Whimsical Card",
-    description: "Whimsical pastel cloud container with joyful rainbow illustration, suited for nursery, mom life, and crafts.",
+    defaultTopic: "Mindful Living: Gentle Daily Self-Care Routines",
+    typography: "Soft Rounded Sans + Flowing Italic Script",
+    decorElements: "Frosted Soft Cloud Pill + Floating Lavender Sparkles",
+    placement: "Top Center Gentle Cloud",
+    description: "Calming pastel cloud shape with soft rounded edges and whimsical lavender star sparkles.",
   },
   {
-    id: "dark_cinematic_coffee",
+    id: "charcoal_dark_coffee",
     num: 14,
-    name: "Dark Cinematic Coffee Splash",
+    name: "Charcoal Scrim Dark Coffee",
     refLabel: "Ref 2 (6/8)",
     refGroup: 2,
-    defaultTopic: "Coffee Better Days Aesthetic",
-    typography: "High-Contrast Bodoni Serif + White Italic Accent",
-    decorElements: "Charcoal Paint Brush Splash + Minimalist Divider Line",
-    placement: "Top Centered Moody Card",
-    description: "Rustic textured black brushstroke backdrop with elegant high-contrast white serif typography for dark roasts & cafes.",
+    defaultTopic: "Artisan Coffee Roasts: Brewing the Perfect Pour-Over",
+    typography: "Bold High-Contrast Serif + Crisp All-Caps Subtitle",
+    decorElements: "Smooth Charcoal Scrim Gradient + Minimal White Framing",
+    placement: "Top Half Moody Scrim",
+    description: "Sophisticated moody dark scrim that creates striking contrast over warm coffee and rustic wood textures.",
   },
   {
-    id: "modern_overlay_sage_home",
+    id: "sage_home_glow",
     num: 15,
-    name: "Modern Sage Frosted Card",
+    name: "Sage Green & Soft Glow",
     refLabel: "Ref 2 (7/8)",
     refGroup: 2,
-    defaultTopic: "Home Decor Inspiration & Styling",
-    typography: "Clean Architectural Sans + Spaced Subheadings",
-    decorElements: "Translucent Sage Green Card + Botanical Leaf Sprig Icon",
-    placement: "Left Floating Card",
-    description: "Earthy translucent sage-green card with botanical leaf sprig illustration and 3 checklist bullet points for interiors.",
+    defaultTopic: "Living Room Decor: Cozy Modern Minimalist Spaces",
+    typography: "Refined Modern Serif + Wide-Track Subtitle",
+    decorElements: "Sage Green Rounded Tag + Diffuse Soft Backlight Glow",
+    placement: "Top Left Structured Block",
+    description: "Earthy sage green aesthetic with subtle backlight glow, perfectly attuned to interior decor and lifestyle.",
   },
   {
-    id: "collage_craft_ribbon",
+    id: "craft_ribbon_diy",
     num: 16,
-    name: "Blush Craft Note & Heart Stamp",
+    name: "Craft Ribbon & Stamp DIY",
     refLabel: "Ref 2 (8/8)",
     refGroup: 2,
-    defaultTopic: "Creative Ideas & Artisan DIY",
-    typography: "Cursive Calligraphy + Clean Spaced Tagline",
-    decorElements: "Blush Pink Torn Note + Translucent Washi Tape + Stamped Heart",
-    placement: "Bottom Right Craft Note",
-    description: "Warm blush pink textured scrap note with kraft tape and artisan stamp heart, ideal for DIY, ceramics, and crafts.",
+    defaultTopic: "Easy DIY Pottery Projects: Beginner Clay Creations",
+    typography: "Artisan Typewriter Sans + Playful Handwritten Accent",
+    decorElements: "Folded Craft Paper Ribbon + Circular 'Handmade' Badge Stamp",
+    placement: "Top Left Ribbon Banner",
+    description: "Charming folded craft paper ribbon banner complete with an artisan handmade quality stamp.",
   },
 
   // --- Reference Image 3: Preset 17 ---
   {
-    id: "bold_center_badge",
+    id: "christmas_slate_listicle",
     num: 17,
-    name: "Bold Center Listicle Banner",
+    name: "Christmas Decor Slate 4-Grid Listicle",
     refLabel: "Ref 3 (Preset 17)",
     refGroup: 3,
     defaultTopic: "35 Christmas Decor Ideas 2026",
-    typography: "Giant White 115px Listicle Number + Bold White Sans Title + Year",
-    decorElements: "Deep Slate Banner Across Center + Rounded Pill Button [ MORE IDEAS. ]",
-    placement: "Center Full-Width Card (Grid Collage style)",
-    description: "High-converting viral listicle banner spanning across the center with giant listicle number, high-contrast year, and click-optimized [ MORE IDEAS. ] pill button.",
+    typography: "Condensed Headline Sans + Monospace Subtitle",
+    decorElements: "Solid Deep-Slate Card + Giant Listicle Number + Pill CTA",
+    placement: "Center Floating Square Card (between 4-grid photo quadrants)",
+    description: "Exact 1:1 match of Ref 3: Designed for 4-photo quadrant collages with a centered deep slate card, white listicle count, and [ MORE IDEAS. ] pill.",
   },
 
   // --- Reference Image 4: Preset 18 ---
   {
-    id: "editorial_tall_script",
+    id: "purple_script_ribbon",
     num: 18,
-    name: "Tall Editorial Serif + Script",
+    name: "20 Dark Purple Almond Nails Ribbon",
     refLabel: "Ref 4 (Preset 18)",
     refGroup: 4,
-    defaultTopic: "20 Dark Purple Almond Nails That Take Minutes",
-    typography: "Giant 122px Bodoni Serif Number + Deep Plum Serif + Cursive Accent Script",
-    decorElements: "Plum Brush Stroke Ribbon Tag ('That Take Minutes') + Corner Scrim",
-    placement: "Top Left Luxury Editorial Stack",
-    description: "Luxury beauty & fashion magazine typography featuring a giant serif number, rich jewel-toned title, flowing cursive script, and horizontal acrylic brush stroke ribbon tag.",
+    defaultTopic: "20 Dark Purple Almond Nails",
+    typography: "Giant Didot Serif Number + Flowing Cursive Script + Clean Sans",
+    decorElements: "Angular Lavender Brush Ribbon + Jewel Tone Serif + Script Highlight",
+    placement: "Upper Center Ribbon Floating Banner",
+    description: "Exact 1:1 match of Ref 4: High-contrast luxury beauty pin with giant serif number '20', flowing script 'Dark Purple', and angled lavender ribbon tag.",
   },
 ];
 
@@ -270,7 +302,55 @@ const SUGGESTED_TOPICS = [
   "Creative Ideas & Artisan DIY",
 ];
 
+const STUDIO_CATEGORIES = [
+  { id: "all", label: "All Categories" },
+  { id: "Home & Home Decor", label: "Home Decor" },
+  { id: "Fashion & Outfits", label: "Fashion" },
+  { id: "Food & Recipes", label: "Food & Recipes" },
+  { id: "Hair & Hairstyles", label: "Hair & Nails" },
+  { id: "Travel & Places", label: "Travel & Places" },
+  { id: "Health, Fitness & Wellness", label: "Wellness & Fitness" },
+  { id: "Holidays & Events", label: "Holidays & Events" },
+  { id: "DIY & Crafts", label: "Artisan & DIY" },
+  { id: "Business, Finance & Quotes", label: "Quotes & Lifestyle" },
+];
+
+const STUDIO_LAYOUTS = [
+  { id: "all", label: "All Layouts" },
+  { id: "single", label: "Single Hero Pin" },
+  { id: "grid-2x2", label: "2×2 Photo Grid" },
+  { id: "band-2-2", label: "2 Top / 2 Bottom Band" },
+  { id: "band-2-3", label: "2 Top / 3 Bottom Split" },
+  { id: "band-1-1", label: "1 Top / 1 Bottom Split" },
+  { id: "two-side", label: "Two Column Split" },
+  { id: "three-hero-top", label: "Top Hero + 2 Stack" },
+];
+
+const STUDIO_STYLES = [
+  { id: "all", label: "All Archetypes" },
+  { id: "white-blocks", label: "Stacked White Blocks" },
+  { id: "black-boxes", label: "Solid Black Boxes" },
+  { id: "number-badge", label: "Number Badges" },
+  { id: "framed-card", label: "Framed Rounded Card" },
+  { id: "script-accent", label: "Script Cursive Accent" },
+  { id: "brush-banner", label: "Brush Ribbon Banner" },
+  { id: "glow", label: "Neon / Soft Glow" },
+];
+
 export default function PresetsShowcasePage() {
+  // Main view switcher: "studio" (AutoPinDesign 247) or "custom18" (18 Reference Presets)
+  const [mainTab, setMainTab] = useState<"studio" | "custom18">("studio");
+
+  // Studio Presets State
+  const [studioTemplates, setStudioTemplates] = useState<StudioTemplate[]>([]);
+  const [studioLoading, setStudioLoading] = useState(false);
+  const [selectedStudioCat, setSelectedStudioCat] = useState("all");
+  const [selectedStudioLayout, setSelectedStudioLayout] = useState("all");
+  const [selectedStudioStyle, setSelectedStudioStyle] = useState("all");
+  const [studioSearch, setStudioSearch] = useState("");
+  const [selectedStudioDetail, setSelectedStudioDetail] = useState<StudioTemplate | null>(null);
+
+  // 18 Reference Presets State
   const [activeGroup, setActiveGroup] = useState<number | 0>(0); // 0 = all
   const [searchQuery, setSearchQuery] = useState("");
   const [previewTopic, setPreviewTopic] = useState("35 Christmas Decor Ideas 2026");
@@ -279,7 +359,26 @@ export default function PresetsShowcasePage() {
   const [inspectPreset, setInspectPreset] = useState<PresetItem | null>(null);
   const [showRefSheets, setShowRefSheets] = useState(false);
 
-  // Filter presets
+  // Fetch Studio Templates
+  useEffect(() => {
+    async function loadStudioTemplates() {
+      try {
+        setStudioLoading(true);
+        const res = await fetch("/api/templates/studio");
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          setStudioTemplates(json.data);
+        }
+      } catch (err) {
+        console.error("Failed to load studio templates:", err);
+      } finally {
+        setStudioLoading(false);
+      }
+    }
+    loadStudioTemplates();
+  }, []);
+
+  // Filter 18 Reference presets
   const filteredPresets = PRESETS.filter((p) => {
     if (activeGroup !== 0 && p.refGroup !== activeGroup) return false;
     if (searchQuery.trim().length > 0) {
@@ -294,6 +393,41 @@ export default function PresetsShowcasePage() {
     }
     return true;
   });
+
+  // Filter Studio presets
+  const filteredStudioTemplates = useMemo(() => {
+    return studioTemplates.filter((t) => {
+      if (selectedStudioCat !== "all") {
+        const cat = selectedStudioCat.toLowerCase();
+        const match =
+          t.primaryCategory.toLowerCase() === cat ||
+          t.categories.some((c) => c.toLowerCase() === cat || c.toLowerCase().includes(cat));
+        if (!match) return false;
+      }
+      if (selectedStudioLayout !== "all") {
+        if (t.layoutId.toLowerCase() !== selectedStudioLayout.toLowerCase()) return false;
+      }
+      if (selectedStudioStyle !== "all") {
+        const style = t.visualConfig?.blockStyle || "";
+        if (selectedStudioStyle === "number-badge") {
+          if (!t.visualConfig?.badge) return false;
+        } else if (style !== selectedStudioStyle) {
+          return false;
+        }
+      }
+      if (studioSearch.trim()) {
+        const q = studioSearch.toLowerCase();
+        const match =
+          t.name.toLowerCase().includes(q) ||
+          t.description.toLowerCase().includes(q) ||
+          t.primaryCategory.toLowerCase().includes(q) ||
+          t.fonts.some((f) => f.toLowerCase().includes(q)) ||
+          t.layerTexts.some((txt) => txt.toLowerCase().includes(q));
+        if (!match) return false;
+      }
+      return true;
+    });
+  }, [studioTemplates, selectedStudioCat, selectedStudioLayout, selectedStudioStyle, studioSearch]);
 
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -326,461 +460,781 @@ export default function PresetsShowcasePage() {
                 <Layers className="w-4 h-4" />
               </div>
               <h1 className="text-xl font-bold tracking-tight text-white">
-                18 Authentic Pinterest Overlay Presets
+                Pinterest Overlay Presets & Studio Gallery
               </h1>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                18 Live
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">
+                247 Studio + 18 Live
               </span>
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              Exact 1:1 Pinterest overlay presets matching the uploaded reference pins. View the authentic designs or test dynamic adaptation with any prompt.
+              Select any extracted AutoPinDesign overlay preset or live reference design to apply high-CTR typography, badges, and layout collages.
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Primary View Switcher Tabs */}
+          <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 p-1 rounded-xl">
             <button
-              onClick={() => setShowRefSheets(!showRefSheets)}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-2 transition-all cursor-pointer ${
-                showRefSheets
-                  ? "bg-purple-600 text-white border-purple-500 shadow-lg shadow-purple-600/20"
-                  : "bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700"
+              onClick={() => setMainTab("studio")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                mainTab === "studio"
+                  ? "bg-red-600 text-white shadow-md shadow-red-900/30"
+                  : "text-slate-400 hover:text-white"
               }`}
             >
-              <Eye className="w-3.5 h-3.5" />
-              <span>{showRefSheets ? "Hide Reference Sheets" : "View Reference Sheets (4 Sheets)"}</span>
+              <Grid className="w-3.5 h-3.5" />
+              <span>Studio Presets ({studioTemplates.length || 247})</span>
             </button>
-
-            <Link
-              href="/generate"
-              className="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 shadow-lg shadow-red-600/20 transition-all cursor-pointer"
+            <button
+              onClick={() => setMainTab("custom18")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                mainTab === "custom18"
+                  ? "bg-purple-600 text-white shadow-md shadow-purple-900/30"
+                  : "text-slate-400 hover:text-white"
+              }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Open Studio Generator</span>
-            </Link>
+              <span>18 Custom Reference Presets</span>
+            </button>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-6 space-y-6">
-        {/* Reference Image Comparison Sheets (Collapsible) */}
-        {showRefSheets && (
-          <div className="bg-slate-900/90 rounded-2xl border border-purple-500/30 p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between">
+        {/* ========================================================================= */}
+        {/* TAB 1: AutoPinDesign Studio Presets Gallery (247)                          */}
+        {/* ========================================================================= */}
+        {mainTab === "studio" && (
+          <div className="space-y-6">
+            {/* Studio Filter Controls */}
+            <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3.5 shadow-sm">
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+                {/* Search Input */}
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Search 247 templates by title, font, color, or keyword..."
+                    value={studioSearch}
+                    onChange={(e) => setStudioSearch(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+
+                {/* Layout Dropdown */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400 whitespace-nowrap">Layout:</span>
+                  <select
+                    value={selectedStudioLayout}
+                    onChange={(e) => setSelectedStudioLayout(e.target.value)}
+                    className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-red-500"
+                  >
+                    {STUDIO_LAYOUTS.map((ly) => (
+                      <option key={ly.id} value={ly.id}>
+                        {ly.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Styling Archetype Dropdown */}
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400 whitespace-nowrap">Style Archetype:</span>
+                  <select
+                    value={selectedStudioStyle}
+                    onChange={(e) => setSelectedStudioStyle(e.target.value)}
+                    className="bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-red-500"
+                  >
+                    {STUDIO_STYLES.map((st) => (
+                      <option key={st.id} value={st.id}>
+                        {st.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Category Filter Chips */}
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80 overflow-x-auto text-xs">
+                <span className="text-slate-400 font-medium shrink-0">Niche Category:</span>
+                {STUDIO_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedStudioCat(cat.id)}
+                    className={`px-3 py-1 rounded-full text-[11px] font-medium border whitespace-nowrap transition-all cursor-pointer ${
+                      selectedStudioCat === cat.id
+                        ? "bg-red-600 text-white border-red-500 font-semibold shadow-sm"
+                        : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-300"
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Results count & status */}
+            <div className="flex items-center justify-between text-xs text-slate-400">
               <div>
-                <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4 text-purple-400" />
-                  Original Reference Sheets Provided
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  The exact design source images: Ref 1 (Presets 1–8), Ref 2 (Presets 9–16), Ref 3 (Preset 17), Ref 4 (Preset 18).
-                </p>
+                Showing <span className="text-white font-bold">{filteredStudioTemplates.length}</span> of{" "}
+                <span className="text-white font-bold">{studioTemplates.length}</span> extracted templates
               </div>
-              <button
-                onClick={() => setShowRefSheets(false)}
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-purple-300">Reference Sheet 1</span>
-                  <span className="text-[10px] text-slate-400">Presets 1–8</span>
-                </div>
-                <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
-                  <img
-                    src="/presets/ref_1_8.jpg"
-                    alt="Reference 1"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  Travel, Food & Peach Splash, Explore Waves, Nature Lines, Colorful Tags, Dark Scrims, Healthy Icons, Washi Gems.
-                </p>
-              </div>
-
-              <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-purple-300">Reference Sheet 2</span>
-                  <span className="text-[10px] text-slate-400">Presets 9–16</span>
-                </div>
-                <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
-                  <img
-                    src="/presets/ref_9_16.jpg"
-                    alt="Reference 2"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  Santorini Flight Trail, Amber Splash, Pinned Desk Note, Frosted Gym, Pastel Cloud, Dark Charcoal Coffee, Sage Home, Craft Ribbon.
-                </p>
-              </div>
-
-              <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-purple-300">Reference Sheet 3</span>
-                  <span className="text-[10px] text-slate-400">Preset 17</span>
-                </div>
-                <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
-                  <img
-                    src="/presets/ref_17.jpg"
-                    alt="Reference 3"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  35 Christmas Decor Ideas 2026: 4-grid photo style, center deep slate card, white listicle number & [ MORE IDEAS. ] pill.
-                </p>
-              </div>
-
-              <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-purple-300">Reference Sheet 4</span>
-                  <span className="text-[10px] text-slate-400">Preset 18</span>
-                </div>
-                <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
-                  <img
-                    src="/presets/ref_18.jpg"
-                    alt="Reference 4"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  20 Dark Purple Almond Nails: Giant high-contrast serif number, rich jewel tone serif, flowing script, brush ribbon tag.
-                </p>
+              <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                <span>Layout geometries rendered with live typography & badges</span>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* Interactive Controls Bar */}
-        <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3.5 shadow-sm">
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
-            {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search presets by name, typography, or decor style..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500"
-              />
-            </div>
-
-            {/* Topic Switcher Bar */}
-            <div className="flex items-center gap-2 flex-1">
-              <span className="text-xs text-slate-400 whitespace-nowrap">Live Topic:</span>
-              <input
-                type="text"
-                value={previewTopic}
-                onChange={(e) => setPreviewTopic(e.target.value)}
-                placeholder="Enter any topic to test dynamic adaptation..."
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono"
-              />
-            </div>
-
-            {/* View Mode Switcher */}
-            <div className="flex items-center bg-slate-950 border border-slate-800 rounded-lg p-1 shrink-0">
-              <button
-                onClick={() => setViewMode("exact")}
-                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                  viewMode === "exact"
-                    ? "bg-red-600 text-white font-semibold shadow-sm"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Exact Reference Design
-              </button>
-              <button
-                onClick={() => setViewMode("live")}
-                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                  viewMode === "live"
-                    ? "bg-slate-800 text-white font-semibold shadow-sm"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Live Dynamic Topic
-              </button>
-              <button
-                onClick={() => setViewMode("transparent")}
-                className={`px-3 py-1 rounded text-xs font-medium transition-all ${
-                  viewMode === "transparent"
-                    ? "bg-slate-800 text-white font-semibold shadow-sm"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Isolated Layer
-              </button>
-            </div>
-          </div>
-
-          {/* Quick Topic Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px]">
-            <span className="text-slate-400 shrink-0">Try Topics:</span>
-            {SUGGESTED_TOPICS.map((topic) => (
-              <button
-                key={topic}
-                onClick={() => setPreviewTopic(topic)}
-                className={`px-2.5 py-1 rounded-md border whitespace-nowrap transition-colors cursor-pointer ${
-                  previewTopic === topic
-                    ? "bg-red-500/10 text-red-400 border-red-500/30 font-medium"
-                    : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-300"
-                }`}
-              >
-                {topic}
-              </button>
-            ))}
-          </div>
-
-          {/* Reference Source Filter Pills */}
-          <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80 overflow-x-auto text-xs">
-            <span className="text-slate-400 font-medium">Filter Reference:</span>
-            {[
-              { id: 0, label: "All 18 Presets" },
-              { id: 1, label: "Ref 1 (Presets 1–8: Travel & Adventure)" },
-              { id: 2, label: "Ref 2 (Presets 9–16: Wellness & Studio)" },
-              { id: 3, label: "Ref 3 (Preset 17: Christmas 4-Grid Listicle)" },
-              { id: 4, label: "Ref 4 (Preset 18: Luxury Almond Nails)" },
-            ].map((grp) => (
-              <button
-                key={grp.id}
-                onClick={() => setActiveGroup(grp.id as any)}
-                className={`px-3 py-1 rounded-full text-[11px] font-medium border transition-all cursor-pointer ${
-                  activeGroup === grp.id
-                    ? "bg-white text-slate-900 border-white font-semibold shadow-sm"
-                    : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-300"
-                }`}
-              >
-                {grp.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 18 Presets Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPresets.map((preset) => {
-            const imgSrc = getPresetImageSrc(preset);
-
-            return (
-              <div
-                key={preset.id}
-                className="bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col overflow-hidden shadow-lg group"
-              >
-                {/* Card Header */}
-                <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="w-6 h-6 rounded-md bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-slate-700">
-                      #{preset.num}
-                    </span>
-                    <h3 className="text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">
-                      {preset.name}
-                    </h3>
-                  </div>
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-800 text-purple-300 border border-purple-500/20 shrink-0">
-                    {preset.refLabel}
-                  </span>
-                </div>
-
-                {/* Preset Image Container (Standard 2:3 Pinterest Canvas) */}
-                <div className="relative aspect-[2/3] bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800/80">
-                  <img
-                    src={imgSrc}
-                    alt={preset.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
-
-                  {/* Hover Overlay with Inspect & Fullscreen button */}
-                  <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
-                    <button
-                      onClick={() => setInspectPreset(preset)}
-                      className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-xl border border-slate-600 transition-all cursor-pointer"
-                    >
-                      <Maximize2 className="w-3.5 h-3.5" />
-                      <span>Inspect Details</span>
-                    </button>
-                    <Link
-                      href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
-                      className="px-3.5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
-                    >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Use In Generator</span>
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Card Specs & Design Blueprint */}
-                <div className="p-4 flex-1 flex flex-col justify-between space-y-3 text-xs">
-                  <div className="space-y-2">
-                    <p className="text-slate-400 text-[11px] leading-relaxed line-clamp-2">
-                      {preset.description}
-                    </p>
-
-                    <div className="space-y-1.5 bg-slate-950/60 rounded-lg p-2.5 border border-slate-800/60 font-mono text-[10px]">
-                      <div className="flex items-start justify-between gap-1 text-slate-400">
-                        <span className="text-slate-400">Typography:</span>
-                        <span className="text-slate-200 text-right truncate max-w-[180px]">
-                          {preset.typography}
+            {/* Studio Templates Grid */}
+            {studioLoading ? (
+              <div className="flex flex-col items-center justify-center py-20 text-slate-500">
+                <Loader2 className="w-8 h-8 animate-spin text-red-500 mb-3" />
+                <span className="text-sm">Loading 247 AutoPinDesign presets...</span>
+              </div>
+            ) : filteredStudioTemplates.length === 0 ? (
+              <div className="text-center py-16 bg-slate-900/50 rounded-2xl border border-slate-800">
+                <p className="text-slate-400 text-sm">No studio presets matched your current filter.</p>
+                <button
+                  onClick={() => {
+                    setSelectedStudioCat("all");
+                    setSelectedStudioLayout("all");
+                    setSelectedStudioStyle("all");
+                    setStudioSearch("");
+                  }}
+                  className="mt-3 text-xs text-red-400 hover:underline cursor-pointer"
+                >
+                  Reset all filters
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredStudioTemplates.map((t) => (
+                  <div
+                    key={t.id}
+                    className="bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col overflow-hidden shadow-lg group"
+                  >
+                    {/* Header */}
+                    <div className="p-3.5 border-b border-slate-800/80 flex items-center justify-between">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-red-950/80 text-red-400 border border-red-800/60 font-semibold truncate">
+                          {t.primaryCategory}
+                        </span>
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">
+                          {t.layoutId}
                         </span>
                       </div>
-                      <div className="flex items-start justify-between gap-1 text-slate-400">
-                        <span className="text-slate-400">Decorative:</span>
-                        <span className="text-amber-300 text-right truncate max-w-[180px]">
-                          {preset.decorElements}
+                      {t.visualConfig?.badge && (
+                        <span
+                          className="text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm text-white shrink-0"
+                          style={{ backgroundColor: t.visualConfig.badge.bg || "#EE1A5B" }}
+                        >
+                          Badge: {t.visualConfig.badge.text}
                         </span>
+                      )}
+                    </div>
+
+                    {/* Visual Layout Container */}
+                    <div className="relative aspect-[2/3] bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800/80 p-2">
+                      <PinTemplateVisualPreview template={t} className="w-full h-full shadow-inner" />
+
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2.5 backdrop-blur-[2px] p-4">
+                        <button
+                          onClick={() => setSelectedStudioDetail(t)}
+                          className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-xl border border-slate-600 transition-all cursor-pointer"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span>Inspect</span>
+                        </button>
+                        <Link
+                          href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(
+                            t.headlinePreview || t.name
+                          )}`}
+                          className="px-3.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>Use In Studio</span>
+                        </Link>
                       </div>
-                      <div className="flex items-start justify-between gap-1 text-slate-400">
-                        <span className="text-slate-400">Footprint:</span>
-                        <span className="text-emerald-400 text-right">{preset.placement}</span>
+                    </div>
+
+                    {/* Card Body */}
+                    <div className="p-4 flex-1 flex flex-col justify-between space-y-3 text-xs">
+                      <div className="space-y-1.5">
+                        <h3 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-1">
+                          {t.name}
+                        </h3>
+                        <p className="text-slate-400 text-[11px] line-clamp-2 leading-relaxed">
+                          {t.description}
+                        </p>
+                      </div>
+
+                      {/* Design tags & Palette swatches */}
+                      <div className="space-y-2 pt-2 border-t border-slate-800/80">
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="text-slate-400 font-mono">Archetype:</span>
+                          <span className="text-purple-300 font-semibold">
+                            {t.visualConfig?.blockStyle || "clean-overlay"}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            {t.colors.slice(0, 4).map((c, i) => (
+                              <span
+                                key={i}
+                                className="w-3 h-3 rounded-full border border-slate-700"
+                                style={{ backgroundColor: c }}
+                                title={c}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-[10px] text-slate-400 font-mono">{t.fonts[0] || "Anton"}</span>
+                        </div>
+                      </div>
+
+                      {/* Card Action Buttons */}
+                      <div className="pt-2 flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => handleCopyId(t.id)}
+                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-[11px] font-mono flex items-center gap-1.5 border border-slate-700 cursor-pointer"
+                        >
+                          {copiedId === t.id ? (
+                            <>
+                              <Check className="w-3 h-3 text-emerald-400" />
+                              <span className="text-emerald-400">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" />
+                              <span>Copy ID</span>
+                            </>
+                          )}
+                        </button>
+
+                        <Link
+                          href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(
+                            t.headlinePreview || t.name
+                          )}`}
+                          className="px-3.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-[11px] font-semibold flex items-center gap-1 shadow-sm transition-all cursor-pointer"
+                        >
+                          <span>Apply Preset</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
                       </div>
                     </div>
                   </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
-                  {/* Actions */}
-                  <div className="pt-2 flex items-center justify-between gap-2 border-t border-slate-800/80">
-                    <button
-                      onClick={() => handleCopyId(preset.id)}
-                      className="px-2.5 py-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 text-[11px] font-mono flex items-center gap-1.5 border border-transparent hover:border-slate-700 transition-all cursor-pointer"
-                    >
-                      {copiedId === preset.id ? (
-                        <>
-                          <Check className="w-3 h-3 text-emerald-400" />
-                          <span className="text-emerald-400">Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          <span>{preset.id}</span>
-                        </>
-                      )}
-                    </button>
+        {/* ========================================================================= */}
+        {/* TAB 2: 18 Custom Reference Presets (Ref 1 to 4)                           */}
+        {/* ========================================================================= */}
+        {mainTab === "custom18" && (
+          <div className="space-y-6">
+            {/* Reference Image Comparison Sheets (Collapsible) */}
+            <div className="flex items-center justify-between bg-slate-900 p-4 rounded-xl border border-slate-800">
+              <div className="flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-purple-400" />
+                <span className="text-sm font-semibold text-white">Authentic Reference Source Sheets</span>
+                <span className="text-xs text-slate-400">(Ref 1 to 4 uploaded design sheets)</span>
+              </div>
+              <button
+                onClick={() => setShowRefSheets(!showRefSheets)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium border flex items-center gap-2 transition-all cursor-pointer ${
+                  showRefSheets
+                    ? "bg-purple-600 text-white border-purple-500 shadow-md shadow-purple-600/20"
+                    : "bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700"
+                }`}
+              >
+                <Eye className="w-3.5 h-3.5" />
+                <span>{showRefSheets ? "Hide Source Sheets" : "View 4 Original Sheets"}</span>
+              </button>
+            </div>
 
-                    <Link
-                      href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(
-                        previewTopic || preset.defaultTopic
-                      )}`}
-                      className="px-3 py-1.5 bg-red-600/90 hover:bg-red-500 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                    >
-                      <span>Select Preset</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+            {showRefSheets && (
+              <div className="bg-slate-900/90 rounded-2xl border border-purple-500/30 p-6 space-y-4 shadow-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-purple-300">Reference Sheet 1</span>
+                      <span className="text-[10px] text-slate-400">Presets 1–8</span>
+                    </div>
+                    <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
+                      <img src="/presets/ref_1_8.jpg" alt="Reference 1" className="w-full h-full object-contain" />
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Travel, Food & Peach Splash, Explore Waves, Nature Lines, Colorful Tags, Dark Scrims, Healthy Icons, Washi Gems.
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-purple-300">Reference Sheet 2</span>
+                      <span className="text-[10px] text-slate-400">Presets 9–16</span>
+                    </div>
+                    <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
+                      <img src="/presets/ref_9_16.jpg" alt="Reference 2" className="w-full h-full object-contain" />
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      Santorini Flight Trail, Amber Splash, Pinned Desk Note, Frosted Gym, Pastel Cloud, Dark Charcoal Coffee, Sage Home, Craft Ribbon.
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-purple-300">Reference Sheet 3</span>
+                      <span className="text-[10px] text-slate-400">Preset 17</span>
+                    </div>
+                    <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
+                      <img src="/presets/ref_17.jpg" alt="Reference 3" className="w-full h-full object-contain" />
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      35 Christmas Decor Ideas 2026: 4-grid photo style, center deep slate card, white listicle number & [ MORE IDEAS. ] pill.
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-950/60 rounded-xl p-3 border border-slate-800 space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-purple-300">Reference Sheet 4</span>
+                      <span className="text-[10px] text-slate-400">Preset 18</span>
+                    </div>
+                    <div className="relative rounded-lg overflow-hidden border border-slate-700/60 aspect-[2/3] bg-black">
+                      <img src="/presets/ref_18.jpg" alt="Reference 4" className="w-full h-full object-contain" />
+                    </div>
+                    <p className="text-[11px] text-slate-400">
+                      20 Dark Purple Almond Nails: Giant high-contrast serif number, rich jewel tone serif, flowing script, brush ribbon tag.
+                    </p>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            )}
+
+            {/* Interactive Controls Bar */}
+            <div className="bg-slate-900 rounded-xl border border-slate-800 p-4 space-y-3.5 shadow-sm">
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+                {/* Search Input */}
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Search presets by name, typography, or decor style..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+
+                {/* Topic Switcher Bar */}
+                <div className="flex items-center gap-2 flex-1">
+                  <span className="text-xs text-slate-400 whitespace-nowrap">Live Topic:</span>
+                  <input
+                    type="text"
+                    value={previewTopic}
+                    onChange={(e) => setPreviewTopic(e.target.value)}
+                    placeholder="Enter any topic to test dynamic adaptation..."
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 font-mono"
+                  />
+                </div>
+
+                {/* View Mode Switcher */}
+                <div className="flex items-center bg-slate-950 border border-slate-800 rounded-lg p-1 shrink-0">
+                  <button
+                    onClick={() => setViewMode("exact")}
+                    className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                      viewMode === "exact"
+                        ? "bg-red-600 text-white font-semibold shadow-sm"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    Exact Reference
+                  </button>
+                  <button
+                    onClick={() => setViewMode("live")}
+                    className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                      viewMode === "live"
+                        ? "bg-slate-800 text-white font-semibold shadow-sm"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    Live Dynamic Topic
+                  </button>
+                  <button
+                    onClick={() => setViewMode("transparent")}
+                    className={`px-3 py-1 rounded text-xs font-medium transition-all ${
+                      viewMode === "transparent"
+                        ? "bg-slate-800 text-white font-semibold shadow-sm"
+                        : "text-slate-400 hover:text-slate-200"
+                    }`}
+                  >
+                    Isolated Layer
+                  </button>
+                </div>
+              </div>
+
+              {/* Quick Topic Chips */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px]">
+                <span className="text-slate-400 shrink-0">Try Topics:</span>
+                {SUGGESTED_TOPICS.map((topic) => (
+                  <button
+                    key={topic}
+                    onClick={() => setPreviewTopic(topic)}
+                    className={`px-2.5 py-1 rounded-md border whitespace-nowrap transition-colors cursor-pointer ${
+                      previewTopic === topic
+                        ? "bg-red-500/10 text-red-400 border-red-500/30 font-medium"
+                        : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-300"
+                    }`}
+                  >
+                    {topic}
+                  </button>
+                ))}
+              </div>
+
+              {/* Reference Source Filter Pills */}
+              <div className="flex items-center gap-2 pt-2 border-t border-slate-800/80 overflow-x-auto text-xs">
+                <span className="text-slate-400 font-medium">Filter Reference:</span>
+                {[
+                  { id: 0, label: "All 18 Presets" },
+                  { id: 1, label: "Ref 1 (Presets 1–8: Travel & Adventure)" },
+                  { id: 2, label: "Ref 2 (Presets 9–16: Wellness & Studio)" },
+                  { id: 3, label: "Ref 3 (Preset 17: Christmas 4-Grid Listicle)" },
+                  { id: 4, label: "Ref 4 (Preset 18: Luxury Almond Nails)" },
+                ].map((grp) => (
+                  <button
+                    key={grp.id}
+                    onClick={() => setActiveGroup(grp.id as any)}
+                    className={`px-3 py-1 rounded-full text-[11px] font-medium border transition-all cursor-pointer ${
+                      activeGroup === grp.id
+                        ? "bg-white text-slate-900 border-white font-semibold shadow-sm"
+                        : "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-300"
+                    }`}
+                  >
+                    {grp.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 18 Presets Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPresets.map((preset) => {
+                const imgSrc = getPresetImageSrc(preset);
+
+                return (
+                  <div
+                    key={preset.id}
+                    className="bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col overflow-hidden shadow-lg group"
+                  >
+                    {/* Card Header */}
+                    <div className="p-4 border-b border-slate-800/80 flex items-center justify-between">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="w-6 h-6 rounded-md bg-slate-800 text-slate-300 font-mono text-xs font-bold flex items-center justify-center shrink-0 border border-slate-700">
+                          #{preset.num}
+                        </span>
+                        <h3 className="text-sm font-bold text-white truncate group-hover:text-red-400 transition-colors">
+                          {preset.name}
+                        </h3>
+                      </div>
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-slate-800 text-purple-300 border border-purple-500/20 shrink-0">
+                        {preset.refLabel}
+                      </span>
+                    </div>
+
+                    {/* Preset Image Container (Standard 2:3 Pinterest Canvas) */}
+                    <div className="relative aspect-[2/3] bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800/80">
+                      <img
+                        src={imgSrc}
+                        alt={preset.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                        loading="lazy"
+                      />
+
+                      {/* Hover Overlay with Inspect & Fullscreen button */}
+                      <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
+                        <button
+                          onClick={() => setInspectPreset(preset)}
+                          className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-xl border border-slate-600 transition-all cursor-pointer"
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" />
+                          <span>Inspect Details</span>
+                        </button>
+                        <Link
+                          href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
+                          className="px-3.5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
+                        >
+                          <Sparkles className="w-3.5 h-3.5" />
+                          <span>Use In Generator</span>
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Card Specs & Design Blueprint */}
+                    <div className="p-4 flex-1 flex flex-col justify-between space-y-3 text-xs">
+                      <div className="space-y-2">
+                        <p className="text-slate-400 text-[11px] leading-relaxed line-clamp-2">
+                          {preset.description}
+                        </p>
+
+                        <div className="space-y-1.5 bg-slate-950/60 rounded-lg p-2.5 border border-slate-800/60 font-mono text-[10px]">
+                          <div className="flex items-start justify-between gap-1 text-slate-400">
+                            <span>Typography:</span>
+                            <span className="text-slate-200 text-right truncate max-w-[180px]">
+                              {preset.typography}
+                            </span>
+                          </div>
+                          <div className="flex items-start justify-between gap-1 text-slate-400">
+                            <span>Decor:</span>
+                            <span className="text-amber-300 text-right truncate max-w-[180px]">
+                              {preset.decorElements}
+                            </span>
+                          </div>
+                          <div className="flex items-start justify-between gap-1 text-slate-400">
+                            <span>Placement:</span>
+                            <span className="text-emerald-400 text-right truncate max-w-[180px]">
+                              {preset.placement}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Card Action Buttons */}
+                      <div className="pt-2 flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => handleCopyId(preset.id)}
+                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-[11px] font-mono flex items-center gap-1.5 border border-slate-700 cursor-pointer"
+                        >
+                          {copiedId === preset.id ? (
+                            <>
+                              <Check className="w-3 h-3 text-emerald-400" />
+                              <span className="text-emerald-400">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" />
+                              <span>Copy ID</span>
+                            </>
+                          )}
+                        </button>
+
+                        <Link
+                          href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
+                          className="px-3.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-[11px] font-semibold flex items-center gap-1 shadow-sm transition-all cursor-pointer"
+                        >
+                          <span>Use Preset</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Inspect High-Res Modal */}
+      {/* Studio Template Detail Modal */}
+      {selectedStudioDetail && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 shadow-2xl relative">
+            <button
+              onClick={() => setSelectedStudioDetail(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-red-950 text-red-400 border border-red-800 font-semibold">
+                  {selectedStudioDetail.primaryCategory}
+                </span>
+                <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 font-mono">
+                  {selectedStudioDetail.aspectRatio} ({selectedStudioDetail.width}×{selectedStudioDetail.height})
+                </span>
+              </div>
+              <h2 className="text-lg font-bold text-white mt-2">{selectedStudioDetail.name}</h2>
+              <p className="text-xs text-slate-400 mt-1">{selectedStudioDetail.description}</p>
+            </div>
+
+            {/* High-fidelity Visual Preview */}
+            <div className="flex justify-center py-2 bg-slate-950/60 rounded-xl border border-slate-800/80">
+              <PinTemplateVisualPreview template={selectedStudioDetail} className="w-48 shadow-2xl rounded-xl overflow-hidden" />
+            </div>
+
+            {/* Layout & Design Details */}
+            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Layout Format:</span>
+                <span className="text-white font-semibold">{selectedStudioDetail.layoutId}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Template ID:</span>
+                <span className="text-slate-300 font-mono">{selectedStudioDetail.id}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-slate-400">Archetype:</span>
+                <span className="text-purple-300 font-semibold">
+                  {selectedStudioDetail.visualConfig?.blockStyle || "clean-overlay"}
+                </span>
+              </div>
+              <div>
+                <span className="text-slate-400 block mb-1">Typography Fonts:</span>
+                <div className="flex flex-wrap gap-1">
+                  {selectedStudioDetail.fonts.map((f) => (
+                    <span key={f} className="px-2 py-0.5 rounded bg-slate-800 text-purple-300 font-medium text-[11px]">
+                      {f}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <span className="text-slate-400 block mb-1">Colors:</span>
+                <div className="flex items-center gap-2">
+                  {selectedStudioDetail.colors.map((clr, i) => (
+                    <div key={i} className="flex items-center gap-1">
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-700" style={{ backgroundColor: clr }} />
+                      <span className="font-mono text-[10px] text-slate-300">{clr}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Default Headline Layers */}
+            {selectedStudioDetail.layerTexts.length > 0 && (
+              <div className="space-y-1">
+                <span className="text-xs font-semibold text-slate-300">Default Headline Layers:</span>
+                <div className="bg-slate-950 p-2.5 rounded-xl border border-slate-800/80 space-y-1 text-xs">
+                  {selectedStudioDetail.layerTexts.map((txt, idx) => (
+                    <div key={idx} className="text-slate-200 flex items-center gap-2 text-[11px]">
+                      <span className="text-[10px] text-slate-500 font-mono">0{idx + 1}.</span>
+                      <span className="font-medium">{txt}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="pt-2 flex items-center justify-end gap-3">
+              <button
+                onClick={() => setSelectedStudioDetail(null)}
+                className="px-4 py-2 text-xs text-slate-400 hover:text-white"
+              >
+                Close
+              </button>
+              <Link
+                href={`/generate?preset=${encodeURIComponent(selectedStudioDetail.id)}&topic=${encodeURIComponent(
+                  selectedStudioDetail.headlinePreview || selectedStudioDetail.name
+                )}`}
+                className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm"
+              >
+                <span>Use this Preset in Generator</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reference Preset Inspect Modal */}
       {inspectPreset && (
-        <div className="fixed inset-0 bg-black/85 z-50 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
-            {/* Left: Big Preview */}
-            <div className="md:w-1/2 bg-slate-950 flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-slate-800">
-              <div className="relative aspect-[2/3] w-full max-w-[360px] rounded-xl overflow-hidden shadow-2xl border border-slate-800">
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 shadow-2xl relative">
+            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 font-mono text-sm font-bold flex items-center justify-center">
+                  #{inspectPreset.num}
+                </span>
+                <div>
+                  <h2 className="text-base font-bold text-white">{inspectPreset.name}</h2>
+                  <span className="text-xs text-purple-400 font-mono">
+                    {inspectPreset.refLabel} • ID: {inspectPreset.id}
+                  </span>
+                </div>
+              </div>
+              <button
+                onClick={() => setInspectPreset(null)}
+                className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="relative aspect-[2/3] bg-slate-950 rounded-xl overflow-hidden border border-slate-800">
                 <img
                   src={getPresetImageSrc(inspectPreset)}
                   alt={inspectPreset.name}
                   className="w-full h-full object-cover"
                 />
               </div>
+
+              <div className="space-y-4 text-xs">
+                <div>
+                  <h4 className="text-slate-400 font-semibold uppercase tracking-wider text-[10px] mb-1">
+                    Design Blueprint
+                  </h4>
+                  <p className="text-slate-300 leading-relaxed">{inspectPreset.description}</p>
+                </div>
+
+                <div className="bg-slate-950 rounded-xl p-3.5 border border-slate-800 space-y-2.5 font-mono text-[11px]">
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Typography:</span>
+                    <span className="text-white font-sans">{inspectPreset.typography}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Decorative Elements:</span>
+                    <span className="text-amber-300 font-sans">{inspectPreset.decorElements}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 block text-[10px]">Placement:</span>
+                    <span className="text-emerald-400 font-sans">{inspectPreset.placement}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-slate-400 font-semibold uppercase tracking-wider text-[10px] mb-1">
+                    Test Live Prompt
+                  </h4>
+                  <input
+                    type="text"
+                    value={previewTopic}
+                    onChange={(e) => setPreviewTopic(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-red-500 font-mono"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Right: Info & Controls */}
-            <div className="md:w-1/2 p-6 flex flex-col justify-between space-y-6 overflow-y-auto">
-              <div>
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <div className="flex items-center gap-2">
-                    <span className="w-7 h-7 rounded-lg bg-red-500/10 text-red-400 font-mono text-sm font-bold flex items-center justify-center border border-red-500/20">
-                      #{inspectPreset.num}
-                    </span>
-                    <div>
-                      <h2 className="text-base font-bold text-white">{inspectPreset.name}</h2>
-                      <span className="text-xs text-purple-400 font-mono">
-                        {inspectPreset.refLabel} • ID: {inspectPreset.id}
-                      </span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setInspectPreset(null)}
-                    className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+            <div className="pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
+              <button
+                onClick={() => handleCopyId(inspectPreset.id)}
+                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-mono flex items-center gap-2 border border-slate-700 transition-all cursor-pointer"
+              >
+                {copiedId === inspectPreset.id ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    <span className="text-emerald-400">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Copy Preset ID</span>
+                  </>
+                )}
+              </button>
 
-                <div className="mt-4 space-y-4 text-xs">
-                  <div>
-                    <h4 className="text-slate-400 font-semibold uppercase tracking-wider text-[10px] mb-1">
-                      Preset Design Blueprint
-                    </h4>
-                    <p className="text-slate-300 leading-relaxed">{inspectPreset.description}</p>
-                  </div>
-
-                  <div className="bg-slate-950 rounded-xl p-4 border border-slate-800 space-y-3 font-mono text-[11px]">
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">Typography System:</span>
-                      <span className="text-white font-sans">{inspectPreset.typography}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">Decorative Elements:</span>
-                      <span className="text-amber-300 font-sans">{inspectPreset.decorElements}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-400 block text-[10px]">Canvas Footprint:</span>
-                      <span className="text-emerald-400 font-sans">
-                        {inspectPreset.placement} (strictly ≤ 25% area)
-                      </span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-slate-400 font-semibold uppercase tracking-wider text-[10px] mb-1.5">
-                      Live Testing Prompt
-                    </h4>
-                    <input
-                      type="text"
-                      value={previewTopic}
-                      onChange={(e) => setPreviewTopic(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-lg text-xs text-white focus:outline-none focus:border-red-500"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between gap-3">
-                <button
-                  onClick={() => handleCopyId(inspectPreset.id)}
-                  className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-mono flex items-center gap-2 border border-slate-700 transition-all cursor-pointer"
-                >
-                  {copiedId === inspectPreset.id ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy Preset ID</span>
-                    </>
-                  )}
-                </button>
-
-                <Link
-                  href={`/generate?preset=${inspectPreset.id}&topic=${encodeURIComponent(
-                    previewTopic || inspectPreset.defaultTopic
-                  )}`}
-                  className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 shadow-lg shadow-red-600/20 transition-all cursor-pointer"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  <span>Use This Preset In Studio</span>
-                </Link>
-              </div>
+              <Link
+                href={`/generate?preset=${inspectPreset.id}&topic=${encodeURIComponent(
+                  previewTopic || inspectPreset.defaultTopic
+                )}`}
+                className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-2 shadow-lg shadow-red-600/20 transition-all cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Use This Preset In Studio</span>
+              </Link>
             </div>
           </div>
         </div>

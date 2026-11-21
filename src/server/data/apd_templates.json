@@ -33,7 +33,15 @@
       "Bronde Hair Color",
       "Ideas"
     ],
-    "headlinePreview": "20+ Most Gorgeous Bronde Hair Color Ideas"
+    "headlinePreview": "20+ Most Gorgeous Bronde Hair Color Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-fall-blocks",
@@ -68,7 +76,20 @@
       "Fall Hair Color",
       "Trends 2026"
     ],
-    "headlinePreview": "Biggest Fall Hair Color Trends 2026"
+    "headlinePreview": "Biggest Fall Hair Color Trends 2026",
+    "visualConfig": {
+      "badge": {
+        "text": "22",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-hottest-left-blocks",
@@ -106,7 +127,20 @@
       "Trends",
       "Stylists are legit obsessed with"
     ],
-    "headlinePreview": "12 Hottest Hair Color 2026 Trends Stylists are legit obsessed with"
+    "headlinePreview": "12 Hottest Hair Color 2026 Trends Stylists are legit obsessed with",
+    "visualConfig": {
+      "badge": {
+        "text": "22",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-modern-white-caps",
@@ -144,7 +178,20 @@
       "For Women",
       "Over 50"
     ],
-    "headlinePreview": "22 Modern Short Hairstyles For Women Over 50"
+    "headlinePreview": "22 Modern Short Hairstyles For Women Over 50",
+    "visualConfig": {
+      "badge": {
+        "text": "22",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-half-up-yellow",
@@ -181,7 +228,20 @@
       "Half Down",
       "Hairstyles"
     ],
-    "headlinePreview": "21 Short Half Up Half Down Hairstyles"
+    "headlinePreview": "21 Short Half Up Half Down Hairstyles",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F7E45A",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-huge-number-for-lines",
@@ -219,7 +279,20 @@
       "For",
       "Women"
     ],
-    "headlinePreview": "20 Short Haircut Ideas For Women"
+    "headlinePreview": "20 Short Haircut Ideas For Women",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-outline-white-black",
@@ -257,7 +330,20 @@
       "Ideas For",
       "Fine Thin"
     ],
-    "headlinePreview": "27+ Short Hairstyles Ideas For Fine Thin"
+    "headlinePreview": "27+ Short Hairstyles Ideas For Fine Thin",
+    "visualConfig": {
+      "badge": {
+        "text": "27+",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-shaggy-lavender",
@@ -294,7 +380,20 @@
       "Shaggy",
       "Hairstyles"
     ],
-    "headlinePreview": "22 Short Shaggy Hairstyles"
+    "headlinePreview": "22 Short Shaggy Hairstyles",
+    "visualConfig": {
+      "badge": {
+        "text": "22",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "brush-banner",
+      "bandColor": "#111111",
+      "accentColor": "#DDA3F0",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-chic-teal-brush",
@@ -336,7 +435,20 @@
       "That are trending",
       "Right now"
     ],
-    "headlinePreview": "31 Chic Short Haircuts That are trending Right now"
+    "headlinePreview": "31 Chic Short Haircuts That are trending Right now",
+    "visualConfig": {
+      "badge": {
+        "text": "31",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "brush-banner",
+      "bandColor": "#111111",
+      "accentColor": "#17899A",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-sticker-serif-spring",
@@ -373,7 +485,20 @@
       "Hairstyles",
       "2026"
     ],
-    "headlinePreview": "50+ Medium Length Spring Hairstyles 2026"
+    "headlinePreview": "50+ Medium Length Spring Hairstyles 2026",
+    "visualConfig": {
+      "badge": {
+        "text": "50+",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-sticker-serif-curly",
@@ -410,7 +535,20 @@
       "Ideas",
       "For Women"
     ],
-    "headlinePreview": "50 Gorgeous Curly Hairstyle Ideas For Women"
+    "headlinePreview": "50 Gorgeous Curly Hairstyle Ideas For Women",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-sticker-serif-pixie",
@@ -446,7 +584,20 @@
       "Ideas",
       "For Women"
     ],
-    "headlinePreview": "50 Pixie Cut Ideas For Women"
+    "headlinePreview": "50 Pixie Cut Ideas For Women",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-sticker-serif-over-50",
@@ -482,7 +633,20 @@
       "For Women",
       "Over 50"
     ],
-    "headlinePreview": "50 Short Hair Styles For Women Over 50"
+    "headlinePreview": "50 Short Hair Styles For Women Over 50",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "hb-howto-label-panel",
@@ -526,7 +690,15 @@
       "At Home",
       "pill"
     ],
-    "headlinePreview": "Dot ellipse Label panel How to Style a Bob Cut At Home pill Without a Blow Dryer Click for more Beauty made simple Circle Lifestyle Listicle Custom Blog Pin"
+    "headlinePreview": "Dot ellipse Label panel How to Style a Bob Cut At Home pill Without a Blow Dryer Click for more Beauty made simple Circle Lifestyle Listicle Custom Blog Pin",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-brush-circle",
@@ -564,7 +736,20 @@
       "and instantly",
       "Look Better"
     ],
-    "headlinePreview": "transparent How to Style Edgy Outfits and instantly Look Better"
+    "headlinePreview": "transparent How to Style Edgy Outfits and instantly Look Better",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#F1E4D1",
+        "color": "#2B2B2B"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#E07B45",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-grid-card-pill",
@@ -601,7 +786,20 @@
       "Poses",
       "for pictures"
     ],
-    "headlinePreview": "16 Poses for pictures"
+    "headlinePreview": "16 Poses for pictures",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#F1E4D1",
+        "color": "#2B2B2B"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#2B2B2B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "cv-textfirst-black",
@@ -634,7 +832,15 @@
       "= $500",
       "See how?"
     ],
-    "headlinePreview": "Reddit ChatGPT = $500 See how?"
+    "headlinePreview": "Reddit ChatGPT = $500 See how?",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#F6E9C9",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-panel-chevron",
@@ -676,7 +882,20 @@
       "for glowing",
       "Skin"
     ],
-    "headlinePreview": "6 Uncommon Beauty Tips for glowing Skin"
+    "headlinePreview": "6 Uncommon Beauty Tips for glowing Skin",
+    "visualConfig": {
+      "badge": {
+        "text": "4",
+        "shape": "rounded",
+        "bg": "#5A2E1E",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#F6E9C9",
+      "accentColor": "#F6D36B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-strips-cream-green",
@@ -716,7 +935,20 @@
       "Rosemary Oil For",
       "Hair Growth"
     ],
-    "headlinePreview": "4 rounded Ways to Use Rosemary Oil For Hair Growth"
+    "headlinePreview": "4 rounded Ways to Use Rosemary Oil For Hair Growth",
+    "visualConfig": {
+      "badge": {
+        "text": "4",
+        "shape": "rounded",
+        "bg": "#5A2E1E",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#F6E9C9",
+      "accentColor": "#5A2E1E",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-strips-orange-outline",
@@ -755,7 +987,20 @@
       "Exercises to Tone",
       "Flabby Skin"
     ],
-    "headlinePreview": "5 rounded Powerful Exercises to Tone Flabby Skin"
+    "headlinePreview": "5 rounded Powerful Exercises to Tone Flabby Skin",
+    "visualConfig": {
+      "badge": {
+        "text": "5",
+        "shape": "rounded",
+        "bg": "#E8913A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#F7E7D5",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-strips-coral-pill",
@@ -792,7 +1037,20 @@
       "To Keep Looking",
       "Young After 25"
     ],
-    "headlinePreview": "10 pill Easy Skin Care Tips To Keep Looking Young After 25"
+    "headlinePreview": "10 pill Easy Skin Care Tips To Keep Looking Young After 25",
+    "visualConfig": {
+      "badge": {
+        "text": "10",
+        "shape": "pill",
+        "bg": "#E25C6A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#E25C6A",
+      "accentColor": "#E25C6A",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-strips-yellow-brown",
@@ -830,7 +1088,20 @@
       "To Make You Look",
       "Years Younger"
     ],
-    "headlinePreview": "7 rounded Easy Hair Hacks To Make You Look Years Younger"
+    "headlinePreview": "7 rounded Easy Hair Hacks To Make You Look Years Younger",
+    "visualConfig": {
+      "badge": {
+        "text": "7",
+        "shape": "rounded",
+        "bg": "#5A3A28",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#FCEB8C",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-band-mixed-sizes",
@@ -865,7 +1136,15 @@
       "to Buy When You’re",
       "Broke"
     ],
-    "headlinePreview": "18 Cheapest Foods to Buy When You’re Broke"
+    "headlinePreview": "18 Cheapest Foods to Buy When You’re Broke",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "cv-beige-panel-minimal",
@@ -897,7 +1176,15 @@
     "layerTexts": [
       "Making New Friends in Midlife"
     ],
-    "headlinePreview": "Making New Friends in Midlife"
+    "headlinePreview": "Making New Friends in Midlife",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#E9DCD2",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-textfirst-blue-strip",
@@ -935,7 +1222,15 @@
       "to make up to",
       "$20/hr"
     ],
-    "headlinePreview": "39 Side Jobs to make up to $20/hr"
+    "headlinePreview": "39 Side Jobs to make up to $20/hr",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-textfirst-distressed",
@@ -974,7 +1269,15 @@
       "That Makes",
       "$4000 Monthly"
     ],
-    "headlinePreview": "How to Start a Blog That Makes $4000 Monthly"
+    "headlinePreview": "How to Start a Blog That Makes $4000 Monthly",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-band-black-bold",
@@ -1008,7 +1311,15 @@
       "Breakfast Ideas",
       "For the most important meal"
     ],
-    "headlinePreview": "20 Delicious Grab & Go Breakfast Ideas For the most important meal"
+    "headlinePreview": "20 Delicious Grab & Go Breakfast Ideas For the most important meal",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-torn-edge-script",
@@ -1049,7 +1360,15 @@
       "Meet People",
       "and make connections"
     ],
-    "headlinePreview": "15 Social Hobbies to Meet People and make connections"
+    "headlinePreview": "15 Social Hobbies to Meet People and make connections",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F39A4A",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-pink-outline-number",
@@ -1085,7 +1404,15 @@
       "Spa Day Tips",
       "For a relaxing experience"
     ],
-    "headlinePreview": "15 At Home Spa Day Tips For a relaxing experience"
+    "headlinePreview": "15 At Home Spa Day Tips For a relaxing experience",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-textfirst-tag",
@@ -1125,7 +1452,15 @@
       "from home",
       "$3000/mo"
     ],
-    "headlinePreview": "30 Legit Data Entry Jobs from home $3000/mo"
+    "headlinePreview": "30 Legit Data Entry Jobs from home $3000/mo",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#FF5A1F",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-sage-panel-sticker",
@@ -1160,7 +1495,15 @@
       "Rosemary",
       "for healthy hair"
     ],
-    "headlinePreview": "A Simple Guide to Using Rosemary for healthy hair"
+    "headlinePreview": "A Simple Guide to Using Rosemary for healthy hair",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#F28C4B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-cloud-edge",
@@ -1198,7 +1541,20 @@
       "to Make Your Home",
       "Smell Like Fall"
     ],
-    "headlinePreview": "8 Less Toxic Candles to Make Your Home Smell Like Fall"
+    "headlinePreview": "8 Less Toxic Candles to Make Your Home Smell Like Fall",
+    "visualConfig": {
+      "badge": {
+        "text": "52",
+        "shape": "rounded",
+        "bg": "#E8913A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#F4D6B0",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-strips-beige-green-plain",
@@ -1233,7 +1589,20 @@
       "When You Use Aloe Vera",
       "On Your Face"
     ],
-    "headlinePreview": "What Happens When When You Use Aloe Vera On Your Face"
+    "headlinePreview": "What Happens When When You Use Aloe Vera On Your Face",
+    "visualConfig": {
+      "badge": {
+        "text": "52",
+        "shape": "rounded",
+        "bg": "#E8913A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F4D6B0",
+      "accentColor": "#4A2A1A",
+      "scriptWord": "Cute",
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-strips-cream-brown-number",
@@ -1273,7 +1642,20 @@
       "Style Inspiration",
       "band-2-2"
     ],
-    "headlinePreview": "52 rounded Short Celebrity Hairstyles For Style Inspiration band-2-2"
+    "headlinePreview": "52 rounded Short Celebrity Hairstyles For Style Inspiration band-2-2",
+    "visualConfig": {
+      "badge": {
+        "text": "52",
+        "shape": "rounded",
+        "bg": "#E8913A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FCF1D8",
+      "accentColor": "#E8913A",
+      "scriptWord": "Cute",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-pp-white-band-spaced",
@@ -1312,7 +1694,20 @@
       "Bebas Neue",
       "Gift Ideas"
     ],
-    "headlinePreview": "20 Cute Baby Boy Bebas Neue Gift Ideas"
+    "headlinePreview": "20 Cute Baby Boy Bebas Neue Gift Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F7F7F5",
+      "accentColor": "#111111",
+      "scriptWord": "Cute",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-orange-band-black-badge",
@@ -1351,7 +1746,20 @@
       "Bebas Neue",
       "Storage Ideas"
     ],
-    "headlinePreview": "11 Creative Changing Table Bebas Neue Storage Ideas"
+    "headlinePreview": "11 Creative Changing Table Bebas Neue Storage Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "11",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6B04B",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Creative",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-rust-sticker",
@@ -1389,7 +1797,15 @@
       "Baby Shower",
       "Cake Ideas"
     ],
-    "headlinePreview": "12 Creative Baby Shower Cake Ideas"
+    "headlinePreview": "12 Creative Baby Shower Cake Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "black-boxes",
+      "bandColor": "#B4693E",
+      "accentColor": "#111111",
+      "scriptWord": "Creative",
+      "photoTheme": "food"
+    }
   },
   {
     "id": "cv-pp-open-center-boxed",
@@ -1428,7 +1844,15 @@
       "Organizing",
       "Ideas"
     ],
-    "headlinePreview": "Kitchen Bebas Neue Pots & Pans Organizing Ideas"
+    "headlinePreview": "Kitchen Bebas Neue Pots & Pans Organizing Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#F4F4F2",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-rust-tall",
@@ -1461,7 +1885,15 @@
       "Kitchen With",
       "Upcycled Pallets"
     ],
-    "headlinePreview": "Transform Your Kitchen With Upcycled Pallets"
+    "headlinePreview": "Transform Your Kitchen With Upcycled Pallets",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#B4693E",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-script-boxed-last",
@@ -1497,7 +1929,15 @@
       "Bebas Neue",
       "Ideas"
     ],
-    "headlinePreview": "Smart Kitchen Storage Bebas Neue Ideas"
+    "headlinePreview": "Smart Kitchen Storage Bebas Neue Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#F6B04B",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-minimal-black",
@@ -1529,7 +1969,15 @@
       "Bebas Neue",
       "Tattoo Designs"
     ],
-    "headlinePreview": "15 Bold Sleeve Bebas Neue Tattoo Designs"
+    "headlinePreview": "15 Bold Sleeve Bebas Neue Tattoo Designs",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "cv-pp-black-band",
@@ -1561,7 +2009,15 @@
       "Bebas Neue",
       "Styling Tips"
     ],
-    "headlinePreview": "Seasonal Home Bebas Neue Styling Tips"
+    "headlinePreview": "Seasonal Home Bebas Neue Styling Tips",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-photo-panel-script",
@@ -1596,7 +2052,15 @@
       "Bebas Neue",
       "Chicken Wraps"
     ],
-    "headlinePreview": "Tasty Cheesy Garlic Bebas Neue Chicken Wraps"
+    "headlinePreview": "Tasty Cheesy Garlic Bebas Neue Chicken Wraps",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#A86A4F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "cv-grid-bottom-overlay",
@@ -1629,7 +2093,20 @@
       "Haircuts",
       "2026"
     ],
-    "headlinePreview": "Spring Haircuts 2026"
+    "headlinePreview": "Spring Haircuts 2026",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#A86A4F",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-hard-shadow-band",
@@ -1664,7 +2141,20 @@
       "Hairstyle",
       "Ideas"
     ],
-    "headlinePreview": "30 Trendy Hairstyle Ideas"
+    "headlinePreview": "30 Trendy Hairstyle Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#A86A4F",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-brush-badge-spaced",
@@ -1699,7 +2189,20 @@
       "Yoga Corner",
       "Design Ideas"
     ],
-    "headlinePreview": "25 Bebas Neue Yoga Corner Design Ideas"
+    "headlinePreview": "25 Bebas Neue Yoga Corner Design Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#F0F0EE",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-dark-script-overlay",
@@ -1735,7 +2238,15 @@
       "Trendy",
       "Ideas"
     ],
-    "headlinePreview": "Dim 20 Trendy Ideas"
+    "headlinePreview": "Dim 20 Trendy Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#EADBCB",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-starburst",
@@ -1769,7 +2280,15 @@
       "Decor",
       "Ideas"
     ],
-    "headlinePreview": "40+ Chic Bebas Neue Decor Ideas"
+    "headlinePreview": "40+ Chic Bebas Neue Decor Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#EADBCB",
+      "accentColor": "#F6D94A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-wavy-serif-band",
@@ -1801,7 +2320,15 @@
       "Bedroom",
       "Ideas"
     ],
-    "headlinePreview": "21 Moody Boho Bedroom Ideas"
+    "headlinePreview": "21 Moody Boho Bedroom Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#EADBCB",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-circle-medallion",
@@ -1838,7 +2365,15 @@
       "Lora",
       "Trends"
     ],
-    "headlinePreview": "transparent 21 Must-Try Lora Trends"
+    "headlinePreview": "transparent 21 Must-Try Lora Trends",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#D9D9D7",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-framed-box",
@@ -1876,7 +2411,15 @@
       "Bedroom",
       "Decor Ideas"
     ],
-    "headlinePreview": "41 Farmhouse Bedroom Decor Ideas"
+    "headlinePreview": "41 Farmhouse Bedroom Decor Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#D9D9D7",
+      "accentColor": "#8B6A4E",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-marker-band",
@@ -1914,7 +2457,15 @@
       "Winter Outfits",
       "Ideas"
     ],
-    "headlinePreview": "40 Must-Try Winter Outfits Ideas"
+    "headlinePreview": "40 Must-Try Winter Outfits Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#D9D9D7",
+      "accentColor": "#7A4E2D",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "cv-outline-split",
@@ -1953,7 +2504,15 @@
       "The surprising math behind",
       "rising travel prices"
     ],
-    "headlinePreview": "Why So Many People Can’t Afford to Travel The surprising math behind rising travel prices"
+    "headlinePreview": "Why So Many People Can’t Afford to Travel The surprising math behind rising travel prices",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#5B7FA6",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-outline-blue-script",
@@ -1990,7 +2549,15 @@
       "to your pet without",
       "Falling Apart"
     ],
-    "headlinePreview": "How to Say Goodbye to your pet without Falling Apart"
+    "headlinePreview": "How to Say Goodbye to your pet without Falling Apart",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#D7263D",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-translucent-card",
@@ -2029,7 +2596,15 @@
       "on the market",
       "(the results will surprise you)"
     ],
-    "headlinePreview": "Tested Every Best Dog Food on the market (the results will surprise you)"
+    "headlinePreview": "Tested Every Best Dog Food on the market (the results will surprise you)",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F3C9A8",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-highlight-left-script",
@@ -2067,7 +2642,15 @@
       "Clothes",
       "Ideas"
     ],
-    "headlinePreview": "39 Nostalgic Vintage Baby Clothes Ideas"
+    "headlinePreview": "39 Nostalgic Vintage Baby Clothes Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#D7263D",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "cv-glow-circle",
@@ -2105,7 +2688,20 @@
       "Tiny Home",
       "Warm This Winter"
     ],
-    "headlinePreview": "11 Easy Ways To Keep Your Tiny Home Warm This Winter"
+    "headlinePreview": "11 Easy Ways To Keep Your Tiny Home Warm This Winter",
+    "visualConfig": {
+      "badge": {
+        "text": "600",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#4F78A8"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F4E3C3",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-dotted-frame",
@@ -2147,7 +2743,20 @@
       "Tournaments",
       "with smart choices"
     ],
-    "headlinePreview": "600 rounded Funny Names For Golf Tournaments with smart choices"
+    "headlinePreview": "600 rounded Funny Names For Golf Tournaments with smart choices",
+    "visualConfig": {
+      "badge": {
+        "text": "600",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#4F78A8"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-blob-box",
@@ -2183,7 +2792,15 @@
       "For Golf",
       "Tournaments"
     ],
-    "headlinePreview": "600 Funny Names For Golf Tournaments"
+    "headlinePreview": "600 Funny Names For Golf Tournaments",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-brush-rect",
@@ -2218,7 +2835,20 @@
       "Savings",
       "Strategies"
     ],
-    "headlinePreview": "13 Automating Savings Strategies"
+    "headlinePreview": "13 Automating Savings Strategies",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "square",
+        "bg": "#6F5BC9",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-staggered-labels",
@@ -2254,7 +2884,20 @@
       "Critical Mistakes",
       "that cost this couple everything"
     ],
-    "headlinePreview": "Van Life Insurance Disaster Critical Mistakes that cost this couple everything"
+    "headlinePreview": "Van Life Insurance Disaster Critical Mistakes that cost this couple everything",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "square",
+        "bg": "#6F5BC9",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-number-box-band",
@@ -2291,7 +2934,20 @@
       "With the Rise of",
       "AI"
     ],
-    "headlinePreview": "15 Jobs That Are in Danger With the Rise of AI"
+    "headlinePreview": "15 Jobs That Are in Danger With the Rise of AI",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "square",
+        "bg": "#6F5BC9",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-photo-dark-caption",
@@ -2328,7 +2984,20 @@
       "Just Get Another One",
       "Here’s why that’s wrong"
     ],
-    "headlinePreview": "I Lost My Dog and everyone said Just Get Another One Here’s why that’s wrong"
+    "headlinePreview": "I Lost My Dog and everyone said Just Get Another One Here’s why that’s wrong",
+    "visualConfig": {
+      "badge": {
+        "text": "3",
+        "shape": "circle",
+        "bg": "#B5532F",
+        "color": "#5B7FA6"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#173A14",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-blobs-corners",
@@ -2366,7 +3035,20 @@
       "Confidence",
       "in a new season"
     ],
-    "headlinePreview": "3 Zodiacs Gaining Confidence in a new season"
+    "headlinePreview": "3 Zodiacs Gaining Confidence in a new season",
+    "visualConfig": {
+      "badge": {
+        "text": "3",
+        "shape": "circle",
+        "bg": "#B5532F",
+        "color": "#5B7FA6"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#B5532F",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-red-bg-big-number",
@@ -2407,7 +3089,20 @@
       "for Skin & Hair",
       "(#2 is surprising)"
     ],
-    "headlinePreview": "8 Collagen Packed Foods for Skin & Hair (#2 is surprising)"
+    "headlinePreview": "8 Collagen Packed Foods for Skin & Hair (#2 is surprising)",
+    "visualConfig": {
+      "badge": {
+        "text": "3",
+        "shape": "circle",
+        "bg": "#E58B76",
+        "color": "#4F78A8"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "cv-badge-side-lines",
@@ -2446,7 +3141,20 @@
       "in",
       "Friendship"
     ],
-    "headlinePreview": "3 Zodiac Signs That Demand Loyalty in Friendship"
+    "headlinePreview": "3 Zodiac Signs That Demand Loyalty in Friendship",
+    "visualConfig": {
+      "badge": {
+        "text": "3",
+        "shape": "circle",
+        "bg": "#E58B76",
+        "color": "#4F78A8"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#E58B76",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-staggered-align",
@@ -2481,7 +3189,20 @@
       "Yards",
       "and Gardens"
     ],
-    "headlinePreview": "How to Prevent and Remove Gophers From Yards and Gardens"
+    "headlinePreview": "How to Prevent and Remove Gophers From Yards and Gardens",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#2F3A5E",
+        "color": "#D7F542"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#CFCFCF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-mosaic-circle",
@@ -2519,7 +3240,20 @@
       "Modern",
       "Designs"
     ],
-    "headlinePreview": "40 Stunning TV Unit Modern Designs"
+    "headlinePreview": "40 Stunning TV Unit Modern Designs",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#2F3A5E",
+        "color": "#D7F542"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#111111",
+      "accentColor": "#5B7FA6",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-mosaic-framed-card",
@@ -2555,7 +3289,20 @@
       "Bedroom",
       "Ideas"
     ],
-    "headlinePreview": "25 Coastal Bedroom Ideas"
+    "headlinePreview": "25 Coastal Bedroom Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#2F3A5E",
+        "color": "#D7F542"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#8FB4D9",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-vertical-column",
@@ -2593,7 +3340,15 @@
       "With lovely Pin designs",
       "like these!"
     ],
-    "headlinePreview": "Pinterest Marketing Is Simple! With lovely Pin designs like these!"
+    "headlinePreview": "Pinterest Marketing Is Simple! With lovely Pin designs like these!",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#A88A98",
+      "accentColor": "#F2B8C6",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-white-card-bottom",
@@ -2628,7 +3383,20 @@
       "Is Secretly",
       "Illegal"
     ],
-    "headlinePreview": "Cities Where Your Tiny Home Is Secretly Illegal"
+    "headlinePreview": "Cities Where Your Tiny Home Is Secretly Illegal",
+    "visualConfig": {
+      "badge": {
+        "text": "39",
+        "shape": "square",
+        "bg": "#3A1F2B",
+        "color": "#5B7FA6"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#A88A98",
+      "accentColor": "#7FAE5C",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-side-number-band",
@@ -2666,7 +3434,20 @@
       "Redesign Your",
       "Whole Bedroom"
     ],
-    "headlinePreview": "39 Dressing Table Ideas That Will Redesign Your Whole Bedroom"
+    "headlinePreview": "39 Dressing Table Ideas That Will Redesign Your Whole Bedroom",
+    "visualConfig": {
+      "badge": {
+        "text": "39",
+        "shape": "square",
+        "bg": "#3A1F2B",
+        "color": "#5B7FA6"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#A88A98",
+      "accentColor": "#A88A98",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-giant-ghost-number",
@@ -2705,7 +3486,15 @@
       "$100,000",
       "monthly"
     ],
-    "headlinePreview": "50 Side Hustle ideas that can make $100,000 monthly"
+    "headlinePreview": "50 Side Hustle ideas that can make $100,000 monthly",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#8FB4D9",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-polaroid",
@@ -2742,7 +3531,15 @@
       "You?",
       "Here’s how"
     ],
-    "headlinePreview": "Want Your Puppy to Love You? Here’s how"
+    "headlinePreview": "Want Your Puppy to Love You? Here’s how",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F7F5F0",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-tilted-script-label",
@@ -2781,7 +3578,20 @@
       "Ever Driven",
       "And why you should too"
     ],
-    "headlinePreview": "The Scariest Mountain Pass We Have Ever Driven And why you should too"
+    "headlinePreview": "The Scariest Mountain Pass We Have Ever Driven And why you should too",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "circle",
+        "bg": "#F6B04B",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F4F4F2",
+      "accentColor": "#4F6F9F",
+      "scriptWord": "Fun",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-green-pill-subtitle",
@@ -2816,7 +3626,20 @@
       "For medium to long hair",
       "pill"
     ],
-    "headlinePreview": "32 Stylish Girl Hairstyles For medium to long hair pill"
+    "headlinePreview": "32 Stylish Girl Hairstyles For medium to long hair pill",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "circle",
+        "bg": "#F6B04B",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F4F4F2",
+      "accentColor": "#66B15C",
+      "scriptWord": "Fun",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "cv-pp-huge-outlined-keyword",
@@ -2854,7 +3677,20 @@
       "Crafts",
       "For Teenagers"
     ],
-    "headlinePreview": "20 Fun Crafts For Teenagers"
+    "headlinePreview": "20 Fun Crafts For Teenagers",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "circle",
+        "bg": "#F6B04B",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F4F4F2",
+      "accentColor": "#111111",
+      "scriptWord": "Fun",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-pp-white-circle-outlined-caps",
@@ -2892,7 +3728,20 @@
       "Bebas Neue",
       "Hacks"
     ],
-    "headlinePreview": "15 Chic Bebas Neue Hacks"
+    "headlinePreview": "15 Chic Bebas Neue Hacks",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F4F4F2",
+      "accentColor": "#111111",
+      "scriptWord": "Chic",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-amber-band-orange-outline",
@@ -2929,7 +3778,20 @@
       "Indoor Plant",
       "Tips"
     ],
-    "headlinePreview": "15 Stylish Indoor Plant Tips"
+    "headlinePreview": "15 Stylish Indoor Plant Tips",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#F6B94F",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6B94F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Stylish",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-two-tone-line",
@@ -2967,7 +3829,20 @@
       "Fitness",
       "Solutions"
     ],
-    "headlinePreview": "15 Compact Home Bebas Neue Fitness Solutions"
+    "headlinePreview": "15 Compact Home Bebas Neue Fitness Solutions",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6B94F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Compact",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-pp-one-top-two-bottom",
@@ -3005,7 +3880,20 @@
       "Bebas Neue",
       "Centerpiece Ideas"
     ],
-    "headlinePreview": "30 Gorgeous Baby Breath Bebas Neue Centerpiece Ideas"
+    "headlinePreview": "30 Gorgeous Baby Breath Bebas Neue Centerpiece Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "30",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6B94F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Gorgeous",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-pp-outlined-number-white-band",
@@ -3042,7 +3930,20 @@
       "Bebas Neue",
       "Side Hustles"
     ],
-    "headlinePreview": "15 Simple Money Making Bebas Neue Side Hustles"
+    "headlinePreview": "15 Simple Money Making Bebas Neue Side Hustles",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Simple",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-pp-olive-band-outlined",
@@ -3079,7 +3980,15 @@
       "Vertical Garden",
       "Grocery List"
     ],
-    "headlinePreview": "Band edge 15 Creative Vertical Garden Grocery List"
+    "headlinePreview": "Band edge 15 Creative Vertical Garden Grocery List",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#5E6B2E",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-big-number-money",
@@ -3118,7 +4027,15 @@
       "$100,000",
       "monthly"
     ],
-    "headlinePreview": "50 Side Hustle ideas that can make Raleway $100,000 monthly"
+    "headlinePreview": "50 Side Hustle ideas that can make Raleway $100,000 monthly",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#7DA3C7",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-white-top-yellow",
@@ -3152,7 +4069,15 @@
       "How to Build",
       "Confidence"
     ],
-    "headlinePreview": "How to Build Confidence"
+    "headlinePreview": "How to Build Confidence",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#F7E23E",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-two-colour-outline-stack",
@@ -3189,7 +4114,15 @@
       "Could Fail",
       "Inspection"
     ],
-    "headlinePreview": "9 Ways Your DIY Tiny Home Could Fail Inspection"
+    "headlinePreview": "9 Ways Your DIY Tiny Home Could Fail Inspection",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-black-caps-white-ring",
@@ -3226,7 +4159,15 @@
       "Will Blow",
       "Your Minds"
     ],
-    "headlinePreview": "This Ultra Modern Tiny House Will Blow Your Minds"
+    "headlinePreview": "This Ultra Modern Tiny House Will Blow Your Minds",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#111111",
+      "accentColor": "#2A2A2A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-orange-caps-stack",
@@ -3264,7 +4205,20 @@
       "Your Plants",
       "Keep Dying"
     ],
-    "headlinePreview": "This Common Watering Habit Is Why All Your Plants Keep Dying"
+    "headlinePreview": "This Common Watering Habit Is Why All Your Plants Keep Dying",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#7DA3C7",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-rust-panel-six-grid",
@@ -3301,7 +4255,20 @@
       "Plumbing Nobody",
       "Warns You About"
     ],
-    "headlinePreview": "Panel The Devastating Truth About Tiny Home Plumbing Nobody Warns You About"
+    "headlinePreview": "Panel The Devastating Truth About Tiny Home Plumbing Nobody Warns You About",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#7DA3C7",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-orange-card-grid",
@@ -3341,7 +4308,20 @@
       "Outfit Ideas For",
       "Plus-Size"
     ],
-    "headlinePreview": "15 Stunning 80s Party Bebas Neue Outfit Ideas For Plus-Size"
+    "headlinePreview": "15 Stunning 80s Party Bebas Neue Outfit Ideas For Plus-Size",
+    "visualConfig": {
+      "badge": {
+        "text": "15",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#A89580",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Stunning",
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "cv-ov-caption-card-script",
@@ -3379,7 +4359,15 @@
       "And Why You Should Too",
       "Allura"
     ],
-    "headlinePreview": "The Scariest Mountain Pass We Have Ever Driven Note card And Why You Should Too Allura"
+    "headlinePreview": "The Scariest Mountain Pass We Have Ever Driven Note card And Why You Should Too Allura",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#A89580",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-taupe-band-purple",
@@ -3416,7 +4404,15 @@
       "Toddler Fun",
       "Activities"
     ],
-    "headlinePreview": "31 Screen-Free Toddler Fun Activities"
+    "headlinePreview": "31 Screen-Free Toddler Fun Activities",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#A89580",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-green-box-collage",
@@ -3454,7 +4450,15 @@
       "Christmas",
       "Decor Ideas"
     ],
-    "headlinePreview": "41 Farmhouse Allura Christmas Decor Ideas"
+    "headlinePreview": "41 Farmhouse Allura Christmas Decor Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#5E4B3C",
+      "accentColor": "#2A3A2A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-two-tone-why",
@@ -3495,7 +4499,15 @@
       "Behind 2025's",
       "Travel Price Crisis"
     ],
-    "headlinePreview": "Why 58% of Americans Can't Afford To Travel Anymore: The Shocking Math Behind 2025's Travel Price Crisis"
+    "headlinePreview": "Why 58% of Americans Can't Afford To Travel Anymore: The Shocking Math Behind 2025's Travel Price Crisis",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#5E4B3C",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-brown-panel-tab",
@@ -3531,7 +4543,15 @@
       "Ideas Everyone",
       "Gets Wrong"
     ],
-    "headlinePreview": "Tab 15 Tiny House Minimalist Decor Ideas Everyone Gets Wrong"
+    "headlinePreview": "Tab 15 Tiny House Minimalist Decor Ideas Everyone Gets Wrong",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#5E4B3C",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-script-red-mix",
@@ -3572,7 +4592,15 @@
       "Falling",
       "Apart"
     ],
-    "headlinePreview": "How To Say Goodbye to Your Pet Without Falling Apart"
+    "headlinePreview": "How To Say Goodbye to Your Pet Without Falling Apart",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-olive-mixed-case",
@@ -3611,7 +4639,15 @@
       "Retire In A Tiny",
       "House"
     ],
-    "headlinePreview": "13 Brutal Reasons Why You Should Retire In A Tiny House"
+    "headlinePreview": "13 Brutal Reasons Why You Should Retire In A Tiny House",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#3E4A5E",
+      "accentColor": "#2F2F6A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "cv-ov-mixed-sizes-blue",
@@ -3648,7 +4684,15 @@
       "For",
       "Here's the Fix"
     ],
-    "headlinePreview": "Your Dog Needs More Exercise Than You Have Time For Here's the Fix"
+    "headlinePreview": "Your Dog Needs More Exercise Than You Have Time For Here's the Fix",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#3E4A5E",
+      "accentColor": "#7DA3C7",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "cv-ov-slate-band-script",
@@ -3692,7 +4736,15 @@
       "10 Years Older",
       "Circle"
     ],
-    "headlinePreview": "12 Paint Allura Color Mistakes That're Making Your Home Look 10 Years Older Circle ellipse transparent Frame down Fade Inter"
+    "headlinePreview": "12 Paint Allura Color Mistakes That're Making Your Home Look 10 Years Older Circle ellipse transparent Frame down Fade Inter",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#3E4A5E",
+      "accentColor": "#5A4A5A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-min-cream-frame",
@@ -3729,7 +4781,15 @@
       "Decor Ideas",
       "For a calm, beautiful space"
     ],
-    "headlinePreview": "25 Cormorant Garamond Cozy Bedroom Decor Ideas For a calm, beautiful space"
+    "headlinePreview": "25 Cormorant Garamond Cozy Bedroom Decor Ideas For a calm, beautiful space",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#1C1C1C",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-min-left-editorial",
@@ -3764,7 +4824,15 @@
       "Room Ideas",
       "Simple ways to make it feel calm"
     ],
-    "headlinePreview": "25 Inter Minimalist Living Room Ideas Simple ways to make it feel calm"
+    "headlinePreview": "25 Inter Minimalist Living Room Ideas Simple ways to make it feel calm",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#777777",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-min-two-photos",
@@ -3802,7 +4870,20 @@
       "Ideas",
       "Effortless looks for every day"
     ],
-    "headlinePreview": "25 Spring Outfit Ideas Effortless looks for every day"
+    "headlinePreview": "25 Spring Outfit Ideas Effortless looks for every day",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#777777",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-min-white-card",
@@ -3839,7 +4920,20 @@
       "Decor Ideas",
       "To make your home feel finished"
     ],
-    "headlinePreview": "Card 25 Cormorant Garamond Decor Ideas To make your home feel finished"
+    "headlinePreview": "Card 25 Cormorant Garamond Decor Ideas To make your home feel finished",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#555555",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-min-airy-grid",
@@ -3876,7 +4970,20 @@
       "Ideas That Work",
       "Tidy, simple and beautiful"
     ],
-    "headlinePreview": "25 Inter Kitchen Organization Ideas That Work Tidy, simple and beautiful"
+    "headlinePreview": "25 Inter Kitchen Organization Ideas That Work Tidy, simple and beautiful",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#888888",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-min-black-gallery",
@@ -3913,7 +5020,15 @@
       "Cormorant Garamond",
       "Small rituals for a softer life"
     ],
-    "headlinePreview": "25 The Art of Slow Living Cormorant Garamond Small rituals for a softer life"
+    "headlinePreview": "25 The Art of Slow Living Cormorant Garamond Small rituals for a softer life",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-mag-cover",
@@ -3953,7 +5068,15 @@
       "You Need to Try",
       "The looks everyone is saving"
     ],
-    "headlinePreview": "up down Summer Bebas Neue Outfit Ideas 25 You Need to Try The looks everyone is saving"
+    "headlinePreview": "up down Summer Bebas Neue Outfit Ideas 25 You Need to Try The looks everyone is saving",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-mag-red-block",
@@ -3989,7 +5112,15 @@
       "Kitchen Hacks",
       "You'll Love"
     ],
-    "headlinePreview": "Colour block 25 Bebas Neue Kitchen Hacks You'll Love"
+    "headlinePreview": "Colour block 25 Bebas Neue Kitchen Hacks You'll Love",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "pm-mag-type-first",
@@ -4024,7 +5155,20 @@
       "Bold Bedroom",
       "Ideas"
     ],
-    "headlinePreview": "25 Bold Bedroom Ideas"
+    "headlinePreview": "25 Bold Bedroom Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#FFFFFF",
+        "color": "#1F3FBF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-mag-giant-number",
@@ -4064,7 +5208,20 @@
       "Worth Taking",
       "Save this for your next escape"
     ],
-    "headlinePreview": "Dim down 25 Bebas Neue Weekend Trips Worth Taking Save this for your next escape"
+    "headlinePreview": "Dim down 25 Bebas Neue Weekend Trips Worth Taking Save this for your next escape",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#FFFFFF",
+        "color": "#1F3FBF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-mag-cobalt-split",
@@ -4101,7 +5258,20 @@
       "That Change",
       "Everything"
     ],
-    "headlinePreview": "Colour block 25 pill Morning Habits That Change Everything"
+    "headlinePreview": "Colour block 25 pill Morning Habits That Change Everything",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#FFFFFF",
+        "color": "#1F3FBF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#C7D2FF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "pm-mag-dark-highlight",
@@ -4137,7 +5307,15 @@
       "Street Style",
       "Outfit Ideas"
     ],
-    "headlinePreview": "25 Bebas Neue Street Style Outfit Ideas"
+    "headlinePreview": "25 Bebas Neue Street Style Outfit Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "pm-lux-arch",
@@ -4175,7 +5353,15 @@
       "Decor Ideas",
       "Warm, calm and timeless"
     ],
-    "headlinePreview": "25 Cormorant Garamond Neutral Home Italiana Decor Ideas Warm, calm and timeless"
+    "headlinePreview": "25 Cormorant Garamond Neutral Home Italiana Decor Ideas Warm, calm and timeless",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#5B4636",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-lux-emerald-gold",
@@ -4213,7 +5399,15 @@
       "Room Ideas",
       "For unforgettable evenings"
     ],
-    "headlinePreview": "25 Cormorant Garamond Elegant Dining Italiana Room Ideas For unforgettable evenings"
+    "headlinePreview": "25 Cormorant Garamond Elegant Dining Italiana Room Ideas For unforgettable evenings",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F3E9D7",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-lux-serif-overlay",
@@ -4251,7 +5445,20 @@
       "Makeup Looks",
       "Effortless and elegant"
     ],
-    "headlinePreview": "down 25 Cormorant Garamond Soft Glam Makeup Looks Effortless and elegant"
+    "headlinePreview": "down 25 Cormorant Garamond Soft Glam Makeup Looks Effortless and elegant",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#F4EDE4",
+        "color": "#9C7B5F"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-lux-cream-trio",
@@ -4292,7 +5499,20 @@
       "Ideas",
       "Warm textures and soft light"
     ],
-    "headlinePreview": "25 Cormorant Garamond Cozy Allura Fall Living Room Ideas Warm textures and soft light"
+    "headlinePreview": "25 Cormorant Garamond Cozy Allura Fall Living Room Ideas Warm textures and soft light",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#F4EDE4",
+        "color": "#9C7B5F"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#3E3128",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "pm-lux-blush-grid",
@@ -4332,7 +5552,15 @@
       "Italiana",
       "Ideas"
     ],
-    "headlinePreview": "25 Cormorant Garamond Romantic Nail Italiana Ideas"
+    "headlinePreview": "25 Cormorant Garamond Romantic Nail Italiana Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#8E5A52",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "pm-lux-noir-gold",
@@ -4375,7 +5603,20 @@
       "See All the Ideas",
       "pill"
     ],
-    "headlinePreview": "25 Cormorant Garamond Timeless Wardrobe Italiana Essentials Pieces you will wear for years See All the Ideas pill"
+    "headlinePreview": "25 Cormorant Garamond Timeless Wardrobe Italiana Essentials Pieces you will wear for years See All the Ideas pill",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#D4B483",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ctr-keyword-band-4",
@@ -4415,7 +5656,20 @@
       "Ideas",
       "That look expensive"
     ],
-    "headlinePreview": "Cozy Bedroom Decor Ideas That look expensive"
+    "headlinePreview": "Cozy Bedroom Decor Ideas That look expensive",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "rounded",
+        "bg": "#E63946",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-top-panel-3photos",
@@ -4455,7 +5709,20 @@
       "For Busy Nights",
       "Ready in 30 minutes or less"
     ],
-    "headlinePreview": "25 rounded Easy Dinner Recipes For Busy Nights Ready in 30 minutes or less"
+    "headlinePreview": "25 rounded Easy Dinner Recipes For Busy Nights Ready in 30 minutes or less",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "rounded",
+        "bg": "#E63946",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFD23F",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ctr-yellow-band-6photos",
@@ -4493,7 +5760,20 @@
       "You Will Love",
       "On a budget"
     ],
-    "headlinePreview": "25 Small Balcony Ideas You Will Love On a budget"
+    "headlinePreview": "25 Small Balcony Ideas You Will Love On a budget",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFD23F"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#FFD23F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ctr-dark-band-yellow-number",
@@ -4531,7 +5811,20 @@
       "Haircuts",
       "For Fine Hair"
     ],
-    "headlinePreview": "25 Short Haircuts For Fine Hair"
+    "headlinePreview": "25 Short Haircuts For Fine Hair",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFD23F"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-photo-colour-box",
@@ -4570,7 +5863,15 @@
       "For Glowing Skin",
       "Simple steps for every day"
     ],
-    "headlinePreview": "Colour box 25 Simple Skincare Tips For Glowing Skin Simple steps for every day"
+    "headlinePreview": "Colour box 25 Simple Skincare Tips For Glowing Skin Simple steps for every day",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#D7F2F1",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-hook-underline",
@@ -4607,7 +5908,20 @@
       "Underline",
       "Without feeling broke"
     ],
-    "headlinePreview": "How to Save $500 a Month Underline Without feeling broke"
+    "headlinePreview": "How to Save $500 a Month Underline Without feeling broke",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#FFFFFF",
+        "color": "#F26B5B"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#F26B5B",
+      "accentColor": "#555555",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "ctr-coral-band-pill-number",
@@ -4644,7 +5958,20 @@
       "Nail Designs",
       "For Spring"
     ],
-    "headlinePreview": "25 pill Nail Designs For Spring"
+    "headlinePreview": "25 pill Nail Designs For Spring",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#FFFFFF",
+        "color": "#F26B5B"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#F26B5B",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-cream-panel-recipe",
@@ -4684,7 +6011,20 @@
       "For Work",
       "Quick, cheap and filling"
     ],
-    "headlinePreview": "25 pill Healthy Lunch Ideas For Work Quick, cheap and filling"
+    "headlinePreview": "25 pill Healthy Lunch Ideas For Work Quick, cheap and filling",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#2E7D4F",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#4B1F6F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "ctr-blue-top-strip",
@@ -4724,7 +6064,20 @@
       "For Small Spaces",
       "That actually work"
     ],
-    "headlinePreview": "Top strip 25 rounded Genius Storage Hacks For Small Spaces That actually work"
+    "headlinePreview": "Top strip 25 rounded Genius Storage Hacks For Small Spaces That actually work",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#1E56C8"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#4B1F6F",
+      "accentColor": "#D6E2FF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ctr-purple-band-two-photos",
@@ -4764,7 +6117,20 @@
       "For Women",
       "You'll want to copy"
     ],
-    "headlinePreview": "25 badge Number badge Fall Outfit Ideas For Women You'll want to copy"
+    "headlinePreview": "25 badge Number badge Fall Outfit Ideas For Women You'll want to copy",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#E0168C"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#4B1F6F",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-hair-magenta-band",
@@ -4802,7 +6168,20 @@
       "You'll Want to Try Before",
       "Your Next Salon Visit"
     ],
-    "headlinePreview": "20 Trendy Fall Hair Color Ideas You'll Want to Try Before Your Next Salon Visit"
+    "headlinePreview": "20 Trendy Fall Hair Color Ideas You'll Want to Try Before Your Next Salon Visit",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#E0168C"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-hair-white-boxes",
@@ -4842,7 +6221,20 @@
       "Trends 2026",
       "20"
     ],
-    "headlinePreview": "Biggest Balayage Hair Color Trends 2026 20"
+    "headlinePreview": "Biggest Balayage Hair Color Trends 2026 20",
+    "visualConfig": {
+      "badge": {
+        "text": "20",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F0165A",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-fp-pink-bar-script",
@@ -4877,7 +6269,15 @@
       "Combat Boot Outfits",
       "You Can't Get Around Right Now"
     ],
-    "headlinePreview": "Trendy Keyword bar Combat Boot Outfits You Can't Get Around Right Now"
+    "headlinePreview": "Trendy Keyword bar Combat Boot Outfits You Can't Get Around Right Now",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-fp-classy-red-script",
@@ -4912,7 +6312,15 @@
       "January",
       "Outfits"
     ],
-    "headlinePreview": "Classy January Outfits"
+    "headlinePreview": "Classy January Outfits",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-pink-number-5photos",
@@ -4947,7 +6355,15 @@
       "You'll Want to Copy",
       "All Season"
     ],
-    "headlinePreview": "Casual Winter Outfit Ideas You'll Want to Copy All Season"
+    "headlinePreview": "Casual Winter Outfit Ideas You'll Want to Copy All Season",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-fp-serif-boxes-pink",
@@ -4981,7 +6397,15 @@
       "Expensive",
       "On a Budget"
     ],
-    "headlinePreview": "15 Ways To Look Expensive On a Budget"
+    "headlinePreview": "15 Ways To Look Expensive On a Budget",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-fp-side-rules-6photos",
@@ -5014,7 +6438,15 @@
       "You'll Want to Copy Before",
       "The Cold Really Hits"
     ],
-    "headlinePreview": "20 Trendy Winter Outfit Ideas You'll Want to Copy Before The Cold Really Hits"
+    "headlinePreview": "20 Trendy Winter Outfit Ideas You'll Want to Copy Before The Cold Really Hits",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-old-money-band",
@@ -5048,7 +6480,15 @@
       "Outfits",
       "To Copy This Season"
     ],
-    "headlinePreview": "20 Timeless Style Old Money Outfits To Copy This Season"
+    "headlinePreview": "20 Timeless Style Old Money Outfits To Copy This Season",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-big-number-5photos",
@@ -5081,7 +6521,15 @@
       "Winter Outfits",
       "Everyone Will Be Copying This Season"
     ],
-    "headlinePreview": "Old Money Winter Outfits Everyone Will Be Copying This Season"
+    "headlinePreview": "Old Money Winter Outfits Everyone Will Be Copying This Season",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-recipe-red-script",
@@ -5119,7 +6567,15 @@
       "Thanksgiving",
       "Recipes to Try"
     ],
-    "headlinePreview": "Insanely Good Thanksgiving Recipes to Try"
+    "headlinePreview": "Insanely Good Thanksgiving Recipes to Try",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#D91E2E",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "ctr-fp-marker-outline-photo",
@@ -5153,7 +6609,15 @@
       "Easy Looks",
       "For Real Life"
     ],
-    "headlinePreview": "Easy Looks For Real Life"
+    "headlinePreview": "Easy Looks For Real Life",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#FBF8F3",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-pink-bar-brush",
@@ -5190,7 +6654,15 @@
       "Palazzo Pants",
       "Outfits"
     ],
-    "headlinePreview": "Chic Keyword bar Brown Palazzo Pants Outfits"
+    "headlinePreview": "Chic Keyword bar Brown Palazzo Pants Outfits",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#FBF8F3",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-glass-panel-mix",
@@ -5231,7 +6703,15 @@
       "You'll Want to Recreate",
       "Every Look"
     ],
-    "headlinePreview": "Panel So Chic Date Night Outfit Ideas You'll Want to Recreate Every Look"
+    "headlinePreview": "Panel So Chic Date Night Outfit Ideas You'll Want to Recreate Every Look",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "framed-card",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-fp-grid-red-brush",
@@ -5265,7 +6745,15 @@
       "Swoosh",
       "Street Style Outfits"
     ],
-    "headlinePreview": "Trendy Swoosh Street Style Outfits"
+    "headlinePreview": "Trendy Swoosh Street Style Outfits",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-grid-red-number",
@@ -5300,7 +6788,15 @@
       "Cold Winter",
       "Outfits"
     ],
-    "headlinePreview": "Stylish Cold Winter Outfits"
+    "headlinePreview": "Stylish Cold Winter Outfits",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "ctr-fp-black-boxes-left",
@@ -5335,7 +6831,15 @@
       "2026",
       "You'll Be Obsessed With!"
     ],
-    "headlinePreview": "+20 Amazing Winter Nails 2026 You'll Be Obsessed With!"
+    "headlinePreview": "+20 Amazing Winter Nails 2026 You'll Be Obsessed With!",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-fp-white-display-serif",
@@ -5369,7 +6873,15 @@
       "Storage",
       "Hacks"
     ],
-    "headlinePreview": "Small Bedroom Storage Hacks"
+    "headlinePreview": "Small Bedroom Storage Hacks",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ctr-fp-lowercase-serif-outline",
@@ -5409,7 +6921,15 @@
       "to hop on before",
       "everyone else"
     ],
-    "headlinePreview": "10 hottest winter 2026 fashion trends to hop on before everyone else"
+    "headlinePreview": "10 hottest winter 2026 fashion trends to hop on before everyone else",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "ctr-nails-white-band",
@@ -5443,7 +6963,20 @@
       "Halloween Nails",
       "For 2026"
     ],
-    "headlinePreview": "20+ Trendy Halloween Nails For 2026"
+    "headlinePreview": "20+ Trendy Halloween Nails For 2026",
+    "visualConfig": {
+      "badge": {
+        "text": "18+",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "band-split",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#D65A8C",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-serif-outline-question",
@@ -5478,7 +7011,20 @@
       "Price Guide and",
       "Ways to Save"
     ],
-    "headlinePreview": "How Much Does Balayage Cost? Price Guide and Ways to Save"
+    "headlinePreview": "How Much Does Balayage Cost? Price Guide and Ways to Save",
+    "visualConfig": {
+      "badge": {
+        "text": "18+",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-white-caps-hard-shadow",
@@ -5512,7 +7058,20 @@
       "Blonde",
       "Ideas"
     ],
-    "headlinePreview": "18+ Beige Blonde Ideas"
+    "headlinePreview": "18+ Beige Blonde Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "18+",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-serif-cream-overlay",
@@ -5548,7 +7107,20 @@
       "Haircuts",
       "2026"
     ],
-    "headlinePreview": "16 Fresh Short Choppy Haircuts 2026"
+    "headlinePreview": "16 Fresh Short Choppy Haircuts 2026",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F6F0D8",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-lowercase-sticker",
@@ -5585,7 +7157,15 @@
       "will be",
       "saving"
     ],
-    "headlinePreview": "20+ halloween nails everyone will be saving"
+    "headlinePreview": "20+ halloween nails everyone will be saving",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#D65A8C",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-grid-white-card-magenta",
@@ -5623,7 +7203,15 @@
       "Hair Ideas",
       "You Need to Try"
     ],
-    "headlinePreview": "Card 22+ Classiest Ever Jet Black Hair Ideas You Need to Try"
+    "headlinePreview": "Card 22+ Classiest Ever Jet Black Hair Ideas You Need to Try",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#F0165A",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ctr-four-white-boxes",
@@ -5666,7 +7254,20 @@
       "See All the Ideas",
       "pill"
     ],
-    "headlinePreview": "Trendiest Chocolate Brown Hair for Women Over 40 25 See All the Ideas pill"
+    "headlinePreview": "Trendiest Chocolate Brown Hair for Women Over 40 25 See All the Ideas pill",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-red-number-script",
@@ -5701,7 +7302,15 @@
       "Holiday Styles for Parties and Events",
       "Get the Ideas"
     ],
-    "headlinePreview": "Stunning Medium Hair Holiday Styles for Parties and Events Get the Ideas"
+    "headlinePreview": "Stunning Medium Hair Holiday Styles for Parties and Events Get the Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-pink-band-gorgeous",
@@ -5737,7 +7346,15 @@
       "You Need to See",
       "See All the Ideas"
     ],
-    "headlinePreview": "Gorgeous Keyword band Bob Cuts Ideas You Need to See See All the Ideas"
+    "headlinePreview": "Gorgeous Keyword band Bob Cuts Ideas You Need to See See All the Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-pink-circle-flattering",
@@ -5774,7 +7391,15 @@
       "Haircuts for Women Over 40 That Look Amazing",
       "See All the Ideas"
     ],
-    "headlinePreview": "Fun Flattering Haircuts for Women Over 40 That Look Amazing See All the Ideas"
+    "headlinePreview": "Fun Flattering Haircuts for Women Over 40 That Look Amazing See All the Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#000000",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-black-panel-yellow",
@@ -5810,7 +7435,15 @@
       "For Women Over 50 That Look Absolutely Modern",
       "View All the Looks"
     ],
-    "headlinePreview": "Short Hairstyles For Women Over 50 That Look Absolutely Modern View All the Looks"
+    "headlinePreview": "Short Hairstyles For Women Over 50 That Look Absolutely Modern View All the Looks",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-orange-circle-modern",
@@ -5849,7 +7482,15 @@
       "for Women Over 50 That Look Absolutely Stunning",
       "See the Looks"
     ],
-    "headlinePreview": "Modern Hairstyles for Women Over 50 That Look Absolutely Stunning See the Looks"
+    "headlinePreview": "Modern Hairstyles for Women Over 50 That Look Absolutely Stunning See the Looks",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFF8EE",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-pink-number-keyword",
@@ -5886,7 +7527,15 @@
       "for a Soft Rosy Glow",
       "Find Out Now"
     ],
-    "headlinePreview": "Strawberry Blonde Hair Ideas for a Soft Rosy Glow Find Out Now"
+    "headlinePreview": "Strawberry Blonde Hair Ideas for a Soft Rosy Glow Find Out Now",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-top-block-3photos",
@@ -5924,7 +7573,15 @@
       "For Long Layered Hair",
       "See All the Looks"
     ],
-    "headlinePreview": "Headline block Gorgeous Balayage Hair Color Ideas For Long Layered Hair See All the Looks"
+    "headlinePreview": "Headline block Gorgeous Balayage Hair Color Ideas For Long Layered Hair See All the Looks",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFE2C6",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-photo-bottom-card",
@@ -5964,7 +7621,15 @@
       "For Long Layered Hair",
       "Get the Ideas"
     ],
-    "headlinePreview": "Headline card band Stunning Balayage Hair Color Ideas For Long Layered Hair Get the Ideas"
+    "headlinePreview": "Headline card band Stunning Balayage Hair Color Ideas For Long Layered Hair Get the Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#555555",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-magazine-cover",
@@ -6004,7 +7669,15 @@
       "For Long Layered Hair",
       "See All the Looks"
     ],
-    "headlinePreview": "Dark fade Dreamy Balayage Hair Color Ideas For Long Layered Hair See All the Looks"
+    "headlinePreview": "Dark fade Dreamy Balayage Hair Color Ideas For Long Layered Hair See All the Looks",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-left-panel-2photos",
@@ -6047,7 +7720,15 @@
       "Get the Ideas",
       "pill"
     ],
-    "headlinePreview": "Headline panel Trendy Balayage Hair Color Ideas For Long Layered Hair Get the Ideas pill"
+    "headlinePreview": "Headline panel Trendy Balayage Hair Color Ideas For Long Layered Hair Get the Ideas pill",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-grid6-circle",
@@ -6088,7 +7769,15 @@
       "To Save Now",
       "See All the Ideas"
     ],
-    "headlinePreview": "Center circle band ellipse Pretty Balayage Hair Ideas To Save Now See All the Ideas"
+    "headlinePreview": "Center circle band ellipse Pretty Balayage Hair Ideas To Save Now See All the Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FBF3E6",
+      "accentColor": "#333333",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "lx-ribbon-band",
@@ -6133,7 +7822,20 @@
       "22",
       "ob-yellow-caps"
     ],
-    "headlinePreview": "Must-Try Balayage Hair Ideas For Long Layered Hair Get the Ideas Title 22 ob-yellow-caps Bold Outline — Yellow Keyword, Caps League Spartan white and warm-yellow capitals ob-lime-title Bold Outline — Lime Keyword, Title Case white and lime title-case words ob-pink-caps Bold Outline — Pink Keyword, Heavy Caps white and hot-pink heavy capitals ob-cyan-title Bold Outline — Cyan Keyword, Title Case white and bright-cyan title-case words ob-coral-block Bold Outline — Coral Keyword, Block Caps white and coral block capitals ob-gold-number Bold Outline — Gold Number & Keyword a gold number with white and gold capitals ob-fun-gold Bold Outline — Fun Rounded, Gold Luckiest Guy playful rounded white and gold capitals ob-candy-pink Bold Outline — Candy Pink, Soft Title Lilita One soft rounded white and pink words ob-tall-lime"
+    "headlinePreview": "Must-Try Balayage Hair Ideas For Long Layered Hair Get the Ideas Title 22 ob-yellow-caps Bold Outline — Yellow Keyword, Caps League Spartan white and warm-yellow capitals ob-lime-title Bold Outline — Lime Keyword, Title Case white and lime title-case words ob-pink-caps Bold Outline — Pink Keyword, Heavy Caps white and hot-pink heavy capitals ob-cyan-title Bold Outline — Cyan Keyword, Title Case white and bright-cyan title-case words ob-coral-block Bold Outline — Coral Keyword, Block Caps white and coral block capitals ob-gold-number Bold Outline — Gold Number & Keyword a gold number with white and gold capitals ob-fun-gold Bold Outline — Fun Rounded, Gold Luckiest Guy playful rounded white and gold capitals ob-candy-pink Bold Outline — Candy Pink, Soft Title Lilita One soft rounded white and pink words ob-tall-lime",
+    "visualConfig": {
+      "badge": {
+        "text": "22",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FBF3E6",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ob-lilac-round",
@@ -6177,7 +7879,20 @@
       "25",
       "20"
     ],
-    "headlinePreview": "pill black light split script-bold 25 20"
+    "headlinePreview": "pill black light split script-bold 25 20",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#000000",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "fav-teal-circle-gorgeous",
@@ -6202,7 +7917,15 @@
       "#0E3B3A"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Teal Circle, Script & Outlined Teal Keyword"
+    "headlinePreview": "Inspired — Teal Circle, Script & Outlined Teal Keyword",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-coral-circle-chic",
@@ -6227,7 +7950,15 @@
       "#4A1F12"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Coral Circle, Lobster Script & Outlined Coral Keyword"
+    "headlinePreview": "Inspired — Coral Circle, Lobster Script & Outlined Coral Keyword",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-purple-circle-dreamy",
@@ -6252,7 +7983,15 @@
       "#2B1647"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Purple Circle, Kaushan Script & Outlined Purple Keyword, 6 Photos"
+    "headlinePreview": "Inspired — Purple Circle, Kaushan Script & Outlined Purple Keyword, 6 Photos",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-gold-black-luxe",
@@ -6277,7 +8016,15 @@
       "#FFFFFF"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Black Panel, Gold Circle & Outlined Gold Keyword"
+    "headlinePreview": "Inspired — Black Panel, Gold Circle & Outlined Gold Keyword",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#000000",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-pink-circle-cute",
@@ -6301,7 +8048,15 @@
       "#FFFFFF"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Hot Pink Circle, Satisfy Script & Outlined Pink Keyword"
+    "headlinePreview": "Inspired — Hot Pink Circle, Satisfy Script & Outlined Pink Keyword",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-green-circle-cozy",
@@ -6332,7 +8087,15 @@
       "#B5653A"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Green Circle, Pacifico Script & Outlined Green Keyword, 5 Photos"
+    "headlinePreview": "Inspired — Green Circle, Pacifico Script & Outlined Green Keyword, 5 Photos",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "fav-edge-orange",
@@ -6358,7 +8121,15 @@
       "#F27A1A"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Big Orange Number over the Photo Edge"
+    "headlinePreview": "Inspired — Big Orange Number over the Photo Edge",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "fav-edge-teal",
@@ -6381,7 +8152,15 @@
       "#0FA3A3"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Big Teal Number over the Photo Edge, 4 Photos"
+    "headlinePreview": "Inspired — Big Teal Number over the Photo Edge, 4 Photos",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-edge-red-bar",
@@ -6404,7 +8183,15 @@
       "#E3262E"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Big Red Number, 6 Photos & Red Website Bar"
+    "headlinePreview": "Inspired — Big Red Number, 6 Photos & Red Website Bar",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-edge-purple-cream",
@@ -6427,7 +8214,15 @@
       "#7B3FC4"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Big Purple Number on a Cream Band"
+    "headlinePreview": "Inspired — Big Purple Number on a Cream Band",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-edge-gold-black",
@@ -6451,7 +8246,15 @@
       "#FFFFFF"
     ],
     "layerTexts": [],
-    "headlinePreview": "Inspired — Big Gold Number on a Black Band"
+    "headlinePreview": "Inspired — Big Gold Number on a Black Band",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "fav-edge-blue-bar",
@@ -6495,7 +8298,15 @@
       "Title line",
       "middle"
     ],
-    "headlinePreview": "Text box Gold outline transparent Box border badge Number Title line middle bar Footer Footer frame LuxeHairstyles.com pill 50 Bodoni Moda luxe-bixie-gold-steps Luxe Hair — Gold-Outlined Steps & Cream Footer Bixie Cut Inspirations for Women Ready to Try Something New luxe-bob-black-band Luxe Hair — Beige, White & Black Bands, Cream Footer"
+    "headlinePreview": "Text box Gold outline transparent Box border badge Number Title line middle bar Footer Footer frame LuxeHairstyles.com pill 50 Bodoni Moda luxe-bixie-gold-steps Luxe Hair — Gold-Outlined Steps & Cream Footer Bixie Cut Inspirations for Women Ready to Try Something New luxe-bob-black-band Luxe Hair — Beige, White & Black Bands, Cream Footer",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "sticker-outline",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#C9A45C",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "sb-black-yellow-bold",
@@ -6525,7 +8336,20 @@
       "#FFFFFF"
     ],
     "layerTexts": [],
-    "headlinePreview": "Script & Bar — Black Bar, Yellow Caps & Number"
+    "headlinePreview": "Script & Bar — Black Bar, Yellow Caps & Number",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "sticker-outline",
+      "bandColor": "#111111",
+      "accentColor": "#2F9E5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "viral-red-circle-mushroom",
@@ -6560,7 +8384,15 @@
       "You'll Love",
       "Easy looks to show your stylist"
     ],
-    "headlinePreview": "32 Chic Kaushan Script Mushroom Brown Hair Ideas You'll Love Easy looks to show your stylist"
+    "headlinePreview": "32 Chic Kaushan Script Mushroom Brown Hair Ideas You'll Love Easy looks to show your stylist",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#F2F2F0",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "viral-big-red-number-grid",
@@ -6594,7 +8426,15 @@
       "with bobs and pixies",
       "Get the ideas"
     ],
-    "headlinePreview": "Text panel 58 Gorgeous Short Holiday Hairstyles for women with bobs and pixies Get the ideas"
+    "headlinePreview": "Text panel 58 Gorgeous Short Holiday Hairstyles for women with bobs and pixies Get the ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "clean-overlay",
+      "bandColor": "#F3F2EF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "viral-orange-circle-modern",
@@ -6631,7 +8471,15 @@
       "for Women Over 50 That",
       "Look Absolutely Stunning"
     ],
-    "headlinePreview": "61 Modern Kaushan Script Hairstyles Lilita One for Women Over 50 That Look Absolutely Stunning"
+    "headlinePreview": "61 Modern Kaushan Script Hairstyles Lilita One for Women Over 50 That Look Absolutely Stunning",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "band-split",
+      "bandColor": "#F3F2EF",
+      "accentColor": "#F28A3C",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "viral-crimson-wall-decor",
@@ -6672,7 +8520,15 @@
       "middle",
       "Tap for all 25 ideas →"
     ],
-    "headlinePreview": "25 Renter Friendly Fall Wall Decor Ideas Everyone Is Pinning Ideas You'll Want To Save middle Tap for all 25 ideas →"
+    "headlinePreview": "25 Renter Friendly Fall Wall Decor Ideas Everyone Is Pinning Ideas You'll Want To Save middle Tap for all 25 ideas →",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "viral-maroon-bar-dreamy",
@@ -6713,7 +8569,15 @@
       "Married Couples Stuck in a Routine",
       "Click for more →"
     ],
-    "headlinePreview": "25 Dreamy Keyword bar Date Ideas For Bebas Neue Married Couples Stuck in a Routine Click for more →"
+    "headlinePreview": "25 Dreamy Keyword bar Date Ideas For Bebas Neue Married Couples Stuck in a Routine Click for more →",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "viral-pink-bar-romantic",
@@ -6756,7 +8620,20 @@
       "Bebas Neue",
       "For a Cozy Date Night"
     ],
-    "headlinePreview": "20 Fredoka Romantic Kaushan Script Keyword bar Indoor Picnic Ideas Bebas Neue For a Cozy Date Night Tap for all 20 ideas » Ornament line"
+    "headlinePreview": "20 Fredoka Romantic Kaushan Script Keyword bar Indoor Picnic Ideas Bebas Neue For a Cozy Date Night Tap for all 20 ideas » Ornament line",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#C9A27E",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "ps-patio-tan-script",
@@ -6795,7 +8672,20 @@
       "Decorating",
       "Ideas to Copy"
     ],
-    "headlinePreview": "16 Decorating Ideas to Copy"
+    "headlinePreview": "16 Decorating Ideas to Copy",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#C9A27E",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-apartment-big-caps",
@@ -6833,7 +8723,20 @@
       "Apartment",
       "Patios to Maximize Space"
     ],
-    "headlinePreview": "19 rounded Small Apartment Patios to Maximize Space"
+    "headlinePreview": "19 rounded Small Apartment Patios to Maximize Space",
+    "visualConfig": {
+      "badge": {
+        "text": "19",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#CFC8BF",
+      "scriptWord": "best!",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-clever-olive",
@@ -6868,7 +8771,20 @@
       "Cool Ideas For",
       "Small Patios"
     ],
-    "headlinePreview": "21 Clever Cool Ideas For Small Patios"
+    "headlinePreview": "21 Clever Cool Ideas For Small Patios",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "circle",
+        "bg": "#6E7F3A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "best!",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-balcony-maroon-best",
@@ -6906,7 +8822,20 @@
       "Small",
       "Decor Ideas"
     ],
-    "headlinePreview": "28 best! Small Decor Ideas"
+    "headlinePreview": "28 best! Small Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "circle",
+        "bg": "#8E2A2A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": "best!",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-balcony-slate-stunning",
@@ -6944,7 +8873,20 @@
       "Stunning",
       "Decor Ideas"
     ],
-    "headlinePreview": "28 Stunning Decor Ideas"
+    "headlinePreview": "28 Stunning Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#2B1E16"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#111111",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-bohemian-maroon-ribbon",
@@ -6982,7 +8924,20 @@
       "Ribbon",
       "Balcony Ideas"
     ],
-    "headlinePreview": "24 Charming Bohemian Ribbon Balcony Ideas"
+    "headlinePreview": "24 Charming Bohemian Ribbon Balcony Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "24",
+        "shape": "circle",
+        "bg": "#2E2420",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#6B2A2E",
+      "scriptWord": "Best!",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-dark-band-best",
@@ -7021,7 +8976,20 @@
       "Bohemian",
       "Decor Ideas"
     ],
-    "headlinePreview": "24 rounded Best! Bohemian Decor Ideas"
+    "headlinePreview": "24 rounded Best! Bohemian Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "24",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#252A29",
+      "accentColor": "#111111",
+      "scriptWord": "Best!",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-minimalist-black",
@@ -7057,7 +9025,20 @@
       "Minimalist",
       "Decor Ideas"
     ],
-    "headlinePreview": "32 Minimalist Decor Ideas"
+    "headlinePreview": "32 Minimalist Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Minimalist",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-fall-rust-panel",
@@ -7098,7 +9079,20 @@
       "Fall Room",
       "Decor Ideas"
     ],
-    "headlinePreview": "Cream panel 40 New Fall Room Decor Ideas"
+    "headlinePreview": "Cream panel 40 New Fall Room Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "40",
+        "shape": "circle",
+        "bg": "#A23E1A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6F1E7",
+      "accentColor": "#A23E1A",
+      "scriptWord": "New",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-mirrors-olive-panel",
@@ -7142,7 +9136,20 @@
       "That make rooms",
       "Look Bigger"
     ],
-    "headlinePreview": "30 Best Allura Mirrors For Small Spaces That make rooms Look Bigger"
+    "headlinePreview": "30 Best Allura Mirrors For Small Spaces That make rooms Look Bigger",
+    "visualConfig": {
+      "badge": {
+        "text": "30",
+        "shape": "circle",
+        "bg": "#5E6B3A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F6F1E7",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Best",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-sticker-pink",
@@ -7179,7 +9186,20 @@
       "Small",
       "Ideas"
     ],
-    "headlinePreview": "28 Small Ideas"
+    "headlinePreview": "28 Small Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#111111",
+      "accentColor": "#6F8F7E",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-sticker-black-outline",
@@ -7215,7 +9235,20 @@
       "Bohemian",
       "Balcony Ideas"
     ],
-    "headlinePreview": "24 Genius Bohemian Balcony Ideas"
+    "headlinePreview": "24 Genius Bohemian Balcony Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "24",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "ps-hair-serif-stack",
@@ -7250,7 +9283,20 @@
       "Ideas",
       "Footer panel"
     ],
-    "headlinePreview": "28 Makeover Ideas Footer panel"
+    "headlinePreview": "28 Makeover Ideas Footer panel",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ps-hair-brown-ribbons",
@@ -7289,7 +9335,20 @@
       "to Take to Your",
       "Next Salon Appointment"
     ],
-    "headlinePreview": "50 Lob Haircut Ideas to Take to Your Next Salon Appointment"
+    "headlinePreview": "50 Lob Haircut Ideas to Take to Your Next Salon Appointment",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#7B4A21",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ps-hair-italic-mix",
@@ -7327,7 +9386,20 @@
       "Effortlessly Cool",
       "Footer panel"
     ],
-    "headlinePreview": "50 Short Shag Haircut Ideas That Are Effortlessly Cool Footer panel"
+    "headlinePreview": "50 Short Shag Haircut Ideas That Are Effortlessly Cool Footer panel",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#F3E7DA",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ps-hair-trendy-lines",
@@ -7364,7 +9436,20 @@
       "Ideas",
       "For every woman"
     ],
-    "headlinePreview": "50 Trendy Short Hairstyles Ideas For every woman"
+    "headlinePreview": "50 Trendy Short Hairstyles Ideas For every woman",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "ps-hair-pink-bronde",
@@ -7398,7 +9483,20 @@
       "Bronde",
       "Hair Color Ideas"
     ],
-    "headlinePreview": "52 Perfect Bronde Hair Color Ideas"
+    "headlinePreview": "52 Perfect Bronde Hair Color Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "52",
+        "shape": "circle",
+        "bg": "#E85BA8",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Chic",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "tr-fashion-capsule-arch",
@@ -7434,7 +9532,20 @@
       "Chic",
       "Capsule Wardrobe Essentials"
     ],
-    "headlinePreview": "FASHION & STYLE EDIT Chic Capsule Wardrobe Essentials"
+    "headlinePreview": "FASHION & STYLE EDIT Chic Capsule Wardrobe Essentials",
+    "visualConfig": {
+      "badge": {
+        "text": "15 MIN",
+        "shape": "pill",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "framed-card",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#BE123C",
+      "scriptWord": "Chic",
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "tr-recipe-dinner-steps",
@@ -7474,7 +9585,20 @@
       "CTA button",
       "GET THE RECIPE →"
     ],
-    "headlinePreview": "Header banner 15 MIN pill Easy Garlic Butter Pasta CTA background CTA button GET THE RECIPE →"
+    "headlinePreview": "Header banner 15 MIN pill Easy Garlic Butter Pasta CTA background CTA button GET THE RECIPE →",
+    "visualConfig": {
+      "badge": {
+        "text": "15 MIN",
+        "shape": "pill",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#0F172A",
+      "scriptWord": "Easy",
+      "photoTheme": "food"
+    }
   },
   {
     "id": "tr-wellness-glow-habits",
@@ -7516,7 +9640,20 @@
       "Simple steps that make a big difference",
       "Plus Jakarta Sans"
     ],
-    "headlinePreview": "Card bg 7 Aesthetic Daily Morning Habits for Radiant Skin Subtitle Simple steps that make a big difference Plus Jakarta Sans"
+    "headlinePreview": "Card bg 7 Aesthetic Daily Morning Habits for Radiant Skin Subtitle Simple steps that make a big difference Plus Jakarta Sans",
+    "visualConfig": {
+      "badge": {
+        "text": "7",
+        "shape": "circle",
+        "bg": "#BE123C",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#0F172A",
+      "accentColor": "#BE123C",
+      "scriptWord": "Aesthetic",
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "tr-travel-destinations-band",
@@ -7559,7 +9696,20 @@
       "THE ULTIMATE 2026 TRAVEL GUIDE",
       "Plus Jakarta Sans"
     ],
-    "headlinePreview": "Obsidian band 12 rounded Dreamy Bucket List Places to Visit Subtitle THE ULTIMATE 2026 TRAVEL GUIDE Plus Jakarta Sans"
+    "headlinePreview": "Obsidian band 12 rounded Dreamy Bucket List Places to Visit Subtitle THE ULTIMATE 2026 TRAVEL GUIDE Plus Jakarta Sans",
+    "visualConfig": {
+      "badge": {
+        "text": "12",
+        "shape": "rounded",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#0F172A",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Dreamy",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "tr-home-decor-floating-card",
@@ -7601,7 +9751,20 @@
       "Warm, Minimalist & Budget-Friendly",
       "Plus Jakarta Sans"
     ],
-    "headlinePreview": "Floating Card 25 Cozy Living Room Decor Ideas Subtitle Warm, Minimalist & Budget-Friendly Plus Jakarta Sans"
+    "headlinePreview": "Floating Card 25 Cozy Living Room Decor Ideas Subtitle Warm, Minimalist & Budget-Friendly Plus Jakarta Sans",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#0F172A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#B45309",
+      "scriptWord": "Cozy",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "tr-mindset-glow-quote",
@@ -7638,7 +9801,20 @@
       "rgba(255,255,255,0.3)",
       "DAILY MOTIVATION & SELF CARE"
     ],
-    "headlinePreview": "Dark overlay Quote mark “ Small daily habits create massive lifelong changes. rgba(255,255,255,0.3) DAILY MOTIVATION & SELF CARE"
+    "headlinePreview": "Dark overlay Quote mark “ Small daily habits create massive lifelong changes. rgba(255,255,255,0.3) DAILY MOTIVATION & SELF CARE",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "m1-lob-pink-blocks",
@@ -7673,7 +9849,20 @@
       "Lob Haircut",
       "Ideas"
     ],
-    "headlinePreview": "50 Lob Haircut Ideas"
+    "headlinePreview": "50 Lob Haircut Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#FF5C8D",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "m2-lob-subtitle-band",
@@ -7713,7 +9902,20 @@
       "Subtitle",
       "To take to your next salon appointment"
     ],
-    "headlinePreview": "50 Lob Haircut Ideas Subtitle To take to your next salon appointment"
+    "headlinePreview": "50 Lob Haircut Ideas Subtitle To take to your next salon appointment",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "circle",
+        "bg": "#FF5C8D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FBF4EA",
+      "accentColor": "#FF5C8D",
+      "scriptWord": "Stunning",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "m3-balcony-stunning",
@@ -7755,7 +9957,20 @@
       "Allura",
       "Decor Ideas"
     ],
-    "headlinePreview": "28 Stunning Allura Decor Ideas"
+    "headlinePreview": "28 Stunning Allura Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "circle",
+        "bg": "#3F5A2A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FBF4EA",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f1-center-white-badge",
@@ -7789,7 +10004,20 @@
       "28",
       "Hair Makeover Ideas"
     ],
-    "headlinePreview": "28 Hair Makeover Ideas"
+    "headlinePreview": "28 Hair Makeover Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "28",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Cozy",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f1-center-cream-script",
@@ -7821,7 +10049,20 @@
       "Cozy",
       "Fall Room Decor Ideas"
     ],
-    "headlinePreview": "Cozy Fall Room Decor Ideas"
+    "headlinePreview": "Cozy Fall Room Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "40",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F3EBDD",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Cozy",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f1-center-dark",
@@ -7854,7 +10095,20 @@
       "Short Haircuts for Women",
       "Bebas Neue"
     ],
-    "headlinePreview": "40 Short Haircuts for Women Bebas Neue"
+    "headlinePreview": "40 Short Haircuts for Women Bebas Neue",
+    "visualConfig": {
+      "badge": {
+        "text": "40",
+        "shape": "square",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f2-balcony-white",
@@ -7887,7 +10141,20 @@
       "24",
       "Charming Bohemian Balcony Ideas"
     ],
-    "headlinePreview": "24 Charming Bohemian Balcony Ideas"
+    "headlinePreview": "24 Charming Bohemian Balcony Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "24",
+        "shape": "circle",
+        "bg": "#B5651D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f2-patio-script",
@@ -7922,7 +10189,20 @@
       "Allura",
       "Patio Decor Ideas"
     ],
-    "headlinePreview": "Stunning Allura Patio Decor Ideas"
+    "headlinePreview": "Stunning Allura Patio Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#F6F1EB",
+      "accentColor": "#2E2420",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f2-distressed-dark",
@@ -7954,7 +10234,20 @@
     "layerTexts": [
       "40 New Fall Room Decor Ideas"
     ],
-    "headlinePreview": "40 New Fall Room Decor Ideas"
+    "headlinePreview": "40 New Fall Room Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#1F1A17",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Modern",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f3-editorial-white-blocks",
@@ -7988,7 +10281,20 @@
       "Haircut",
       "Ideas"
     ],
-    "headlinePreview": "50 Lob Haircut Ideas"
+    "headlinePreview": "50 Lob Haircut Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Modern",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f3-editorial-black-blocks",
@@ -8021,7 +10327,20 @@
       "Chic Lob",
       "Haircuts"
     ],
-    "headlinePreview": "30 Chic Lob Haircuts"
+    "headlinePreview": "30 Chic Lob Haircuts",
+    "visualConfig": {
+      "badge": {
+        "text": "30",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Modern",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f3-editorial-script-box",
@@ -8053,7 +10372,20 @@
       "Modern",
       "Living Room Ideas"
     ],
-    "headlinePreview": "Title box Modern Living Room Ideas"
+    "headlinePreview": "Title box Modern Living Room Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#2E2420",
+        "color": "#F6F1EB"
+      },
+      "blockStyle": "black-boxes",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Modern",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f3-fashion-hero-left",
@@ -8084,7 +10416,20 @@
       "Fall",
       "Outfit Ideas"
     ],
-    "headlinePreview": "Fall Outfit Ideas"
+    "headlinePreview": "Fall Outfit Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#2E2420",
+        "color": "#F6F1EB"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "fashion"
+    }
   },
   {
     "id": "f4-text-first-number",
@@ -8117,7 +10462,20 @@
       "32",
       "Minimalist Balcony Decor Ideas"
     ],
-    "headlinePreview": "32 Minimalist Balcony Decor Ideas"
+    "headlinePreview": "32 Minimalist Balcony Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#2E2420",
+        "color": "#F6F1EB"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Perfect",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f4-badge-grid",
@@ -8149,7 +10507,20 @@
       "25",
       "Braided Hairstyles for Long Hair"
     ],
-    "headlinePreview": "25 Braided Hairstyles for Long Hair"
+    "headlinePreview": "25 Braided Hairstyles for Long Hair",
+    "visualConfig": {
+      "badge": {
+        "text": "25",
+        "shape": "circle",
+        "bg": "#C7797D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Perfect",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f4-badge-on-image",
@@ -8182,7 +10553,20 @@
       "rounded",
       "Cozy Living Room Ideas"
     ],
-    "headlinePreview": "19 rounded Cozy Living Room Ideas"
+    "headlinePreview": "19 rounded Cozy Living Room Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "19",
+        "shape": "rounded",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Perfect",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f5-script-bold-white-band",
@@ -8217,7 +10601,20 @@
       "Perfect",
       "Bronde Hair Color Ideas"
     ],
-    "headlinePreview": "Text band 52 Perfect Bronde Hair Color Ideas"
+    "headlinePreview": "Text band 52 Perfect Bronde Hair Color Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "52",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#8B5A3C",
+      "scriptWord": "Perfect",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f5-script-bold-two-image",
@@ -8249,7 +10646,20 @@
       "Best",
       "Balcony Decor Ideas"
     ],
-    "headlinePreview": "Best Balcony Decor Ideas"
+    "headlinePreview": "Best Balcony Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "circle",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Best",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f6-dark-overlay-center",
@@ -8282,7 +10692,20 @@
       "The ultimate guide",
       "Fall Outfit Ideas"
     ],
-    "headlinePreview": "Dark overlay The ultimate guide Fall Outfit Ideas"
+    "headlinePreview": "Dark overlay The ultimate guide Fall Outfit Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "circle",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f6-white-box-badge",
@@ -8315,7 +10738,20 @@
       "Spring Nail Designs to Copy",
       "21"
     ],
-    "headlinePreview": "Spring Nail Designs to Copy 21"
+    "headlinePreview": "Spring Nail Designs to Copy 21",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "circle",
+        "bg": "#E60023",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "f6-magazine",
@@ -8351,7 +10787,15 @@
       "Effortless Spring Capsule Wardrobe",
       "bottom"
     ],
-    "headlinePreview": "Bottom shade Masthead STYLE EDIT Italiana Effortless Spring Capsule Wardrobe bottom"
+    "headlinePreview": "Bottom shade Masthead STYLE EDIT Italiana Effortless Spring Capsule Wardrobe bottom",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   },
   {
     "id": "f7-bottom-panel",
@@ -8385,7 +10829,15 @@
       "Easy Lemon Garlic Pasta",
       "Get the recipe"
     ],
-    "headlinePreview": "Easy Lemon Garlic Pasta Get the recipe"
+    "headlinePreview": "Easy Lemon Garlic Pasta Get the recipe",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#FFFFFF",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "f7-minimal-rounded",
@@ -8417,7 +10869,15 @@
       "Lora",
       "top"
     ],
-    "headlinePreview": "Home inspiration Small Bedroom Ideas That Feel Bigger Lora top"
+    "headlinePreview": "Home inspiration Small Bedroom Ideas That Feel Bigger Lora top",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f7-center-panel",
@@ -8447,7 +10907,20 @@
     "layerTexts": [
       "How to Style a Small Patio"
     ],
-    "headlinePreview": "How to Style a Small Patio"
+    "headlinePreview": "How to Style a Small Patio",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f7-relationship-quote",
@@ -8484,7 +10957,20 @@
       "Cormorant Garamond",
       "Relationship advice"
     ],
-    "headlinePreview": "Quote mark “ Little Things That Keep Love Strong Cormorant Garamond Relationship advice"
+    "headlinePreview": "Quote mark “ Little Things That Keep Love Strong Cormorant Garamond Relationship advice",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F9E5E5",
+      "accentColor": "#3B2A2A",
+      "scriptWord": "Glowy",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "f7-quote-text-only",
@@ -8518,7 +11004,20 @@
       "Love is a choice you make every single day",
       "Cormorant Garamond"
     ],
-    "headlinePreview": "Quote mark “ Love is a choice you make every single day Cormorant Garamond"
+    "headlinePreview": "Quote mark “ Love is a choice you make every single day Cormorant Garamond",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F9E5E5",
+      "accentColor": "#F6F1EB",
+      "scriptWord": "Glowy",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "f8-hair-two-image",
@@ -8549,7 +11048,20 @@
       "Curtain Bangs",
       "Hairstyles"
     ],
-    "headlinePreview": "16 Curtain Bangs Hairstyles"
+    "headlinePreview": "16 Curtain Bangs Hairstyles",
+    "visualConfig": {
+      "badge": {
+        "text": "16",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F9E5E5",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Glowy",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f8-beauty-band",
@@ -8584,7 +11096,20 @@
       "Glowy",
       "Makeup Looks to Try"
     ],
-    "headlinePreview": "21 pill Glowy Makeup Looks to Try"
+    "headlinePreview": "21 pill Glowy Makeup Looks to Try",
+    "visualConfig": {
+      "badge": {
+        "text": "21",
+        "shape": "pill",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#F9E5E5",
+      "accentColor": "#FFFFFF",
+      "scriptWord": "Glowy",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f8-beauty-split",
@@ -8616,7 +11141,20 @@
       "Soft Glam Makeup Ideas",
       "Bebas Neue"
     ],
-    "headlinePreview": "Soft Glam Makeup Ideas Bebas Neue"
+    "headlinePreview": "Soft Glam Makeup Ideas Bebas Neue",
+    "visualConfig": {
+      "badge": {
+        "text": "35",
+        "shape": "circle",
+        "bg": "#B5651D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "clean-overlay",
+      "bandColor": "#344E41",
+      "accentColor": "#E8B4B8",
+      "scriptWord": null,
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "f9-decor-hero4-band",
@@ -8649,7 +11187,20 @@
       "Fall Living Room Decor",
       "35"
     ],
-    "headlinePreview": "Fall Living Room Decor 35"
+    "headlinePreview": "Fall Living Room Decor 35",
+    "visualConfig": {
+      "badge": {
+        "text": "35",
+        "shape": "circle",
+        "bg": "#B5651D",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#344E41",
+      "accentColor": "#B5651D",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f9-decor-offset",
@@ -8680,7 +11231,20 @@
     "layerTexts": [
       "Neutral Living Room Decor Ideas"
     ],
-    "headlinePreview": "Neutral Living Room Decor Ideas"
+    "headlinePreview": "Neutral Living Room Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#344E41"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#344E41",
+      "accentColor": "#8B6F5A",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "f9-patio-band-23",
@@ -8712,7 +11276,20 @@
       "32",
       "Small Patio Decor Ideas"
     ],
-    "headlinePreview": "32 Small Patio Decor Ideas"
+    "headlinePreview": "32 Small Patio Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#FFFFFF",
+        "color": "#344E41"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#344E41",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "x-recipe-card",
@@ -8741,7 +11318,20 @@
       "Easy recipe",
       "One-Pot Creamy Tuscan Chicken"
     ],
-    "headlinePreview": "Easy recipe One-Pot Creamy Tuscan Chicken"
+    "headlinePreview": "Easy recipe One-Pot Creamy Tuscan Chicken",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "food"
+    }
   },
   {
     "id": "x-how-to-steps",
@@ -8771,7 +11361,20 @@
       "Step by step",
       "How to Make Cold Brew at Home"
     ],
-    "headlinePreview": "Step by step How to Make Cold Brew at Home"
+    "headlinePreview": "Step by step How to Make Cold Brew at Home",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "food"
+    }
   },
   {
     "id": "f10-blank",
@@ -8796,7 +11399,20 @@
       "#FFFFFF"
     ],
     "layerTexts": [],
-    "headlinePreview": "Blank Editorial Canvas"
+    "headlinePreview": "Blank Editorial Canvas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "script-accent",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "blog-736-four-editorial",
@@ -8830,7 +11446,20 @@
       "Haircut",
       "Ideas"
     ],
-    "headlinePreview": "50 Lob Haircut Ideas"
+    "headlinePreview": "50 Lob Haircut Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "hair"
+    }
   },
   {
     "id": "blog-736-center-band",
@@ -8863,7 +11492,20 @@
       "24",
       "Cozy Bedroom Decor Ideas"
     ],
-    "headlinePreview": "24 Cozy Bedroom Decor Ideas"
+    "headlinePreview": "24 Cozy Bedroom Decor Ideas",
+    "visualConfig": {
+      "badge": {
+        "text": "24",
+        "shape": "circle",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "homedecor"
+    }
   },
   {
     "id": "blog-736-five-band",
@@ -8895,7 +11537,15 @@
       "Stunning",
       "Balcony Decor Ideas"
     ],
-    "headlinePreview": "Stunning Balcony Decor Ideas"
+    "headlinePreview": "Stunning Balcony Decor Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": "Stunning",
+      "photoTheme": "outdoor"
+    }
   },
   {
     "id": "blog-736-single-panel",
@@ -8926,7 +11576,15 @@
     "layerTexts": [
       "Easy Weeknight Dinner Ideas"
     ],
-    "headlinePreview": "Easy Weeknight Dinner Ideas"
+    "headlinePreview": "Easy Weeknight Dinner Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#111111",
+      "accentColor": "#D9D9D9",
+      "scriptWord": null,
+      "photoTheme": "lifestyle"
+    }
   },
   {
     "id": "blog-736-text-overlay",
@@ -8961,6 +11619,14 @@
       "Get the Full List",
       "Try This Look"
     ],
-    "headlinePreview": "Spring Nail Designs to Copy f10-blank See All the Looks Find Your Next Cut Show Your Stylist Save These Looks Get the Full List Try This Look Screenshot for Your Stylist Find Your Perfect Look See Which Suits You Steal These Looks Tap to See Every Look Pick Your Favorite Save for Your Salon Visit Get Salon-Ready Your Next Look Is Here See Them All Book-Worthy Looks Inside Find Your Shade Get the Hair Inspo See Every Style Get Your Dream Hair Save Your Favorites See All the Ideas Get the Look Save for Your Next Project Steal These Ideas Shop the Look See the Full Room Tour Get the Decor Ideas Copy This Look Transform Your Space See Every Room Save for Your Makeover Find Your Style Get Inspired Now See the Before & After Shop Every Piece See All Outfits Get the Outfit Ideas Save for Later Copy These Outfits See What to Wear Steal the Look Save for Your Next Trip Get the Recipe Save This Recipe Cook It Tonight See All Recipes Make It Tonight Get the Easy Recipe Save for Dinner See the Steps Try It This Week Get All the Recipes Try It Today Show Your Nail Tech See Every Look Get the Tutorial Save for Your Next Appointment Read the Guide Learn How Get the Steps See the Tutorial Start Today Get the Free Guide Learn the Trick See How It's Done Save the Steps Read More See All Ideas Tap for More Click for More Get Inspired Read the Post Tap to Read See the Full Post Keep Reading Save This Pin See the List Get the Details Discover More Don't Miss These Find Out Now Start Here Learn More See Why Get the Ideas Open the Full List See More Ideas Save It for Later Read the Full Guide Tap to See More See the Best Ones Find Your Favorite Get the List Click to See All Explore the Ideas See Every Idea Pin It for Later See What Works Get the Full Story Read It Now Try These Today Get Started Take a Look See the Collection Save for Inspiration See How Get the Inspiration Read the Tips Click to Read See the Ideas Get the Guide Find Out More → ➜ » › ⟶ Looks Ideas"
+    "headlinePreview": "Spring Nail Designs to Copy f10-blank See All the Looks Find Your Next Cut Show Your Stylist Save These Looks Get the Full List Try This Look Screenshot for Your Stylist Find Your Perfect Look See Which Suits You Steal These Looks Tap to See Every Look Pick Your Favorite Save for Your Salon Visit Get Salon-Ready Your Next Look Is Here See Them All Book-Worthy Looks Inside Find Your Shade Get the Hair Inspo See Every Style Get Your Dream Hair Save Your Favorites See All the Ideas Get the Look Save for Your Next Project Steal These Ideas Shop the Look See the Full Room Tour Get the Decor Ideas Copy This Look Transform Your Space See Every Room Save for Your Makeover Find Your Style Get Inspired Now See the Before & After Shop Every Piece See All Outfits Get the Outfit Ideas Save for Later Copy These Outfits See What to Wear Steal the Look Save for Your Next Trip Get the Recipe Save This Recipe Cook It Tonight See All Recipes Make It Tonight Get the Easy Recipe Save for Dinner See the Steps Try It This Week Get All the Recipes Try It Today Show Your Nail Tech See Every Look Get the Tutorial Save for Your Next Appointment Read the Guide Learn How Get the Steps See the Tutorial Start Today Get the Free Guide Learn the Trick See How It's Done Save the Steps Read More See All Ideas Tap for More Click for More Get Inspired Read the Post Tap to Read See the Full Post Keep Reading Save This Pin See the List Get the Details Discover More Don't Miss These Find Out Now Start Here Learn More See Why Get the Ideas Open the Full List See More Ideas Save It for Later Read the Full Guide Tap to See More See the Best Ones Find Your Favorite Get the List Click to See All Explore the Ideas See Every Idea Pin It for Later See What Works Get the Full Story Read It Now Try These Today Get Started Take a Look See the Collection Save for Inspiration See How Get the Inspiration Read the Tips Click to Read See the Ideas Get the Guide Find Out More → ➜ » › ⟶ Looks Ideas",
+    "visualConfig": {
+      "badge": null,
+      "blockStyle": "white-blocks",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#EE1A5B",
+      "scriptWord": null,
+      "photoTheme": "beauty"
+    }
   }
 ]
