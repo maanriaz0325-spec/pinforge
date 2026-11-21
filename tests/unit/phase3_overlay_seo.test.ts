@@ -360,7 +360,7 @@ describe("Phase 3: Text, Canvas Overlay & SEO Engine", () => {
         niche: "Home Decor",
         preset: "bold_center_badge",
       });
-      expect(homeNiche.kicker.toLowerCase()).toContain("kitchen");
+      expect(homeNiche.kicker?.toLowerCase()).toContain("kitchen");
       expect(homeNiche.mainTitle.toLowerCase()).toContain("open concept kitchen");
 
       const homeSvg = renderOverlaySvg({
@@ -386,7 +386,7 @@ describe("Phase 3: Text, Canvas Overlay & SEO Engine", () => {
         niche: "Beauty & Nails",
         preset: "editorial_tall_script",
       });
-      expect(nailsNiche.kicker.toLowerCase()).toContain("dark purple");
+      expect(nailsNiche.kicker?.toLowerCase()).toContain("dark purple");
       expect(nailsNiche.mainTitle.toLowerCase()).toContain("almond nails");
 
       const nailsSvg = renderOverlaySvg({
@@ -412,8 +412,8 @@ describe("Phase 3: Text, Canvas Overlay & SEO Engine", () => {
         niche: "Travel",
         preset: "classic_clean_travel",
       });
-      expect(travelNiche.kicker.toLowerCase()).toContain("the best");
-      expect(travelNiche.accentScript.toLowerCase()).toContain("in canada");
+      expect(travelNiche.kicker?.toLowerCase()).toContain("the best");
+      expect(travelNiche.accentScript?.toLowerCase()).toContain("in canada");
 
       const travelSvg = renderOverlaySvg({
         canvas: { w: 768, h: 1152 },
