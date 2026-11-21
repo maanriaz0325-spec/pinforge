@@ -48,6 +48,7 @@ interface StudioTemplate {
   width: number;
   height: number;
   aspectRatio: string;
+  imageCount?: number;
   layoutId: string;
   collageGap: number;
   fonts: string[];
@@ -614,12 +615,15 @@ export default function PresetsShowcasePage() {
                   >
                     {/* Header */}
                     <div className="p-3.5 border-b border-slate-800/80 flex items-center justify-between">
-                      <div className="flex items-center gap-2 min-w-0">
+                      <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-white border border-slate-700 shrink-0">
+                          {t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId.includes("two") ? 2 : t.layoutId.includes("three") ? 3 : t.layoutId.includes("5") || t.layoutId.includes("2-3") ? 5 : t.layoutId.includes("6") || t.layoutId.includes("2-4") ? 6 : 4)} {(t.imageCount === 1 || t.layoutId === "single" ? "image" : "images")}
+                        </span>
+                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
+                          {t.aspectRatio}
+                        </span>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-red-950/80 text-red-400 border border-red-800/60 font-semibold truncate">
                           {t.primaryCategory}
-                        </span>
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">
-                          {t.layoutId}
                         </span>
                       </div>
                       {t.visualConfig?.badge && (

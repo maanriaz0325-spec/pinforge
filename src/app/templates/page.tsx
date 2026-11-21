@@ -36,6 +36,7 @@ interface StudioTemplate {
   width: number;
   height: number;
   aspectRatio: string;
+  imageCount?: number;
   layoutId: string;
   collageGap: number;
   fonts: string[];
@@ -545,12 +546,15 @@ KEYWORD THEMES: niche ideas, modern niche aesthetic.`);
                       <PinTemplateVisualPreview template={t} className="rounded-t-2xl rounded-b-none" />
 
                       {/* Layout & Aspect Overlay Badges */}
-                      <div className="absolute top-3 left-3 flex items-center gap-1.5 z-30">
+                      <div className="absolute top-3 left-3 flex items-center gap-1.5 z-30 flex-wrap">
+                        <span className="text-[10px] font-bold tracking-wider px-2 py-0.5 rounded bg-black/80 text-white backdrop-blur-md border border-white/20">
+                          {t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId.includes("two") ? 2 : t.layoutId.includes("three") ? 3 : t.layoutId.includes("5") || t.layoutId.includes("2-3") ? 5 : t.layoutId.includes("6") || t.layoutId.includes("2-4") ? 6 : 4)} {(t.imageCount === 1 || t.layoutId === "single" ? "image" : "images")}
+                        </span>
                         <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-black/75 text-white backdrop-blur-md border border-white/20">
                           {t.aspectRatio}
                         </span>
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-black/60 text-slate-200 backdrop-blur-md border border-white/10">
-                          {t.layoutId}
+                          {t.primaryCategory}
                         </span>
                       </div>
 
