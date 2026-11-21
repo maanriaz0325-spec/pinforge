@@ -1,5 +1,510 @@
 [
   {
+    "id": "luxe-medium-two-line",
+    "name": "Luxe Hair — Two-Line Caps & Italic Pills",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with high-CTR typography boxes.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "two-side",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "two-side",
+    "collageGap": 4,
+    "fonts": [
+      "Didot",
+      "Playfair Display",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#111111",
+      "#EFE6DB",
+      "#8F9A7E"
+    ],
+    "layerTexts": [
+      "50",
+      "MEDIUM LENGTH",
+      "HAIRSTYLE IDEAS",
+      "That Work for",
+      "Every Hair Type"
+    ],
+    "headlinePreview": "50 MEDIUM LENGTH HAIRSTYLE IDEAS That Work for Every Hair Type",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "white-box",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "luxe-stepped-boxes",
+      "bandColor": "#EFE6DB",
+      "accentColor": "#111111",
+      "scriptWord": "That Work for",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "luxe-short-over-50",
+    "name": "Luxe Hair — Stacked Caps, Italic Accent & Modern Box",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with high-CTR typography boxes.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "two-side",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "two-side",
+    "collageGap": 4,
+    "fonts": [
+      "Didot",
+      "Playfair Display",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#111111",
+      "#EFE6DB",
+      "#8F9A7E"
+    ],
+    "layerTexts": [
+      "50",
+      "SHORT",
+      "HAIRSTYLES",
+      "for Women",
+      "OVER 50",
+      "That Look",
+      "ABSOLUTELY MODERN"
+    ],
+    "headlinePreview": "50 SHORT HAIRSTYLES for Women OVER 50 That Look ABSOLUTELY MODERN",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "white-box",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "luxe-stacked-over-50",
+      "bandColor": "#EFE6DB",
+      "accentColor": "#111111",
+      "scriptWord": "for Women",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "luxe-trendy-black-boxes",
+    "name": "Luxe Hair — Black Number Box, Trendy Tag & Short Hairstyle Ideas",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with black number box and trendy tags.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "two-side",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "two-side",
+    "collageGap": 4,
+    "fonts": [
+      "Didot",
+      "Anton",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#000000",
+      "#EFE6DB",
+      "#8F9A7E"
+    ],
+    "layerTexts": [
+      "50",
+      "- TRENDY -",
+      "SHORT",
+      "— HAIRSTYLES —",
+      "IDEAS",
+      "FOR EVERY WOMAN"
+    ],
+    "headlinePreview": "50 - TRENDY - SHORT — HAIRSTYLES — IDEAS FOR EVERY WOMAN",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "black-box",
+        "bg": "#000000",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "luxe-black-boxes",
+      "bandColor": "#000000",
+      "accentColor": "#000000",
+      "scriptWord": "- TRENDY -",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "viral-red-circle-mushroom",
+    "name": "Viral — Red Circle Number, Script & Red Outlined Keyword",
+    "description": "Viral Pin Collection: 4 images, 1:2 ratio, red circle badge with flowing script and bold red keyword.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "two-side",
+      "script-bold",
+      "number-badge",
+      "viral-pin"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "two-side",
+    "collageGap": 4,
+    "fonts": [
+      "Anton",
+      "Great Vibes",
+      "Montserrat"
+    ],
+    "colors": [
+      "#C92A2A",
+      "#111111",
+      "#FFFFFF"
+    ],
+    "layerTexts": [
+      "32",
+      "Chic",
+      "MUSHROOM",
+      "BROWN HAIR IDEAS YOU'LL LOVE",
+      "EASY LOOKS TO SHOW YOUR STYLIST"
+    ],
+    "headlinePreview": "32 Chic MUSHROOM BROWN HAIR IDEAS YOU'LL LOVE EASY LOOKS TO SHOW YOUR STYLIST",
+    "visualConfig": {
+      "badge": {
+        "text": "32",
+        "shape": "circle",
+        "bg": "#C92A2A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "viral-badge-script",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#C92A2A",
+      "scriptWord": "Chic",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "viral-big-red-number-grid",
+    "name": "Viral — Huge Red Number, Script & 2x2 Grid with CTA",
+    "description": "Viral Pin Collection: 6 images / 2x2 grid, 1:2 ratio, huge red number with script, subtitle card and CTA pill.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "grid-2x2",
+      "script-bold",
+      "number-badge",
+      "viral-pin"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "grid-2x2",
+    "collageGap": 4,
+    "fonts": [
+      "Anton",
+      "Great Vibes",
+      "Montserrat"
+    ],
+    "colors": [
+      "#C92A2A",
+      "#111111",
+      "#FFFFFF"
+    ],
+    "layerTexts": [
+      "58",
+      "Gorgeous",
+      "SHORT HOLIDAY",
+      "HAIRSTYLES FOR WOMEN WITH BOBS AND PIXIES",
+      "GET THE IDEAS"
+    ],
+    "headlinePreview": "58 Gorgeous SHORT HOLIDAY HAIRSTYLES FOR WOMEN WITH BOBS AND PIXIES",
+    "visualConfig": {
+      "badge": {
+        "text": "58",
+        "shape": "giant-number",
+        "bg": "#C92A2A",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "viral-grid-cta",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#C92A2A",
+      "scriptWord": "Gorgeous",
+      "photoTheme": "hair",
+      "ctaText": "GET THE IDEAS",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "viral-orange-circle-modern",
+    "name": "Viral — Orange Circle Number, Script & Orange Outlined Keyword",
+    "description": "Viral Pin Collection: 4 images, 1:2 ratio, amber-orange circle badge with flowing script and orange keyword.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "two-side",
+      "script-bold",
+      "number-badge",
+      "viral-pin"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "two-side",
+    "collageGap": 4,
+    "fonts": [
+      "Anton",
+      "Great Vibes",
+      "Montserrat"
+    ],
+    "colors": [
+      "#F58220",
+      "#111111",
+      "#FFFFFF"
+    ],
+    "layerTexts": [
+      "61",
+      "Modern",
+      "Hairstyles",
+      "for Women Over 50 That",
+      "Look Absolutely Stunning"
+    ],
+    "headlinePreview": "61 Modern Hairstyles for Women Over 50 That Look Absolutely Stunning",
+    "visualConfig": {
+      "badge": {
+        "text": "61",
+        "shape": "circle",
+        "bg": "#F58220",
+        "color": "#111111"
+      },
+      "blockStyle": "viral-badge-script",
+      "bandColor": "#FFFFFF",
+      "accentColor": "#F58220",
+      "scriptWord": "Modern",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "luxe-spring-crimson",
+    "name": "Luxe Hair — Crimson & Black Caps, Pink Italic Box",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with high-CTR typography boxes.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "collage-4",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "grid-2x2",
+    "collageGap": 8,
+    "fonts": [
+      "Didot",
+      "Playfair Display",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#111111",
+      "#EFE6DB",
+      "#C9A45C"
+    ],
+    "layerTexts": [
+      "45",
+      "Medium Length",
+      "Spring Hairstyles",
+      "for 2026",
+      "That Feel Light and Fresh"
+    ],
+    "headlinePreview": "45 Medium Length Spring Hairstyles for 2026 That Feel Light and Fresh",
+    "visualConfig": {
+      "badge": {
+        "text": "45",
+        "shape": "square",
+        "bg": "#111111",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "luxe-black-boxes",
+      "bandColor": "#EFE6DB",
+      "accentColor": "#C9A45C",
+      "scriptWord": "for Women",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "luxe-long-brown-caps",
+    "name": "Luxe Hair — Brown Caps Keyword & Beige Italic Box",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with high-CTR typography boxes.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "collage-4",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "grid-2x2",
+    "collageGap": 8,
+    "fonts": [
+      "Didot",
+      "Playfair Display",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#111111",
+      "#EFE6DB",
+      "#C9A45C"
+    ],
+    "layerTexts": [
+      "50",
+      "Long",
+      "Hairstyle Ideas",
+      "for Women",
+      "That Are Pure Inspiration"
+    ],
+    "headlinePreview": "50 Long Hairstyle Ideas for Women That Are Pure Inspiration",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "white-box",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "luxe-stepped-boxes",
+      "bandColor": "#EFE6DB",
+      "accentColor": "#C9A45C",
+      "scriptWord": "for Women",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
+    "id": "luxe-lob-brown",
+    "name": "Luxe Hair — Brown Keyword & Brown Italic Bar",
+    "description": "Luxe Hair Collection: Recreated from top-performing viral Pinterest pin with high-CTR typography boxes.",
+    "primaryCategory": "Hair & Beauty",
+    "categories": [
+      "Hair",
+      "Beauty",
+      "Listicle",
+      "Viral"
+    ],
+    "designTypes": [
+      "collage-4",
+      "number-badge",
+      "listicle",
+      "luxe-hair"
+    ],
+    "width": 736,
+    "height": 1472,
+    "aspectRatio": "1:2",
+    "layoutId": "grid-2x2",
+    "collageGap": 8,
+    "fonts": [
+      "Didot",
+      "Playfair Display",
+      "Montserrat"
+    ],
+    "colors": [
+      "#FFFFFF",
+      "#111111",
+      "#EFE6DB",
+      "#C9A45C"
+    ],
+    "layerTexts": [
+      "50",
+      "Lob",
+      "Haircut Ideas",
+      "to Take to Your",
+      "Next Salon Appointment"
+    ],
+    "headlinePreview": "50 Lob Haircut Ideas to Take to Your Next Salon Appointment",
+    "visualConfig": {
+      "badge": {
+        "text": "50",
+        "shape": "white-box",
+        "bg": "#FFFFFF",
+        "color": "#111111"
+      },
+      "blockStyle": "luxe-stepped-boxes",
+      "bandColor": "#EFE6DB",
+      "accentColor": "#C9A45C",
+      "scriptWord": "for Women",
+      "photoTheme": "hair",
+      "abstractCollage": true
+    }
+  },
+  {
     "id": "hb-bronde-blocks",
     "name": "Hair — White Blocks, Pink Keyword (4 lines)",
     "description": "One photo with four separate white blocks: black lines and a hot-pink keyword line (“20+ Most / Gorgeous / Bronde Hair Color / Ideas”).",
@@ -8352,136 +8857,6 @@
     }
   },
   {
-    "id": "viral-red-circle-mushroom",
-    "name": "Viral — Red Circle Number, Script & Red Outlined Keyword",
-    "description": "",
-    "primaryCategory": "Lifestyle",
-    "categories": [],
-    "designTypes": [
-      "split",
-      "script-bold",
-      "number-badge"
-    ],
-    "width": 736,
-    "height": 1472,
-    "aspectRatio": "1:2",
-    "layoutId": "band-2-2",
-    "collageGap": 8,
-    "fonts": [
-      "Kaushan Script",
-      "Anton"
-    ],
-    "colors": [
-      "#F2F2F0",
-      "#A8191E"
-    ],
-    "layerTexts": [
-      "32",
-      "Chic",
-      "Kaushan Script",
-      "Mushroom",
-      "Brown Hair Ideas",
-      "You'll Love",
-      "Easy looks to show your stylist"
-    ],
-    "headlinePreview": "32 Chic Kaushan Script Mushroom Brown Hair Ideas You'll Love Easy looks to show your stylist",
-    "visualConfig": {
-      "badge": null,
-      "blockStyle": "band-split",
-      "bandColor": "#F2F2F0",
-      "accentColor": "#EE1A5B",
-      "scriptWord": null,
-      "photoTheme": "lifestyle"
-    }
-  },
-  {
-    "id": "viral-big-red-number-grid",
-    "name": "Viral — Huge Red Number, Script & 2×2 Grid with CTA",
-    "description": "",
-    "primaryCategory": "Lifestyle",
-    "categories": [],
-    "designTypes": [
-      "image-text-panel",
-      "script-bold",
-      "number-badge"
-    ],
-    "width": 736,
-    "height": 1472,
-    "aspectRatio": "1:2",
-    "layoutId": "grid4-band-2",
-    "collageGap": 8,
-    "fonts": [
-      "Pacifico",
-      "Oswald"
-    ],
-    "colors": [
-      "#E3262E"
-    ],
-    "layerTexts": [
-      "Text panel",
-      "58",
-      "Gorgeous",
-      "Short Holiday",
-      "Hairstyles for women",
-      "with bobs and pixies",
-      "Get the ideas"
-    ],
-    "headlinePreview": "Text panel 58 Gorgeous Short Holiday Hairstyles for women with bobs and pixies Get the ideas",
-    "visualConfig": {
-      "badge": null,
-      "blockStyle": "clean-overlay",
-      "bandColor": "#F3F2EF",
-      "accentColor": "#EE1A5B",
-      "scriptWord": null,
-      "photoTheme": "lifestyle"
-    }
-  },
-  {
-    "id": "viral-orange-circle-modern",
-    "name": "Viral — Orange Circle Number, Script & Orange Outlined Keyword",
-    "description": "",
-    "primaryCategory": "Lifestyle",
-    "categories": [],
-    "designTypes": [
-      "split",
-      "script-bold",
-      "number-badge"
-    ],
-    "width": 736,
-    "height": 1472,
-    "aspectRatio": "1:2",
-    "layoutId": "band-2-2",
-    "collageGap": 8,
-    "fonts": [
-      "Kaushan Script",
-      "Lilita One",
-      "Anton"
-    ],
-    "colors": [
-      "#F3F2EF",
-      "#F2A44A",
-      "#F28A3C"
-    ],
-    "layerTexts": [
-      "61",
-      "Modern",
-      "Kaushan Script",
-      "Hairstyles",
-      "Lilita One",
-      "for Women Over 50 That",
-      "Look Absolutely Stunning"
-    ],
-    "headlinePreview": "61 Modern Kaushan Script Hairstyles Lilita One for Women Over 50 That Look Absolutely Stunning",
-    "visualConfig": {
-      "badge": null,
-      "blockStyle": "band-split",
-      "bandColor": "#F3F2EF",
-      "accentColor": "#F28A3C",
-      "scriptWord": null,
-      "photoTheme": "lifestyle"
-    }
-  },
-  {
     "id": "viral-crimson-wall-decor",
     "name": "Viral — Crimson Number & Keyword, Crimson Frame, 5 Photos",
     "description": "",
@@ -8512,22 +8887,26 @@
       "#2B0D18"
     ],
     "layerTexts": [
-      "25",
-      "Renter Friendly Fall",
-      "Wall Decor",
-      "Ideas Everyone Is Pinning",
-      "Ideas You'll Want To Save",
-      "middle",
-      "Tap for all 25 ideas →"
+      "45",
+      "Creative",
+      "WALL DECOR",
+      "IDEAS FOR EMPTY SPACES",
+      "SEE ALL DESIGNS"
     ],
-    "headlinePreview": "25 Renter Friendly Fall Wall Decor Ideas Everyone Is Pinning Ideas You'll Want To Save middle Tap for all 25 ideas →",
+    "headlinePreview": "45 Creative WALL DECOR IDEAS FOR EMPTY SPACES SEE ALL DESIGNS",
     "visualConfig": {
-      "badge": null,
-      "blockStyle": "script-accent",
+      "badge": {
+        "text": "45",
+        "shape": "square",
+        "bg": "#8B0000",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "viral-badge-script",
       "bandColor": "#FFFFFF",
-      "accentColor": "#EE1A5B",
-      "scriptWord": null,
-      "photoTheme": "homedecor"
+      "accentColor": "#8B0000",
+      "scriptWord": "Creative",
+      "photoTheme": "homedecor",
+      "abstractCollage": true
     }
   },
   {
@@ -8563,20 +8942,24 @@
     "layerTexts": [
       "25",
       "Dreamy",
-      "Keyword bar",
-      "Date Ideas For",
-      "Bebas Neue",
-      "Married Couples Stuck in a Routine",
-      "Click for more →"
+      "BEDROOM",
+      "AESTHETIC INSPIRATION",
+      "EXPLORE MORE"
     ],
-    "headlinePreview": "25 Dreamy Keyword bar Date Ideas For Bebas Neue Married Couples Stuck in a Routine Click for more →",
+    "headlinePreview": "25 Dreamy BEDROOM AESTHETIC INSPIRATION EXPLORE MORE",
     "visualConfig": {
-      "badge": null,
-      "blockStyle": "script-accent",
+      "badge": {
+        "text": "25",
+        "shape": "pill",
+        "bg": "#800020",
+        "color": "#FFFFFF"
+      },
+      "blockStyle": "viral-badge-script",
       "bandColor": "#FFFFFF",
-      "accentColor": "#EE1A5B",
-      "scriptWord": null,
-      "photoTheme": "lifestyle"
+      "accentColor": "#800020",
+      "scriptWord": "Dreamy",
+      "photoTheme": "lifestyle",
+      "abstractCollage": true
     }
   },
   {
@@ -8611,28 +8994,26 @@
       "#111111"
     ],
     "layerTexts": [
-      "20",
-      "Fredoka",
+      "18",
       "Romantic",
-      "Kaushan Script",
-      "Keyword bar",
-      "Indoor Picnic Ideas",
-      "Bebas Neue",
-      "For a Cozy Date Night"
+      "OUTFITS",
+      "CHIC CASUAL STYLE GUIDE",
+      "SHOP THE LOOK"
     ],
-    "headlinePreview": "20 Fredoka Romantic Kaushan Script Keyword bar Indoor Picnic Ideas Bebas Neue For a Cozy Date Night Tap for all 20 ideas » Ornament line",
+    "headlinePreview": "18 Romantic OUTFITS CHIC CASUAL STYLE GUIDE SHOP THE LOOK",
     "visualConfig": {
       "badge": {
-        "text": "16",
+        "text": "18",
         "shape": "circle",
-        "bg": "#C9A27E",
+        "bg": "#E91E63",
         "color": "#FFFFFF"
       },
-      "blockStyle": "framed-card",
+      "blockStyle": "viral-badge-script",
       "bandColor": "#FFFFFF",
-      "accentColor": "#111111",
-      "scriptWord": null,
-      "photoTheme": "lifestyle"
+      "accentColor": "#E91E63",
+      "scriptWord": "Romantic",
+      "photoTheme": "lifestyle",
+      "abstractCollage": true
     }
   },
   {

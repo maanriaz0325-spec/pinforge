@@ -291,8 +291,43 @@ export async function POST(req: NextRequest) {
 
     if (textMode === "canvas") {
       overlayTextToStore = hookText;
-      const presetKey = (overlayPreset in OVERLAY_PRESETS ? overlayPreset : "classic_clean_travel") as PresetName;
-      const basePreset = OVERLAY_PRESETS[presetKey];
+      let basePreset: Partial<OverlayConfig>;
+      let presetKey: string = overlayPreset || "classic_clean_travel";
+
+      if (presetKey in OVERLAY_PRESETS) {
+        basePreset = OVERLAY_PRESETS[presetKey as PresetName];
+      } else {
+        try {
+          // Dynamic resolution for AutoPinDesign Studio templates
+          const apdTemplates = require("@/server/data/apd_templates.json");
+          const studioMatch = apdTemplates.find((t: any) => t.id === presetKey);
+          if (studioMatch) {
+            basePreset = {
+              text: {
+                content: hookText,
+                preset: presetKey,
+                fontFamily: studioMatch.fonts?.[0] ? `${studioMatch.fonts[0]}, sans-serif` : "Montserrat, sans-serif",
+                weight: 900,
+                color: studioMatch.visualConfig?.blockStyle === "white-blocks" ? "#111111" : "#ffffff",
+                align: "center",
+                maxLines: 4,
+                box: { x: 0.08, y: 0.35, w: 0.84, h: 0.35 },
+              },
+              background: {
+                type: studioMatch.visualConfig?.bandColor ? "solid_band" : "scrim",
+                color: studioMatch.visualConfig?.bandColor || "rgba(0,0,0,0.75)",
+              },
+              accent: {
+                color: studioMatch.visualConfig?.accentColor || "#EE1A5B",
+              },
+            };
+          } else {
+            basePreset = OVERLAY_PRESETS["classic_clean_travel"];
+          }
+        } catch {
+          basePreset = OVERLAY_PRESETS["classic_clean_travel"];
+        }
+      }
 
       const overlayConfig: OverlayConfig = {
         canvas: { w: targetWidth, h: targetHeight },

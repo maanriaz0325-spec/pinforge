@@ -55,6 +55,7 @@ export const COLOR_SWATCHES = [
 
 interface PresetCustomizerEditorProps {
   initialTemplate?: TemplatePreviewData | null;
+  initialTemplateId?: string;
   onApplyAI?: (config: {
     templateId: string;
     prompt: string;
@@ -73,6 +74,7 @@ interface PresetCustomizerEditorProps {
 
 export function PresetCustomizerEditor({
   initialTemplate,
+  initialTemplateId,
   onApplyAI,
   onSavePinSuccess,
   className = "",
@@ -111,13 +113,35 @@ export function PresetCustomizerEditor({
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
           setStudioTemplates(json.data);
+          const targetId = initialTemplateId || initialTemplate?.id;
+          if (targetId) {
+            const match = json.data.find((t: TemplatePreviewData) => t.id === targetId);
+            if (match) {
+              setTemplate(match);
+              if (match.fonts?.[0]) setSelectedFont(`${match.fonts[0]}, sans-serif`);
+              if (match.visualConfig?.blockStyle === "white-blocks") setTextColor("#111111");
+              else setTextColor("#FFFFFF");
+              if (match.visualConfig?.accentColor) setAccentColor(match.visualConfig.accentColor);
+              if (match.visualConfig?.bandColor) setBandColor(match.visualConfig.bandColor);
+              if (match.visualConfig?.badge) {
+                setBadgeBg(match.visualConfig.badge.bg);
+                setBadgeText(match.visualConfig.badge.text);
+                setBadgeShape(match.visualConfig.badge.shape || "circle");
+              }
+              if (match.layerTexts && match.layerTexts.length > 0) {
+                setLines(match.layerTexts);
+              }
+              if (match.primaryCategory) setKicker(match.primaryCategory);
+              if (match.visualConfig?.scriptWord) setScriptWord(match.visualConfig.scriptWord);
+            }
+          }
         }
       } catch (err) {
         console.error("Failed to load studio templates:", err);
       }
     }
     loadStudioTemplates();
-  }, []);
+  }, [initialTemplateId, initialTemplate?.id]);
 
   function handleSelectNewTemplate(tId: string) {
     const found = studioTemplates.find((t) => t.id === tId);

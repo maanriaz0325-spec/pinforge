@@ -623,8 +623,8 @@ KEYWORD THEMES: niche ideas, modern niche aesthetic.`);
                           </button>
 
                           <Link
-                            href={`/?template=${encodeURIComponent(t.id)}&preset=${encodeURIComponent(t.name)}`}
-                            className="text-xs bg-red-600 hover:bg-red-500 text-white font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition-colors"
+                            href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(t.headlinePreview || t.name)}`}
+                            className="text-xs bg-red-600 hover:bg-red-500 text-white font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition-colors cursor-pointer"
                           >
                             <span>Use Pin</span>
                             <ExternalLink className="w-3 h-3" />
@@ -739,8 +739,8 @@ KEYWORD THEMES: niche ideas, modern niche aesthetic.`);
                 Close
               </button>
               <Link
-                href={`/?template=${encodeURIComponent(selectedTemplateDetail.id)}&preset=${encodeURIComponent(selectedTemplateDetail.name)}`}
-                className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm"
+                href={`/generate?preset=${encodeURIComponent(selectedTemplateDetail.id)}&topic=${encodeURIComponent(selectedTemplateDetail.headlinePreview || selectedTemplateDetail.name)}`}
+                className="px-5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer"
               >
                 <span>Use this Template</span>
                 <ExternalLink className="w-3.5 h-3.5" />

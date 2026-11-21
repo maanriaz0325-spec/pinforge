@@ -90,6 +90,17 @@ const OVERLAY_PRESET_OPTIONS = [
   { id: "bold_center_badge", label: "17. Bold Center Listicle Banner (35 Christmas / Slate Card + Big Number & Pill)" },
   // Reference Image 4: Preset 18
   { id: "editorial_tall_script", label: "18. Tall Editorial Serif + Script (Giant Bodoni Number + Plum Script + Ribbon)" },
+  // AutoPinDesign: Luxe Hair Collection
+  { id: "luxe-medium-two-line", label: "★ Luxe Hair — Two-Line Caps & Italic Pills (50 Medium Length Ideas)" },
+  { id: "luxe-short-over-50", label: "★ Luxe Hair — Stacked Caps & Italic Accent (50 Short Hairstyles Over 50)" },
+  { id: "luxe-trendy-black-boxes", label: "★ Luxe Hair — Black Number Box & Trendy Tag (50 Short Ideas)" },
+  // AutoPinDesign: Viral Pin Collection
+  { id: "viral-red-circle-mushroom", label: "★ Viral Pin — Red Circle Badge & Script (32 Chic Mushroom Brown)" },
+  { id: "viral-big-red-number-grid", label: "★ Viral Pin — Huge Red Number & CTA (58 Gorgeous Short Holiday)" },
+  { id: "viral-orange-circle-modern", label: "★ Viral Pin — Orange Circle Badge & Script (61 Modern Hairstyles)" },
+  { id: "hb-bronde-blocks", label: "★ AutoPin Studio — White Highlight Blocks (20+ Bronde Hair Color)" },
+  { id: "ctr-fp-black-boxes-left", label: "★ AutoPin Studio — High-CTR Black Boxes (30+ Best Outfit Ideas)" },
+  { id: "cv-framed-box", label: "★ AutoPin Studio — Framed Glass Translucent Box (Minimalist Aesthetic)" },
 ];
 
 const ASPECT_OPTIONS = [
@@ -324,19 +335,21 @@ export default function GeneratePage() {
 
     loadMetadata();
 
-    // Check query params if navigated from Presets Showcase
+    // Check query params if navigated from Presets Showcase or Templates Studio
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const presetParam = params.get("preset");
+      const templateParam = params.get("template");
       const topicParam = params.get("topic");
       const headlineParam = params.get("headline");
       const modeParam = params.get("mode");
 
+      const targetPreset = presetParam || templateParam;
       if (modeParam === "upload" || modeParam === "custom" || modeParam === "editor") {
         setActiveWay("custom_preset");
       }
-      if (presetParam) {
-        setOverlayPreset(presetParam);
+      if (targetPreset) {
+        setOverlayPreset(targetPreset);
         setTextMode("canvas");
         setPresetIsManual(true);
       }
@@ -1140,6 +1153,7 @@ export default function GeneratePage() {
       {/* Mode: Preset Customizer & Photo Upload */}
       {activeWay === "custom_preset" && (
         <PresetCustomizerEditor
+          initialTemplateId={overlayPreset}
           onApplyAI={(config) => {
             setPrompt(config.prompt);
             setCustomOverlayText(config.headline);
@@ -1816,37 +1830,57 @@ export default function GeneratePage() {
                       {opt.label}
                     </option>
                   ))}
+                  {!OVERLAY_PRESET_OPTIONS.some((opt) => opt.id === overlayPreset) && (
+                    <option value={overlayPreset}>
+                      ★ Selected Studio Preset ({overlayPreset})
+                    </option>
+                  )}
                 </select>
 
                 {/* Selected Preset Visual Card */}
                 {(() => {
                   const selIdx = OVERLAY_PRESET_OPTIONS.findIndex((p) => p.id === overlayPreset);
-                  const pNum = selIdx !== -1 ? selIdx + 1 : 1;
-                  const currentOpt = OVERLAY_PRESET_OPTIONS[selIdx] || OVERLAY_PRESET_OPTIONS[0];
+                  const isRef18 = selIdx >= 0 && selIdx < 18;
+                  const pNum = isRef18 ? selIdx + 1 : 1;
+                  const currentOpt = OVERLAY_PRESET_OPTIONS[selIdx] || {
+                    id: overlayPreset,
+                    label: `AutoPin Studio Preset: ${overlayPreset}`,
+                  };
+
                   return (
                     <div className="flex items-center gap-3 bg-slate-950 p-2.5 rounded-lg border border-slate-800 mt-2">
-                      <div className="w-12 h-18 rounded overflow-hidden shrink-0 bg-black border border-slate-700 relative aspect-[2/3]">
-                        <img
-                          src={`/presets/exact/preset_${pNum}.jpg`}
-                          alt={currentOpt.label}
-                          className="w-full h-full object-cover"
-                        />
+                      <div className="w-12 h-18 rounded overflow-hidden shrink-0 bg-slate-900 border border-slate-700 relative aspect-[2/3] flex items-center justify-center">
+                        {isRef18 ? (
+                          <img
+                            src={`/presets/exact/preset_${pNum}.jpg`}
+                            alt={currentOpt.label}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-red-950/60 to-purple-950/60 p-1 text-center">
+                            <Sparkles className="w-4 h-4 text-amber-400 mb-1" />
+                            <span className="text-[8px] font-bold text-white uppercase tracking-tighter">Studio</span>
+                          </div>
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                           <span className="text-[11px] font-bold text-white truncate">
-                            Preset #{pNum}: {currentOpt.label.split("(")[0].replace(/^\d+\.\s*/, "")}
+                            {isRef18
+                              ? `Preset #${pNum}: ${currentOpt.label.split("(")[0].replace(/^\d+\.\s*/, "")}`
+                              : currentOpt.label.replace("★ ", "")}
                           </span>
-                          <Link
-                            href="/presets"
-                            className="text-[10px] text-red-400 hover:text-red-300 font-medium shrink-0 flex items-center gap-1"
+                          <button
+                            type="button"
+                            onClick={() => setActiveWay("custom_preset")}
+                            className="text-[10px] text-amber-400 hover:text-amber-300 font-semibold shrink-0 flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 cursor-pointer"
                           >
-                            <span>Browse All 18</span>
-                            <ExternalLink className="w-2.5 h-2.5" />
-                          </Link>
+                            <span>Open In Studio</span>
+                            <Sliders className="w-2.5 h-2.5" />
+                          </button>
                         </div>
                         <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-2">
-                          {currentOpt.label.includes("(") ? currentOpt.label.split("(")[1].replace(")", "") : ""}
+                          {currentOpt.label.includes("(") ? currentOpt.label.split("(")[1].replace(")", "") : "Custom high-converting layout geometry"}
                         </p>
                       </div>
                     </div>
