@@ -626,8 +626,9 @@ export function PresetCustomizerEditor({
   const activeLayer = textLayers.find((l) => l.id === selectedLayerId) || textLayers[0];
 
   function updateActiveLayer(updates: Partial<TextLayerAdjustment>) {
+    const targetId = selectedLayerId || textLayers[0]?.id;
     setTextLayers((prev) =>
-      prev.map((l) => (l.id === selectedLayerId ? { ...l, ...updates } : l))
+      prev.map((l) => (l.id === targetId ? { ...l, ...updates } : l))
     );
   }
 
@@ -787,10 +788,11 @@ export function PresetCustomizerEditor({
       slotAdjustments,
       customTextLayers: textLayers,
       customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
-      customBadgeText: textLayers.find((l) => l.role === "badge")?.text,
-      customBadgeShape: textLayers.find((l) => l.role === "badge")?.shape || "circle",
-      customBadgePosition: textLayers.find((l) => l.role === "badge")?.position || "center-top",
-      customBadgeBg: textLayers.find((l) => l.role === "badge")?.bgHighlight,
+      customBadgeText: textLayers.find((l) => l.role === "badge")?.text || activeLayer?.text || "20",
+      customBadgeShape: activeLayer?.shape || textLayers.find((l) => l.role === "badge")?.shape || "circle",
+      customBadgePosition: (activeLayer?.position || textLayers.find((l) => l.role === "badge")?.position || "top-left") as any,
+      customBadgeBg: activeLayer?.bgHighlight || textLayers.find((l) => l.role === "badge")?.bgHighlight || template.visualConfig?.badge?.bg || "#EE1A5B",
+      customBadgeColor: activeLayer?.color || textLayers.find((l) => l.role === "badge")?.color || "#FFFFFF",
       customFont: activeLayer?.fontFamily,
       customTextColor: activeLayer?.color,
       onSlotClick: (idx) => {
@@ -1258,7 +1260,67 @@ export function PresetCustomizerEditor({
 
                   {/* Collage Patterns dependent on Image Quantity */}
                   <div className="space-y-1.5 pt-2 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-300 font-bold block">
+                    {/* BADGE / ACCENT SHAPE & POSITION CONTROLS */}
+                  <div className="pt-3 border-t border-slate-800 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Shape & Position (Badge / Tag)</span>
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-400 capitalize">
+                        {activeLayer?.shape || "circle"} · {activeLayer?.position || "top-left"}
+                      </span>
+                    </div>
+
+                    {/* Shape Selector */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block">Shape</span>
+                      <div className="grid grid-cols-4 gap-1.5 bg-slate-900 p-1 rounded-xl border border-slate-700">
+                        {(["circle", "rounded", "square", "pill"] as const).map((sh) => (
+                          <button
+                            key={sh}
+                            type="button"
+                            onClick={() => updateActiveLayer({ shape: sh, containerShape: sh })}
+                            className={`py-1.5 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer ${
+                              (activeLayer?.shape || "circle") === sh
+                                ? "bg-red-600 text-white shadow-xs"
+                                : "text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            {sh}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Position Selector */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block">Position</span>
+                      <div className="grid grid-cols-2 gap-2">
+                        {[
+                          { id: "top-left", label: "Top left" },
+                          { id: "center-top", label: "Center top" },
+                          { id: "over-band", label: "Over text band" },
+                          { id: "over-image", label: "Over image" },
+                        ].map((pos) => (
+                          <button
+                            key={pos.id}
+                            type="button"
+                            onClick={() => updateActiveLayer({ position: pos.id as any })}
+                            className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all border cursor-pointer ${
+                              (activeLayer?.position || "top-left") === pos.id
+                                ? "border-red-500 bg-red-500/10 text-red-400"
+                                : "border-slate-700 bg-slate-900 text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            {pos.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <span className="text-[11px] text-slate-300 font-bold block">
                       Layout Patterns for {imageCount} {imageCount === 1 ? "Photo" : "Photos"}:
                     </span>
                     <div className="grid grid-cols-2 gap-1.5">

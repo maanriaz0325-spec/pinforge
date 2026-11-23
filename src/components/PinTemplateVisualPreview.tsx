@@ -80,6 +80,7 @@ export interface TemplatePreviewData {
   customAccentColor?: string;
   customBandColor?: string;
   customBadgeBg?: string;
+  customBadgeColor?: string;
   customBadgeText?: string;
   customBadgeShape?: string;
   customBadgePosition?: "top-left" | "center-top" | "over-band" | "over-image";
@@ -219,13 +220,14 @@ export function PinTemplateVisualPreview({
   const blockStyle = config.blockStyle || "color-band-card";
 
   // Badge configuration
+  const badgeLayer = template.customTextLayers?.find((l) => l.role === "badge") || template.customTextLayers?.[0];
   const defaultBadge = config.badge;
-  const hasBadge = Boolean(defaultBadge || template.customBadgeText);
-  const badgeText = template.customBadgeText || defaultBadge?.text || "20";
-  const badgeBg = template.customBadgeBg || defaultBadge?.bg || accentColor;
-  const badgeColor = defaultBadge?.color || "#FFFFFF";
-  const badgeShape = template.customBadgeShape || defaultBadge?.shape || "circle";
-  const badgePosition = template.customBadgePosition || "top-left";
+  const hasBadge = Boolean(defaultBadge || template.customBadgeText || badgeLayer?.text);
+  const badgeText = template.customBadgeText || badgeLayer?.text || defaultBadge?.text || "20";
+  const badgeBg = template.customBadgeBg || badgeLayer?.bgHighlight || defaultBadge?.bg || accentColor;
+  const badgeColor = template.customBadgeColor || badgeLayer?.color || defaultBadge?.color || "#FFFFFF";
+  const badgeShape = template.customBadgeShape || badgeLayer?.shape || defaultBadge?.shape || "circle";
+  const badgePosition = template.customBadgePosition || badgeLayer?.position || "top-left";
 
   // Split headline lines or use user custom lines
   const rawLines =
@@ -433,10 +435,22 @@ export function PinTemplateVisualPreview({
     const rotation = layer?.rotation ? `rotate(${layer.rotation}deg)` : undefined;
     const shadow = layer?.textShadow && layer?.shadowColor ? `0 2px 4px ${layer.shadowColor}` : defaultStyle.textShadow;
 
+    const shape = layer?.shape || layer?.containerShape;
+    let shapeClass = "";
+    if (shape === "circle") {
+      shapeClass = "rounded-full aspect-square min-w-[38px] min-h-[38px] inline-flex items-center justify-center p-2 border border-white/70 shadow-md";
+    } else if (shape === "pill") {
+      shapeClass = "rounded-full px-4 py-1 inline-flex items-center justify-center border border-white/70 shadow-md";
+    } else if (shape === "rounded") {
+      shapeClass = "rounded-xl px-3 py-1.5 inline-flex items-center justify-center border border-white/70 shadow-md";
+    } else if (shape === "square") {
+      shapeClass = "rounded-none aspect-square min-w-[38px] min-h-[38px] inline-flex items-center justify-center p-2 border border-white/70 shadow-md";
+    }
+
     return (
       <span
         onClick={() => template.onLayerClick?.(layer?.id || `layer-${layerIdx}`)}
-        className={`${className} transition-all pointer-events-auto cursor-pointer`}
+        className={`${className} ${shapeClass} transition-all pointer-events-auto cursor-pointer`}
         style={{
           fontFamily: font,
           color: color,
@@ -704,33 +718,34 @@ export function PinTemplateVisualPreview({
       </div>
 
       {/* ======================================================== */}
-      {/* 2. NUMBER BADGE (FOR OVERLAYS REQUIRING FLOATING BADGE)   */}
+      {/* 2. NUMBER BADGE (SHAPE & POSITION)                       */}
       {/* ======================================================== */}
-      {hasBadge && !isIntegratedArchetype && (
+      {hasBadge && (
         <div
-          className={`absolute z-30 flex items-center justify-center font-extrabold shadow-lg transition-all ${
+          onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
+          className={`absolute z-30 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
             badgePosition === "center-top"
               ? "top-4 left-1/2 -translate-x-1/2"
               : badgePosition === "over-band"
-              ? "bottom-[38%] left-1/2 -translate-x-1/2"
+              ? "bottom-[42%] left-1/2 -translate-x-1/2"
               : badgePosition === "over-image"
-              ? "top-6 right-6"
+              ? "top-5 right-5"
               : "top-4 left-4"
           } ${
             badgeShape === "circle"
-              ? "w-11 h-11 rounded-full border-2 border-white/60"
+              ? "w-12 h-12 rounded-full border-2 border-white/80"
               : badgeShape === "pill"
-              ? "px-3.5 py-1 rounded-full border border-white/50 text-xs"
+              ? "px-4 py-1.5 rounded-full border-2 border-white/80 text-xs sm:text-sm"
               : badgeShape === "rounded"
-              ? "w-11 h-11 rounded-xl border-2 border-white/60"
-              : "w-10 h-10 rounded-none border-2 border-white/60"
+              ? "w-12 h-12 rounded-2xl border-2 border-white/80"
+              : "w-11 h-11 rounded-none border-2 border-white/80"
           }`}
           style={{
-            backgroundColor: badgeBg,
+            backgroundColor: badgeBg || accentColor || "#EE1A5B",
             color: badgeColor,
           }}
         >
-          <span className="text-xs sm:text-sm tracking-tighter leading-none">{badgeText}</span>
+          <span className="text-sm sm:text-base tracking-tighter leading-none">{badgeText}</span>
         </div>
       )}
 
