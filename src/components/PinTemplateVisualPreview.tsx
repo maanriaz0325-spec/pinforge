@@ -403,11 +403,17 @@ export function PinTemplateVisualPreview({
     const layer = template.customTextLayers?.[layerIdx];
     if (layer && layer.visible === false) return null;
 
+    // If layer 0 is the badge and it has been detached to an external position (top-left, center-top, over-image),
+    // don't duplicate it inside the central text band
+    if (layerIdx === 0 && (layer?.role === "badge" || badgeLayer?.id === layer?.id) && isIntegratedArchetype && badgePosition !== "over-band") {
+      return null;
+    }
+
     const text = layer?.text !== undefined && layer?.text !== "" ? layer.text : (lines[layerIdx] || fallbackText);
     if (!text) return null;
 
-    const font = layer?.fontFamily || template.customFont || defaultStyle.font || primaryFont;
-    const color = layer?.color || template.customTextColor || defaultStyle.color || "#FFFFFF";
+    const font = layer?.fontFamily || defaultStyle.font || primaryFont;
+    const color = layer?.color || defaultStyle.color || "#FFFFFF";
     const bg = layer?.bgHighlight && layer.bgHighlight !== "transparent" ? layer.bgHighlight : defaultStyle.bg;
 
     let weight: string | number = defaultStyle.weight || 700;
@@ -720,7 +726,7 @@ export function PinTemplateVisualPreview({
       {/* ======================================================== */}
       {/* 2. NUMBER BADGE (SHAPE & POSITION)                       */}
       {/* ======================================================== */}
-      {hasBadge && (
+      {hasBadge && (!isIntegratedArchetype || badgePosition !== "over-band") && (
         <div
           onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
           className={`absolute z-30 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
@@ -2077,7 +2083,7 @@ export function PinTemplateVisualPreview({
         {/* Additional Custom User Text Layers */}
         {template.customTextLayers && template.customTextLayers.length > 4 && (
           <div className="w-full flex flex-col items-center gap-1.5 mt-2 pointer-events-auto">
-            {template.customTextLayers.slice(4).map((layer, extraIdx) => {
+            {template.customTextLayers.slice(4).filter((l) => l.role !== "website").map((layer, extraIdx) => {
               if (layer.visible === false) return null;
               return (
                 <div

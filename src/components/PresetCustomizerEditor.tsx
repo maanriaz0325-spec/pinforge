@@ -624,9 +624,17 @@ export function PresetCustomizerEditor({
   // PER-LAYER TYPOGRAPHY HANDLERS
   // -------------------------------------------------------------
   const activeLayer = textLayers.find((l) => l.id === selectedLayerId) || textLayers[0];
+  const badgeLayer = textLayers.find((l) => l.role === "badge") || textLayers[0];
 
   function updateActiveLayer(updates: Partial<TextLayerAdjustment>) {
     const targetId = selectedLayerId || textLayers[0]?.id;
+    setTextLayers((prev) =>
+      prev.map((l) => (l.id === targetId ? { ...l, ...updates } : l))
+    );
+  }
+
+  function updateBadgeLayer(updates: Partial<TextLayerAdjustment>) {
+    const targetId = badgeLayer?.id || "layer-badge";
     setTextLayers((prev) =>
       prev.map((l) => (l.id === targetId ? { ...l, ...updates } : l))
     );
@@ -771,8 +779,11 @@ export function PresetCustomizerEditor({
 
   // Composed Preview Object for PinTemplateVisualPreview
   const livePreviewData: TemplatePreviewData = useMemo(() => {
+    const badgeL = textLayers.find((l) => l.role === "badge") || textLayers[0];
     return {
       ...template,
+      imageCount,
+      collagePattern,
       canvasRatio,
       customWidth,
       customHeight,
@@ -788,13 +799,11 @@ export function PresetCustomizerEditor({
       slotAdjustments,
       customTextLayers: textLayers,
       customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
-      customBadgeText: textLayers.find((l) => l.role === "badge")?.text || activeLayer?.text || "20",
-      customBadgeShape: activeLayer?.shape || textLayers.find((l) => l.role === "badge")?.shape || "circle",
-      customBadgePosition: (activeLayer?.position || textLayers.find((l) => l.role === "badge")?.position || "top-left") as any,
-      customBadgeBg: activeLayer?.bgHighlight || textLayers.find((l) => l.role === "badge")?.bgHighlight || template.visualConfig?.badge?.bg || "#EE1A5B",
-      customBadgeColor: activeLayer?.color || textLayers.find((l) => l.role === "badge")?.color || "#FFFFFF",
-      customFont: activeLayer?.fontFamily,
-      customTextColor: activeLayer?.color,
+      customBadgeText: badgeL?.text || "20",
+      customBadgeShape: badgeL?.shape || "circle",
+      customBadgePosition: (badgeL?.position || "top-left") as any,
+      customBadgeBg: badgeL?.bgHighlight || template.visualConfig?.badge?.bg || "#EE1A5B",
+      customBadgeColor: badgeL?.color || "#FFFFFF",
       onSlotClick: (idx) => {
         setSelectedSlotIndex(idx);
         setActiveTab("images");
@@ -806,6 +815,8 @@ export function PresetCustomizerEditor({
     };
   }, [
     template,
+    imageCount,
+    collagePattern,
     canvasRatio,
     customWidth,
     customHeight,
@@ -820,7 +831,6 @@ export function PresetCustomizerEditor({
     snapToElements,
     slotAdjustments,
     textLayers,
-    activeLayer,
   ]);
 
   // Design Check warnings count
@@ -1268,7 +1278,7 @@ export function PresetCustomizerEditor({
                         <span>Shape & Position (Badge / Tag)</span>
                       </span>
                       <span className="text-[10px] font-mono text-slate-400 capitalize">
-                        {activeLayer?.shape || "circle"} · {activeLayer?.position || "top-left"}
+                        {badgeLayer?.shape || "circle"} · {badgeLayer?.position || "top-left"}
                       </span>
                     </div>
 
@@ -1280,9 +1290,9 @@ export function PresetCustomizerEditor({
                           <button
                             key={sh}
                             type="button"
-                            onClick={() => updateActiveLayer({ shape: sh, containerShape: sh })}
+                            onClick={() => updateBadgeLayer({ shape: sh, containerShape: sh })}
                             className={`py-1.5 rounded-lg text-xs font-bold capitalize transition-all cursor-pointer ${
-                              (activeLayer?.shape || "circle") === sh
+                              (badgeLayer?.shape || "circle") === sh
                                 ? "bg-red-600 text-white shadow-xs"
                                 : "text-slate-400 hover:text-white"
                             }`}
@@ -1306,9 +1316,9 @@ export function PresetCustomizerEditor({
                           <button
                             key={pos.id}
                             type="button"
-                            onClick={() => updateActiveLayer({ position: pos.id as any })}
+                            onClick={() => updateBadgeLayer({ position: pos.id as any })}
                             className={`py-1.5 px-2 rounded-lg text-xs font-bold transition-all border cursor-pointer ${
-                              (activeLayer?.position || "top-left") === pos.id
+                              (badgeLayer?.position || "top-left") === pos.id
                                 ? "border-red-500 bg-red-500/10 text-red-400"
                                 : "border-slate-700 bg-slate-900 text-slate-400 hover:text-white"
                             }`}
