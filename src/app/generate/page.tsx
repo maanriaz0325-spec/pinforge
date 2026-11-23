@@ -345,7 +345,7 @@ export default function GeneratePage() {
       const modeParam = params.get("mode");
 
       const targetPreset = presetParam || templateParam;
-      if (modeParam === "upload" || modeParam === "custom" || modeParam === "editor") {
+      if (modeParam === "upload" || modeParam === "custom" || modeParam === "editor" || targetPreset) {
         setActiveWay("custom_preset");
       }
       if (targetPreset) {

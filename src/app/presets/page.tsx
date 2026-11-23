@@ -24,6 +24,7 @@ import {
   Upload,
 } from "lucide-react";
 import { PinTemplateVisualPreview } from "@/components/PinTemplateVisualPreview";
+import { PresetCustomizerEditor } from "@/components/PresetCustomizerEditor";
 
 interface PresetItem {
   id: string;
@@ -340,8 +341,9 @@ const STUDIO_STYLES = [
 ];
 
 export default function PresetsShowcasePage() {
-  // Main view switcher: "studio" (AutoPinDesign 247) or "custom18" (18 Reference Presets)
-  const [mainTab, setMainTab] = useState<"studio" | "custom18">("studio");
+  // Main view switcher: "studio" (AutoPinDesign) | "custom18" (18 Reference Presets) | "editor" (Live Customizer)
+  const [mainTab, setMainTab] = useState<"studio" | "custom18" | "editor">("studio");
+  const [customizerTemplateId, setCustomizerTemplateId] = useState<string>("sb-pink-combat-boots");
 
   // Studio Presets State
   const [studioTemplates, setStudioTemplates] = useState<StudioTemplate[]>([]);
@@ -484,7 +486,18 @@ export default function PresetsShowcasePage() {
               }`}
             >
               <Grid className="w-3.5 h-3.5" />
-              <span>Studio Presets ({studioTemplates.length || 247})</span>
+              <span>Studio Presets ({studioTemplates.length || 272})</span>
+            </button>
+            <button
+              onClick={() => setMainTab("editor")}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                mainTab === "editor"
+                  ? "bg-red-600 text-white shadow-md shadow-red-900/30"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <Sliders className="w-3.5 h-3.5" />
+              <span>🎨 Pin Customizer & Studio Editor</span>
             </button>
             <button
               onClick={() => setMainTab("custom18")}
@@ -722,6 +735,17 @@ export default function PresetsShowcasePage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB: Live Pin Customizer & Studio Editor (AutoPinDesign Dual-Sync)         */}
+        {/* ========================================================================= */}
+        {mainTab === "editor" && (
+          <div className="space-y-6">
+            <PresetCustomizerEditor
+              initialTemplateId={customizerTemplateId}
+            />
           </div>
         )}
 

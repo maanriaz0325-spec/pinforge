@@ -2,6 +2,40 @@
 
 import React from "react";
 
+export interface ImageSlotAdjustment {
+  url?: string;
+  zoom?: number; // 1 to 2.5
+  panX?: number; // -50% to +50%
+  panY?: number; // -50% to +50%
+  fit?: "cover" | "contain" | "fill";
+  brightness?: number; // 50 to 150
+  contrast?: number; // 50 to 150
+  saturation?: number; // 0 to 200
+  rotation?: number; // 0, 90, 180, 270
+}
+
+export interface TextLayerAdjustment {
+  id: string;
+  text: string;
+  role: "badge" | "title" | "subtitle" | "website" | "cta" | "kicker";
+  fontFamily?: string;
+  fontWeight?: string;
+  fontSizePx?: number;
+  isBold?: boolean;
+  isItalic?: boolean;
+  isUnderline?: boolean;
+  isUppercase?: boolean;
+  textAlign?: "left" | "center" | "right";
+  color?: string;
+  bgHighlight?: string;
+  outlineColor?: string;
+  outlineWidth?: number;
+  shape?: "circle" | "rounded" | "square" | "pill" | "none";
+  position?: "top-left" | "center-top" | "over-band" | "over-image";
+  visible?: boolean;
+  letterSpacing?: string;
+}
+
 export interface VisualConfig {
   badge?: {
     text: string;
@@ -40,6 +74,7 @@ export interface TemplatePreviewData {
   customBadgeBg?: string;
   customBadgeText?: string;
   customBadgeShape?: string;
+  customBadgePosition?: "top-left" | "center-top" | "over-band" | "over-image";
   customLines?: string[];
   customKicker?: string;
   customScriptWord?: string;
@@ -51,6 +86,25 @@ export interface TemplatePreviewData {
     italic?: boolean;
     letterSpacing?: string;
   };
+  // Design Tab overrides:
+  canvasRatio?: "2:3" | "3:4" | "4:5" | "9:16" | "1:1" | "1:2" | "custom";
+  customWidth?: number;
+  customHeight?: number;
+  bgType?: "solid" | "gradient" | "image" | "transparent";
+  bgColor?: string;
+  bgGradientStart?: string;
+  bgGradientEnd?: string;
+  borderColor?: string;
+  borderWidth?: number;
+  cornerRadius?: number;
+  collageGap?: number;
+  snapToElements?: boolean;
+  // Images Tab overrides (per slot):
+  slotAdjustments?: Record<number, ImageSlotAdjustment>;
+  onSlotClick?: (slotIndex: number) => void;
+  // Text Tab overrides (per word/layer):
+  customTextLayers?: TextLayerAdjustment[];
+  onLayerClick?: (layerId: string) => void;
 }
 
 // Curated high-aesthetic royalty-free Unsplash photos by niche
@@ -158,6 +212,7 @@ export function PinTemplateVisualPreview({
   const badgeBg = template.customBadgeBg || defaultBadge?.bg || accentColor;
   const badgeColor = defaultBadge?.color || "#FFFFFF";
   const badgeShape = template.customBadgeShape || defaultBadge?.shape || "circle";
+  const badgePosition = template.customBadgePosition || "top-left";
 
   // Split headline lines or use user custom lines
   const rawLines =
@@ -201,223 +256,192 @@ export function PinTemplateVisualPreview({
     blockStyle === "forge-cyber-noir" ||
     blockStyle === "forge-provence-lavender";
 
+  // Resolve aspect ratio class or style
+  const effectiveRatio = template.canvasRatio || template.aspectRatio || "2:3";
+  const aspectClass =
+    effectiveRatio === "1:2"
+      ? "aspect-[1/2]"
+      : effectiveRatio === "9:16"
+      ? "aspect-[9/16]"
+      : effectiveRatio === "1:1"
+      ? "aspect-square"
+      : effectiveRatio === "4:5"
+      ? "aspect-[4/5]"
+      : effectiveRatio === "3:4"
+      ? "aspect-[3/4]"
+      : "aspect-[2/3]";
+
+  // Dynamic Background Style
+  const bgType = template.bgType || "solid";
+  const bgStyle: React.CSSProperties = {};
+  if (bgType === "gradient") {
+    bgStyle.backgroundImage = `linear-gradient(135deg, ${template.bgGradientStart || "#EE1A5B"}, ${template.bgGradientEnd || "#8B5CF6"})`;
+  } else if (bgType === "transparent") {
+    bgStyle.backgroundColor = "transparent";
+  } else if (bgType === "solid" && template.bgColor) {
+    bgStyle.backgroundColor = template.bgColor;
+  } else {
+    bgStyle.backgroundColor = "#0b0f19";
+  }
+
+  // Frame Border & Corner Radius
+  const borderWidth = template.borderWidth ?? 0;
+  const borderColor = template.borderColor || "#FFFFFF";
+  const cornerRadius = template.cornerRadius ?? 12;
+  const collageGap = template.collageGap !== undefined ? template.collageGap : 2;
+
+  // Single Slot Renderer (handles per-slot photo, zoom, pan, brightness, contrast, rotation, fit)
+  const renderSlot = (idx: number, fallbackBg?: string) => {
+    const slotAdj = template.slotAdjustments?.[idx];
+    const userImg = slotAdj?.url || (template.customImages && template.customImages[idx]) || (hasCustomImages && userImages[idx]) || (hasCustomImages && userImages[0]);
+    const activeImg = userImg || (hasCustomImages ? getPhoto(idx) : null);
+
+    if (activeImg) {
+      const zoom = slotAdj?.zoom ?? 1;
+      const panX = slotAdj?.panX ?? 0;
+      const panY = slotAdj?.panY ?? 0;
+      const rotation = slotAdj?.rotation ?? 0;
+      const brightness = slotAdj?.brightness ?? 100;
+      const contrast = slotAdj?.contrast ?? 100;
+      const saturation = slotAdj?.saturation ?? 100;
+      const fit = slotAdj?.fit || "cover";
+
+      return (
+        <div
+          className="relative w-full h-full overflow-hidden bg-slate-900 group/slot cursor-pointer select-none"
+          onClick={() => template.onSlotClick?.(idx)}
+        >
+          <img
+            src={activeImg}
+            alt={`Slot ${idx + 1}`}
+            className="w-full h-full pointer-events-none transition-transform duration-75"
+            style={{
+              objectFit: fit,
+              transform: `scale(${zoom}) translate(${panX}%, ${panY}%) rotate(${rotation}deg)`,
+              filter: `brightness(${brightness}%) contrast(${contrast}%) saturate(${saturation}%)`,
+            }}
+          />
+          {template.onSlotClick && (
+            <div className="absolute inset-0 bg-red-600/10 opacity-0 group-hover/slot:opacity-100 transition-opacity border border-red-500/50 pointer-events-none flex items-center justify-center">
+              <span className="text-[10px] bg-black/75 px-1.5 py-0.5 rounded text-white font-mono">
+                Slot {idx + 1}
+              </span>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Abstract geometric placeholder matching screenshot
+    return (
+      <div
+        className={`relative w-full h-full overflow-hidden ${fallbackBg || "bg-[#EFE7DC]"} flex items-center justify-center cursor-pointer select-none`}
+        onClick={() => template.onSlotClick?.(idx)}
+      >
+        <div className="w-16 sm:w-20 aspect-square rounded-full bg-[#E48E83] opacity-80" />
+      </div>
+    );
+  };
+
+  // Helper to extract layer adjustment if customized by user
+  const getLayer = (idx: number) => {
+    if (template.customTextLayers && template.customTextLayers[idx]) {
+      return template.customTextLayers[idx];
+    }
+    return null;
+  };
+
   return (
     <div
-      className={`relative w-full aspect-[2/3] overflow-hidden rounded-xl bg-slate-950 select-none shadow-md ${className}`}
-      style={{ fontFamily: primaryFont }}
+      className={`relative w-full ${aspectClass} overflow-hidden select-none shadow-md ${className}`}
+      style={{
+        fontFamily: primaryFont,
+        borderWidth: `${borderWidth}px`,
+        borderColor: borderColor,
+        borderStyle: borderWidth > 0 ? "solid" : "none",
+        borderRadius: `${cornerRadius}px`,
+        ...bgStyle,
+      }}
     >
       {/* ======================================================== */}
-      {/* 1. PHOTO COLLAGE OR SIGNATURE GEOMETRIC ARTWORK */}
+      {/* 1. PHOTO COLLAGE OR SIGNATURE GEOMETRIC ARTWORK          */}
       {/* ======================================================== */}
       <div className="absolute inset-0 pointer-events-none">
-        {hasCustomImages ? (
-          /* User Uploaded Photos Rendered In Layout */
-          <>
-            {imageCount === 1 && (
-              <div
-                className="w-full h-full bg-cover bg-center"
-                style={{ backgroundImage: `url(${getPhoto(0)})` }}
-              >
-                <div className="w-full h-full bg-gradient-to-t from-black/85 via-black/35 to-black/30" />
-              </div>
-            )}
+        {/* 1 Image: Single Panel */}
+        {imageCount === 1 && (
+          <div className="w-full h-full pointer-events-auto">
+            {renderSlot(0, "bg-[#EFE7DC]")}
+          </div>
+        )}
 
-            {imageCount === 2 && (
-              <div className="w-full h-full grid grid-cols-2 gap-[2px] bg-white/30">
-                <div
-                  className="w-full h-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${getPhoto(0)})` }}
-                />
-                <div
-                  className="w-full h-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${getPhoto(1)})` }}
-                />
-              </div>
-            )}
+        {/* 2 Images: Split Left & Right Columns */}
+        {imageCount === 2 && (
+          <div
+            className="w-full h-full grid grid-cols-2 pointer-events-auto"
+            style={{ gap: `${collageGap}px` }}
+          >
+            {renderSlot(0, "bg-[#EFE7DC]")}
+            {renderSlot(1, "bg-[#8E9880]")}
+          </div>
+        )}
 
-            {imageCount === 3 && (
-              <div className="w-full h-full flex flex-col gap-[2px] bg-white/30">
-                <div
-                  className="h-[55%] w-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${getPhoto(0)})` }}
-                />
-                <div className="h-[45%] grid grid-cols-2 gap-[2px]">
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(1)})` }}
-                  />
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(2)})` }}
-                  />
-                </div>
-              </div>
-            )}
+        {/* 3 Images: 1 Hero Top + 2 Split Bottom */}
+        {imageCount === 3 && (
+          <div
+            className="w-full h-full flex flex-col pointer-events-auto"
+            style={{ gap: `${collageGap}px` }}
+          >
+            <div className="h-[52%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+            <div className="h-[48%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(1, "bg-[#C39F8F]/40")}
+              {renderSlot(2, "bg-[#8E9880]")}
+            </div>
+          </div>
+        )}
 
-            {imageCount === 4 && (
-              <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px] bg-white/30">
-                {[0, 1, 2, 3].map((idx) => (
-                  <div
-                    key={idx}
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(idx)})` }}
-                  />
-                ))}
-              </div>
-            )}
+        {/* 4 Images: 4 Quadrants (2x2 Grid) */}
+        {imageCount === 4 && (
+          <div
+            className="w-full h-full grid grid-cols-2 grid-rows-2 pointer-events-auto"
+            style={{ gap: `${collageGap}px` }}
+          >
+            {renderSlot(0, "bg-[#EFE7DC]")}
+            {renderSlot(1, "bg-[#8E9880]")}
+            {renderSlot(2, "bg-[#EFE7DC]")}
+            {renderSlot(3, "bg-[#8E9880]")}
+          </div>
+        )}
 
-            {imageCount === 5 && (
-              <div className="w-full h-full flex flex-col gap-[2px] bg-white/30">
-                <div className="h-[45%] grid grid-cols-2 gap-[2px]">
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(0)})` }}
-                  />
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(1)})` }}
-                  />
-                </div>
-                <div className="h-[55%] grid grid-cols-3 gap-[2px]">
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(2)})` }}
-                  />
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(3)})` }}
-                  />
-                  <div
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(4)})` }}
-                  />
-                </div>
-              </div>
-            )}
+        {/* 5 Images: 2 Top Panels + 3 Bottom Panels */}
+        {imageCount === 5 && (
+          <div
+            className="w-full h-full flex flex-col pointer-events-auto"
+            style={{ gap: `${collageGap}px` }}
+          >
+            <div className="h-[45%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(0, "bg-[#EFE7DC]")}
+              {renderSlot(1, "bg-[#8E9880]")}
+            </div>
+            <div className="h-[55%] grid grid-cols-3" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(2, "bg-[#C39F8F]/40")}
+              {renderSlot(3, "bg-[#EFE7DC]")}
+              {renderSlot(4, "bg-[#8E9880]")}
+            </div>
+          </div>
+        )}
 
-            {imageCount >= 6 && (
-              <div className="w-full h-full grid grid-cols-2 grid-rows-3 gap-[2px] bg-white/30">
-                {[0, 1, 2, 3, 4, 5].map((idx) => (
-                  <div
-                    key={idx}
-                    className="w-full h-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${getPhoto(idx)})` }}
-                  />
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          /* Signature AutoPinDesign Abstract Geometric Collage (Screenshot Exact Reproduction) */
-          <>
-            {/* 1 Image: Elegant Single Panel */}
-            {imageCount === 1 && (
-              <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden flex flex-col justify-between p-6">
-                <div className="w-36 h-36 rounded-full bg-[#E48E83] opacity-80 shadow-xs self-start -ml-8 -mt-8" />
-                <div className="w-44 h-44 rounded-full bg-[#8E9880] opacity-80 shadow-xs self-end -mr-10 -mb-10" />
-              </div>
-            )}
-
-            {/* 2 Images: Split Left & Right Columns */}
-            {imageCount === 2 && (
-              <div className="w-full h-full flex">
-                <div className="w-1/2 h-full bg-[#EFE7DC] relative overflow-hidden border-r border-white/60">
-                  <div className="absolute top-[8%] left-[10%] w-[75%] aspect-square rounded-full bg-[#E48E83] opacity-90 shadow-xs" />
-                  <div className="absolute bottom-[8%] left-[10%] w-[75%] aspect-square rounded-full bg-[#C39F8F] opacity-90 shadow-xs" />
-                </div>
-                <div className="w-1/2 h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute top-[8%] right-[10%] w-[75%] aspect-square rounded-full bg-[#758169] opacity-85 shadow-xs" />
-                  <div className="absolute top-[48%] inset-x-0 h-9 bg-[#6A745E] opacity-75" />
-                  <div className="absolute bottom-[8%] right-[10%] w-[75%] aspect-square rounded-full bg-[#A2AE95] opacity-85 shadow-xs" />
-                </div>
-              </div>
-            )}
-
-            {/* 3 Images: 1 Hero Top + 2 Split Bottom */}
-            {imageCount === 3 && (
-              <div className="w-full h-full flex flex-col">
-                <div className="h-[52%] w-full bg-[#EFE7DC] relative overflow-hidden border-b border-white/60">
-                  <div className="absolute top-[10%] left-[20%] w-[50%] aspect-square rounded-full bg-[#E48E83] opacity-85" />
-                </div>
-                <div className="h-[48%] w-full flex">
-                  <div className="w-1/2 h-full bg-[#C39F8F]/40 relative overflow-hidden border-r border-white/60">
-                    <div className="absolute bottom-[10%] left-[15%] w-[70%] aspect-square rounded-full bg-[#C39F8F] opacity-90" />
-                  </div>
-                  <div className="w-1/2 h-full bg-[#8E9880] relative overflow-hidden">
-                    <div className="absolute bottom-[10%] right-[15%] w-[70%] aspect-square rounded-full bg-[#A2AE95] opacity-85" />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* 4 Images: 4 Quadrants (2x2 Grid) */}
-            {imageCount === 4 && (
-              <div className="w-full h-full grid grid-cols-2 grid-rows-2 gap-[2px] bg-white/60">
-                <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                  <div className="absolute top-[10%] left-[10%] w-[75%] aspect-square rounded-full bg-[#E48E83] opacity-90" />
-                </div>
-                <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute top-[10%] right-[10%] w-[75%] aspect-square rounded-full bg-[#758169] opacity-85" />
-                </div>
-                <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                  <div className="absolute bottom-[10%] left-[10%] w-[75%] aspect-square rounded-full bg-[#C39F8F] opacity-90" />
-                </div>
-                <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute top-[30%] inset-x-0 h-6 bg-[#6A745E] opacity-75" />
-                  <div className="absolute bottom-[10%] right-[10%] w-[75%] aspect-square rounded-full bg-[#A2AE95] opacity-85" />
-                </div>
-              </div>
-            )}
-
-            {/* 5 Images: 2 Top Panels + 3 Bottom Panels */}
-            {imageCount === 5 && (
-              <div className="w-full h-full flex flex-col gap-[2px] bg-white/60">
-                <div className="h-[45%] grid grid-cols-2 gap-[2px]">
-                  <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                    <div className="absolute top-[10%] left-[10%] w-[70%] aspect-square rounded-full bg-[#E48E83] opacity-85" />
-                  </div>
-                  <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                    <div className="absolute top-[10%] right-[10%] w-[70%] aspect-square rounded-full bg-[#758169] opacity-85" />
-                  </div>
-                </div>
-                <div className="h-[55%] grid grid-cols-3 gap-[2px]">
-                  <div className="w-full h-full bg-[#C39F8F]/40 relative overflow-hidden">
-                    <div className="absolute bottom-[10%] left-[10%] w-[80%] aspect-square rounded-full bg-[#C39F8F] opacity-85" />
-                  </div>
-                  <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                    <div className="absolute bottom-[10%] inset-x-[10%] w-[80%] aspect-square rounded-full bg-[#E48E83] opacity-85" />
-                  </div>
-                  <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                    <div className="absolute bottom-[10%] right-[10%] w-[80%] aspect-square rounded-full bg-[#A2AE95] opacity-85" />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* 6 Images: 2x3 Grid */}
-            {imageCount >= 6 && (
-              <div className="w-full h-full grid grid-cols-2 grid-rows-3 gap-[2px] bg-white/60">
-                <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                  <div className="absolute top-[10%] left-[10%] w-[70%] aspect-square rounded-full bg-[#E48E83] opacity-85" />
-                </div>
-                <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute top-[10%] right-[10%] w-[70%] aspect-square rounded-full bg-[#758169] opacity-85" />
-                </div>
-                <div className="w-full h-full bg-[#C39F8F]/40 relative overflow-hidden">
-                  <div className="absolute top-[10%] left-[10%] w-[70%] aspect-square rounded-full bg-[#C39F8F] opacity-85" />
-                </div>
-                <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute top-[20%] inset-x-0 h-4 bg-[#6A745E] opacity-75" />
-                </div>
-                <div className="w-full h-full bg-[#EFE7DC] relative overflow-hidden">
-                  <div className="absolute bottom-[10%] left-[10%] w-[70%] aspect-square rounded-full bg-[#E48E83] opacity-85" />
-                </div>
-                <div className="w-full h-full bg-[#8E9880] relative overflow-hidden">
-                  <div className="absolute bottom-[10%] right-[10%] w-[70%] aspect-square rounded-full bg-[#A2AE95] opacity-85" />
-                </div>
-              </div>
-            )}
-          </>
+        {/* 6 Images: 2x3 Grid */}
+        {imageCount >= 6 && (
+          <div
+            className="w-full h-full grid grid-cols-2 grid-rows-3 pointer-events-auto"
+            style={{ gap: `${collageGap}px` }}
+          >
+            {[0, 1, 2, 3, 4, 5].map((idx) => (
+              <React.Fragment key={idx}>
+                {renderSlot(idx, idx % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
+              </React.Fragment>
+            ))}
+          </div>
         )}
       </div>
 
@@ -426,12 +450,22 @@ export function PinTemplateVisualPreview({
       {/* ======================================================== */}
       {hasBadge && !isIntegratedArchetype && (
         <div
-          className={`absolute z-30 flex items-center justify-center font-extrabold shadow-lg transition-transform ${
+          className={`absolute z-30 flex items-center justify-center font-extrabold shadow-lg transition-all ${
+            badgePosition === "center-top"
+              ? "top-4 left-1/2 -translate-x-1/2"
+              : badgePosition === "over-band"
+              ? "bottom-[38%] left-1/2 -translate-x-1/2"
+              : badgePosition === "over-image"
+              ? "top-6 right-6"
+              : "top-4 left-4"
+          } ${
             badgeShape === "circle"
-              ? "w-11 h-11 rounded-full border-2 border-white/60 top-4 left-4"
+              ? "w-11 h-11 rounded-full border-2 border-white/60"
               : badgeShape === "pill"
-              ? "px-3.5 py-1 rounded-full border border-white/50 text-xs top-4 left-4"
-              : "w-10 h-10 rounded-sm border-2 border-white/60 top-4 left-4"
+              ? "px-3.5 py-1 rounded-full border border-white/50 text-xs"
+              : badgeShape === "rounded"
+              ? "w-11 h-11 rounded-xl border-2 border-white/60"
+              : "w-10 h-10 rounded-none border-2 border-white/60"
           }`}
           style={{
             backgroundColor: badgeBg,
