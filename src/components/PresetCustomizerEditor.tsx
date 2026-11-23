@@ -109,6 +109,47 @@ interface PresetCustomizerEditorProps {
   compact?: boolean;
 }
 
+// Curated Collage Layout Patterns by Image Quantity
+export const COLLAGE_PATTERNS_BY_COUNT: Record<number, { id: string; label: string; desc: string }[]> = {
+  1: [
+    { id: "default", label: "Full Bleed", desc: "100% canvas coverage" },
+    { id: "single-framed", label: "Framed Inset", desc: "Elegant border frame" },
+    { id: "single-hero-top", label: "Hero Top", desc: "72% photo + colored base" },
+  ],
+  2: [
+    { id: "default", label: "Split Columns", desc: "50/50 side-by-side" },
+    { id: "two-rows", label: "Stacked Rows", desc: "Top & bottom halves" },
+    { id: "two-asymmetric", label: "60/40 Hero", desc: "Left hero + right column" },
+    { id: "two-hero-top", label: "Top Hero 65/35", desc: "Top hero + bottom strip" },
+  ],
+  3: [
+    { id: "default", label: "Top Hero + 2", desc: "1 Top hero + 2 bottom split" },
+    { id: "three-hero-bottom", label: "2 Top + Hero", desc: "2 Top split + 1 bottom hero" },
+    { id: "three-hero-left", label: "Left Hero + 2", desc: "1 Left hero + 2 right stack" },
+    { id: "three-cols", label: "3 Columns", desc: "3 Vertical panels" },
+    { id: "three-rows", label: "3 Rows", desc: "3 Horizontal stacks" },
+  ],
+  4: [
+    { id: "default", label: "2x2 Quad Grid", desc: "4 Equal quadrants" },
+    { id: "four-hero-top", label: "1 Top + 3 Cols", desc: "Top hero + 3 bottom cols" },
+    { id: "four-hero-left", label: "1 Left + 3 Stack", desc: "Left hero + 3 right rows" },
+    { id: "four-cols", label: "4 Columns", desc: "4 Vertical slices" },
+    { id: "four-rows", label: "4 Rows", desc: "4 Horizontal rows" },
+  ],
+  5: [
+    { id: "default", label: "2 Top + 3 Bottom", desc: "2 Hero top + 3 bottom split" },
+    { id: "five-top3-bottom2", label: "3 Top + 2 Bottom", desc: "3 Top split + 2 bottom hero" },
+    { id: "five-hero-top", label: "1 Top + 4 Grid", desc: "1 Wide hero + 2x2 grid" },
+    { id: "five-hero-left", label: "1 Left + 4 Grid", desc: "1 Tall hero + 2x2 grid" },
+  ],
+  6: [
+    { id: "default", label: "2x3 Grid", desc: "2 Columns x 3 rows" },
+    { id: "six-grid-3x2", label: "3x2 Grid", desc: "3 Columns x 2 rows" },
+    { id: "six-top2-bottom4", label: "2 Top + 4 Grid", desc: "2 Top hero + 2x2 grid" },
+    { id: "six-hero-top", label: "1 Top + 5 Gallery", desc: "1 Big hero + 5 bottom row" },
+  ],
+};
+
 export function PresetCustomizerEditor({
   initialTemplate,
   initialTemplateId,
@@ -200,7 +241,10 @@ export function PresetCustomizerEditor({
   // -------------------------------------------------------------
   // TAB 2: IMAGES STATE (Per-Slot Separate Settings - Screenshot 3)
   // -------------------------------------------------------------
-  const slotCount = template.imageCount || (template.layoutId === "single" ? 1 : template.layoutId?.includes("two") ? 2 : template.layoutId?.includes("three") ? 3 : template.layoutId?.includes("5") ? 5 : template.layoutId?.includes("6") ? 6 : 4);
+  const initialSlotCount = template.imageCount || (template.layoutId === "single" ? 1 : template.layoutId?.includes("two") ? 2 : template.layoutId?.includes("three") ? 3 : template.layoutId?.includes("5") ? 5 : template.layoutId?.includes("6") ? 6 : 4);
+  const [imageCount, setImageCount] = useState<number>(initialSlotCount);
+  const [collagePattern, setCollagePattern] = useState<string>("default");
+  const slotCount = imageCount;
   const [selectedSlotIndex, setSelectedSlotIndex] = useState<number | null>(0);
   const [slotAdjustments, setSlotAdjustments] = useState<Record<number, ImageSlotAdjustment>>({});
   const [uploadingSlot, setUploadingSlot] = useState<number | null>(null);
@@ -318,6 +362,9 @@ export function PresetCustomizerEditor({
     if (t.aspectRatio) setCanvasRatio(t.aspectRatio as any);
     if (t.visualConfig?.bandColor) setBgColor(t.visualConfig.bandColor);
     if (t.collageGap !== undefined) setCollageGap(t.collageGap);
+    const resolvedCount = t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId?.includes("two") ? 2 : t.layoutId?.includes("three") ? 3 : t.layoutId?.includes("5") ? 5 : t.layoutId?.includes("6") ? 6 : 4);
+    setImageCount(resolvedCount);
+    setCollagePattern(t.collagePattern || "default");
 
     const raw = t.layerTexts && t.layerTexts.length > 0
       ? t.layerTexts
@@ -535,6 +582,34 @@ export function PresetCustomizerEditor({
       copy[toSlot] = temp;
       return copy;
     });
+  }
+
+  
+  function handleAddSlot() {
+    if (imageCount >= 6) return;
+    const newCount = imageCount + 1;
+    setImageCount(newCount);
+    setSelectedSlotIndex(newCount - 1);
+  }
+
+  function handleRemoveSlot(slotIdxToRemove?: number) {
+    if (imageCount <= 1) return;
+    const targetIdx = slotIdxToRemove !== undefined ? slotIdxToRemove : imageCount - 1;
+    setSlotAdjustments((prev) => {
+      const copy: Record<number, ImageSlotAdjustment> = {};
+      let newI = 0;
+      for (let i = 0; i < imageCount; i++) {
+        if (i === targetIdx) continue;
+        if (prev[i]) copy[newI] = prev[i];
+        newI++;
+      }
+      return copy;
+    });
+    const newCount = imageCount - 1;
+    setImageCount(newCount);
+    if (selectedSlotIndex !== null && selectedSlotIndex >= newCount) {
+      setSelectedSlotIndex(newCount - 1);
+    }
   }
 
   function handleClearSlot(slotIdx: number) {
@@ -1112,10 +1187,100 @@ export function PresetCustomizerEditor({
             )}
 
             {/* ------------------------------------------------------------- */}
-            {/* TAB 2: IMAGES (Per-Slot Separate Settings - Screenshot 3)     */}
+            {/* TAB 2: IMAGES (Collage Layout Patterns & Per-Slot Settings)   */}
             {/* ------------------------------------------------------------- */}
             {activeTab === "images" && (
               <div className="space-y-4">
+                {/* 1. COLLAGE QUANTITY & PATTERN SELECTOR */}
+                <div className="p-3.5 rounded-xl bg-[#171d2b] border border-slate-700/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+                        <ImageIcon className="w-3.5 h-3.5 text-red-400" />
+                        <span>Collage Layout & Photos</span>
+                      </h3>
+                      <p className="text-[10px] text-slate-400">
+                        Choose photo quantity (1 to 6) and select layout pattern.
+                      </p>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold border border-red-500/30">
+                      {imageCount} {imageCount === 1 ? "Photo" : "Photos"}
+                    </span>
+                  </div>
+
+                  {/* Quantity Pills & Add/Remove buttons */}
+                  <div className="space-y-1.5">
+                    <span className="text-[11px] text-slate-300 font-bold block">Photo Quantity:</span>
+                    <div className="flex items-center gap-1.5">
+                      {[1, 2, 3, 4, 5, 6].map((num) => (
+                        <button
+                          key={num}
+                          type="button"
+                          onClick={() => {
+                            setImageCount(num);
+                            setCollagePattern("default");
+                            if (selectedSlotIndex !== null && selectedSlotIndex >= num) {
+                              setSelectedSlotIndex(num - 1);
+                            }
+                          }}
+                          className={`flex-1 py-1.5 rounded-lg text-xs font-bold cursor-pointer transition-all ${
+                            imageCount === num
+                              ? "bg-red-600 text-white shadow-md shadow-red-900/30 scale-105"
+                              : "bg-slate-900 border border-slate-800 text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          {num}
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={handleAddSlot}
+                        disabled={imageCount >= 6}
+                        className="flex-1 py-1 px-2.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-red-500/60 disabled:opacity-40 text-slate-200 hover:text-white text-[11px] font-bold flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed transition-all"
+                      >
+                        <Plus className="w-3 h-3 text-emerald-400" />
+                        <span>+ Add Photo Slot</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSlot()}
+                        disabled={imageCount <= 1}
+                        className="flex-1 py-1 px-2.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-red-500/60 disabled:opacity-40 text-slate-200 hover:text-white text-[11px] font-bold flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed transition-all"
+                      >
+                        <Trash2 className="w-3 h-3 text-rose-400" />
+                        <span>- Remove Slot</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Collage Patterns dependent on Image Quantity */}
+                  <div className="space-y-1.5 pt-2 border-t border-slate-800">
+                    <span className="text-[11px] text-slate-300 font-bold block">
+                      Layout Patterns for {imageCount} {imageCount === 1 ? "Photo" : "Photos"}:
+                    </span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {(COLLAGE_PATTERNS_BY_COUNT[imageCount] || COLLAGE_PATTERNS_BY_COUNT[4]).map((pat) => (
+                        <button
+                          key={pat.id}
+                          type="button"
+                          onClick={() => setCollagePattern(pat.id)}
+                          className={`p-2 rounded-lg text-left cursor-pointer transition-all border ${
+                            (collagePattern === pat.id || (pat.id === "default" && (!collagePattern || collagePattern === "default")))
+                              ? "bg-red-600/15 border-red-500 text-white shadow-xs"
+                              : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
+                          }`}
+                        >
+                          <span className="text-[11px] font-bold block truncate">{pat.label}</span>
+                          <span className="text-[9px] text-slate-400 block truncate">{pat.desc}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 <div>
                   <h3 className="text-xs font-extrabold text-white uppercase tracking-wider">Image frames</h3>
                   <p className="text-[11px] text-slate-400 mt-0.5">
@@ -1171,7 +1336,7 @@ export function PresetCustomizerEditor({
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
                           <span
                             className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
                               hasImage
@@ -1181,6 +1346,19 @@ export function PresetCustomizerEditor({
                           >
                             {hasImage ? "Loaded" : "Empty"}
                           </span>
+                          {imageCount > 1 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRemoveSlot(idx);
+                              }}
+                              className="p-1 rounded text-slate-500 hover:text-red-400 hover:bg-slate-800 cursor-pointer transition-colors"
+                              title="Delete this image slot"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                         </div>
                       </div>
                     );

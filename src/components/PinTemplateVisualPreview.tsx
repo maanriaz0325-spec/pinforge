@@ -66,6 +66,7 @@ export interface TemplatePreviewData {
   layoutId?: string;
   aspectRatio?: string;
   imageCount?: number;
+  collagePattern?: string;
   fonts?: string[];
   colors?: string[];
   layerTexts?: string[];
@@ -194,6 +195,7 @@ export function PinTemplateVisualPreview({
 }) {
   const layout = template.layoutId || "two-side";
   const imageCount = resolveImageCount(template.layoutId, template.imageCount);
+  const collagePattern = template.collagePattern || "default";
   const config = template.visualConfig || {};
   const photoTheme = config.photoTheme || "lifestyle";
   const defaultPhotos = NICHE_PHOTOS[photoTheme] || NICHE_PHOTOS.lifestyle;
@@ -470,84 +472,234 @@ export function PinTemplateVisualPreview({
       }}
     >
       {/* ======================================================== */}
-      {/* 1. PHOTO COLLAGE OR SIGNATURE GEOMETRIC ARTWORK          */}
+      {/* 1. PHOTO COLLAGE WITH DYNAMIC LAYOUT PATTERNS            */}
       {/* ======================================================== */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* 1 Image: Single Panel */}
+        {/* 1 Image Patterns */}
         {imageCount === 1 && (
-          <div className="w-full h-full pointer-events-auto">
-            {renderSlot(0, "bg-[#EFE7DC]")}
-          </div>
-        )}
-
-        {/* 2 Images: Split Left & Right Columns */}
-        {imageCount === 2 && (
-          <div
-            className="w-full h-full grid grid-cols-2 pointer-events-auto"
-            style={{ gap: `${collageGap}px` }}
-          >
-            {renderSlot(0, "bg-[#EFE7DC]")}
-            {renderSlot(1, "bg-[#8E9880]")}
-          </div>
-        )}
-
-        {/* 3 Images: 1 Hero Top + 2 Split Bottom */}
-        {imageCount === 3 && (
-          <div
-            className="w-full h-full flex flex-col pointer-events-auto"
-            style={{ gap: `${collageGap}px` }}
-          >
-            <div className="h-[52%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
-            <div className="h-[48%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
-              {renderSlot(1, "bg-[#C39F8F]/40")}
-              {renderSlot(2, "bg-[#8E9880]")}
+          collagePattern === "single-framed" ? (
+            <div className="w-full h-full p-3 pointer-events-auto flex items-center justify-center">
+              <div className="w-full h-full overflow-hidden shadow-inner border border-white/50 rounded-xl">
+                {renderSlot(0, "bg-[#EFE7DC]")}
+              </div>
             </div>
-          </div>
+          ) : collagePattern === "single-hero-top" ? (
+            <div className="w-full h-full pointer-events-auto flex flex-col">
+              <div className="h-[72%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[28%] w-full bg-[#EFE7DC]/50 flex items-center justify-center" />
+            </div>
+          ) : (
+            <div className="w-full h-full pointer-events-auto">
+              {renderSlot(0, "bg-[#EFE7DC]")}
+            </div>
+          )
         )}
 
-        {/* 4 Images: 4 Quadrants (2x2 Grid) */}
-        {imageCount === 4 && (
-          <div
-            className="w-full h-full grid grid-cols-2 grid-rows-2 pointer-events-auto"
-            style={{ gap: `${collageGap}px` }}
-          >
-            {renderSlot(0, "bg-[#EFE7DC]")}
-            {renderSlot(1, "bg-[#8E9880]")}
-            {renderSlot(2, "bg-[#EFE7DC]")}
-            {renderSlot(3, "bg-[#8E9880]")}
-          </div>
-        )}
-
-        {/* 5 Images: 2 Top Panels + 3 Bottom Panels */}
-        {imageCount === 5 && (
-          <div
-            className="w-full h-full flex flex-col pointer-events-auto"
-            style={{ gap: `${collageGap}px` }}
-          >
-            <div className="h-[45%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+        {/* 2 Images Patterns */}
+        {imageCount === 2 && (
+          collagePattern === "two-rows" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-1/2 w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-1/2 w-full">{renderSlot(1, "bg-[#8E9880]")}</div>
+            </div>
+          ) : collagePattern === "two-asymmetric" ? (
+            <div className="w-full h-full grid grid-cols-[1.3fr_1fr] pointer-events-auto" style={{ gap: `${collageGap}px` }}>
               {renderSlot(0, "bg-[#EFE7DC]")}
               {renderSlot(1, "bg-[#8E9880]")}
             </div>
-            <div className="h-[55%] grid grid-cols-3" style={{ gap: `${collageGap}px` }}>
-              {renderSlot(2, "bg-[#C39F8F]/40")}
-              {renderSlot(3, "bg-[#EFE7DC]")}
-              {renderSlot(4, "bg-[#8E9880]")}
+          ) : collagePattern === "two-hero-top" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[65%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[35%] w-full">{renderSlot(1, "bg-[#8E9880]")}</div>
             </div>
-          </div>
+          ) : (
+            <div className="w-full h-full grid grid-cols-2 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(0, "bg-[#EFE7DC]")}
+              {renderSlot(1, "bg-[#8E9880]")}
+            </div>
+          )
         )}
 
-        {/* 6 Images: 2x3 Grid */}
+        {/* 3 Images Patterns */}
+        {imageCount === 3 && (
+          collagePattern === "three-hero-bottom" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[48%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(0, "bg-[#EFE7DC]")}
+                {renderSlot(1, "bg-[#8E9880]")}
+              </div>
+              <div className="h-[52%] w-full">{renderSlot(2, "bg-[#C39F8F]/40")}</div>
+            </div>
+          ) : collagePattern === "three-hero-left" ? (
+            <div className="w-full h-full grid grid-cols-[1.2fr_1fr] pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-full w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-full flex flex-col" style={{ gap: `${collageGap}px` }}>
+                <div className="h-1/2 w-full">{renderSlot(1, "bg-[#C39F8F]/40")}</div>
+                <div className="h-1/2 w-full">{renderSlot(2, "bg-[#8E9880]")}</div>
+              </div>
+            </div>
+          ) : collagePattern === "three-cols" ? (
+            <div className="w-full h-full grid grid-cols-3 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(0, "bg-[#EFE7DC]")}
+              {renderSlot(1, "bg-[#C39F8F]/40")}
+              {renderSlot(2, "bg-[#8E9880]")}
+            </div>
+          ) : collagePattern === "three-rows" ? (
+            <div className="w-full h-full grid grid-rows-3 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(0, "bg-[#EFE7DC]")}
+              {renderSlot(1, "bg-[#C39F8F]/40")}
+              {renderSlot(2, "bg-[#8E9880]")}
+            </div>
+          ) : (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[52%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[48%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(1, "bg-[#C39F8F]/40")}
+                {renderSlot(2, "bg-[#8E9880]")}
+              </div>
+            </div>
+          )
+        )}
+
+        {/* 4 Images Patterns */}
+        {imageCount === 4 && (
+          collagePattern === "four-hero-top" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[50%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[50%] grid grid-cols-3" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(1, "bg-[#8E9880]")}
+                {renderSlot(2, "bg-[#EFE7DC]")}
+                {renderSlot(3, "bg-[#8E9880]")}
+              </div>
+            </div>
+          ) : collagePattern === "four-hero-left" ? (
+            <div className="w-full h-full grid grid-cols-2 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-full w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-full flex flex-col" style={{ gap: `${collageGap}px` }}>
+                <div className="h-1/3 w-full">{renderSlot(1, "bg-[#8E9880]")}</div>
+                <div className="h-1/3 w-full">{renderSlot(2, "bg-[#EFE7DC]")}</div>
+                <div className="h-1/3 w-full">{renderSlot(3, "bg-[#8E9880]")}</div>
+              </div>
+            </div>
+          ) : collagePattern === "four-cols" ? (
+            <div className="w-full h-full grid grid-cols-4 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {[0, 1, 2, 3].map((i) => (
+                <React.Fragment key={i}>
+                  {renderSlot(i, i % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : collagePattern === "four-rows" ? (
+            <div className="w-full h-full grid grid-rows-4 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {[0, 1, 2, 3].map((i) => (
+                <React.Fragment key={i}>
+                  {renderSlot(i, i % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full h-full grid grid-cols-2 grid-rows-2 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {renderSlot(0, "bg-[#EFE7DC]")}
+              {renderSlot(1, "bg-[#8E9880]")}
+              {renderSlot(2, "bg-[#EFE7DC]")}
+              {renderSlot(3, "bg-[#8E9880]")}
+            </div>
+          )
+        )}
+
+        {/* 5 Images Patterns */}
+        {imageCount === 5 && (
+          collagePattern === "five-top3-bottom2" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[55%] grid grid-cols-3" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(0, "bg-[#EFE7DC]")}
+                {renderSlot(1, "bg-[#8E9880]")}
+                {renderSlot(2, "bg-[#C39F8F]/40")}
+              </div>
+              <div className="h-[45%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(3, "bg-[#EFE7DC]")}
+                {renderSlot(4, "bg-[#8E9880]")}
+              </div>
+            </div>
+          ) : collagePattern === "five-hero-top" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[46%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[54%] grid grid-cols-2 grid-rows-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(1, "bg-[#8E9880]")}
+                {renderSlot(2, "bg-[#C39F8F]/40")}
+                {renderSlot(3, "bg-[#EFE7DC]")}
+                {renderSlot(4, "bg-[#8E9880]")}
+              </div>
+            </div>
+          ) : collagePattern === "five-hero-left" ? (
+            <div className="w-full h-full grid grid-cols-[1.1fr_1fr] pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-full w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-full grid grid-cols-2 grid-rows-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(1, "bg-[#8E9880]")}
+                {renderSlot(2, "bg-[#C39F8F]/40")}
+                {renderSlot(3, "bg-[#EFE7DC]")}
+                {renderSlot(4, "bg-[#8E9880]")}
+              </div>
+            </div>
+          ) : (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[45%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(0, "bg-[#EFE7DC]")}
+                {renderSlot(1, "bg-[#8E9880]")}
+              </div>
+              <div className="h-[55%] grid grid-cols-3" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(2, "bg-[#C39F8F]/40")}
+                {renderSlot(3, "bg-[#EFE7DC]")}
+                {renderSlot(4, "bg-[#8E9880]")}
+              </div>
+            </div>
+          )
+        )}
+
+        {/* 6 Images Patterns */}
         {imageCount >= 6 && (
-          <div
-            className="w-full h-full grid grid-cols-2 grid-rows-3 pointer-events-auto"
-            style={{ gap: `${collageGap}px` }}
-          >
-            {[0, 1, 2, 3, 4, 5].map((idx) => (
-              <React.Fragment key={idx}>
-                {renderSlot(idx, idx % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
-              </React.Fragment>
-            ))}
-          </div>
+          collagePattern === "six-grid-3x2" ? (
+            <div className="w-full h-full grid grid-cols-3 grid-rows-2 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {[0, 1, 2, 3, 4, 5].map((idx) => (
+                <React.Fragment key={idx}>
+                  {renderSlot(idx, idx % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
+                </React.Fragment>
+              ))}
+            </div>
+          ) : collagePattern === "six-top2-bottom4" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[42%] grid grid-cols-2" style={{ gap: `${collageGap}px` }}>
+                {renderSlot(0, "bg-[#EFE7DC]")}
+                {renderSlot(1, "bg-[#8E9880]")}
+              </div>
+              <div className="h-[58%] grid grid-cols-2 grid-rows-2" style={{ gap: `${collageGap}px` }}>
+                {[2, 3, 4, 5].map((idx) => (
+                  <React.Fragment key={idx}>
+                    {renderSlot(idx, idx % 2 === 0 ? "bg-[#C39F8F]/40" : "bg-[#8E9880]")}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          ) : collagePattern === "six-hero-top" ? (
+            <div className="w-full h-full flex flex-col pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              <div className="h-[44%] w-full">{renderSlot(0, "bg-[#EFE7DC]")}</div>
+              <div className="h-[56%] grid grid-cols-5" style={{ gap: `${collageGap}px` }}>
+                {[1, 2, 3, 4, 5].map((idx) => (
+                  <React.Fragment key={idx}>
+                    {renderSlot(idx, idx % 2 === 0 ? "bg-[#8E9880]" : "bg-[#EFE7DC]")}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="w-full h-full grid grid-cols-2 grid-rows-3 pointer-events-auto" style={{ gap: `${collageGap}px` }}>
+              {[0, 1, 2, 3, 4, 5].map((idx) => (
+                <React.Fragment key={idx}>
+                  {renderSlot(idx, idx % 2 === 0 ? "bg-[#EFE7DC]" : "bg-[#8E9880]")}
+                </React.Fragment>
+              ))}
+            </div>
+          )
         )}
       </div>
 
