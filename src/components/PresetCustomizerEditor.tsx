@@ -178,6 +178,10 @@ export function PresetCustomizerEditor({
   const [customWidth, setCustomWidth] = useState<number>(1000);
   const [customHeight, setCustomHeight] = useState<number>(1500);
 
+  // Overlay Placement State
+  const [overlayOffsetY, setOverlayOffsetY] = useState<number>(50);
+  const [overlayHorizontalAlign, setOverlayHorizontalAlign] = useState<"left" | "center" | "right">("center");
+
   // Background state
   const [bgType, setBgType] = useState<"solid" | "gradient" | "image" | "transparent">("solid");
   const [bgColor, setBgColor] = useState<string>("#FFFFFF");
@@ -317,39 +321,73 @@ export function PresetCustomizerEditor({
 
     const raw = t.layerTexts && t.layerTexts.length > 0
       ? t.layerTexts
-      : (t.headlinePreview || t.name).split(" ").slice(0, 5);
+      : (t.headlinePreview || t.name).split(" ").filter(Boolean);
 
+    const defaultFont = t.fonts?.[0] || "Josefin Sans, sans-serif";
+    const accentCol = t.visualConfig?.accentColor || "#EE1A5B";
+
+    const layers: TextLayerAdjustment[] = [];
+
+    // Slot 0: Badge or First Word/Number
     const bText = t.visualConfig?.badge?.text || raw[0] || "20";
-    const title1 = raw[1] || "Trendy Ideas";
-    const title2 = raw[2] || "For This Season";
-    const sub = raw[3] || "You Can't Miss Out Right Now";
+    layers.push({
+      id: "layer-badge",
+      text: bText,
+      role: "badge",
+      fontFamily: defaultFont,
+      fontWeight: "Bold",
+      fontSizePx: 48,
+      isBold: true,
+      isItalic: false,
+      isUnderline: false,
+      isUppercase: true,
+      textAlign: "center",
+      color: accentCol,
+      bgHighlight: "#FFFFFF",
+      shape: (t.visualConfig?.badge?.shape as any) || "square",
+      position: "center-top",
+      visible: true,
+      letterSpacing: "normal",
+      lineHeight: 1.1,
+      opacity: 1,
+    });
 
-    setTextLayers([
-      {
-        id: "layer-badge",
-        text: bText,
-        role: "badge",
-        fontFamily: t.fonts?.[0] || "Josefin Sans, sans-serif",
-        fontWeight: "Bold",
-        fontSizePx: 56,
-        isBold: true,
-        isItalic: false,
-        isUnderline: false,
-        isUppercase: true,
-        textAlign: "center",
-        color: t.visualConfig?.accentColor || "#111111",
-        bgHighlight: "#FFFFFF",
-        shape: (t.visualConfig?.badge?.shape as any) || "square",
-        position: "center-top",
-        visible: true,
-      },
-      {
+    // Slots 1 to N: Title and subtitle lines
+    if (raw.length > 1) {
+      for (let i = 1; i < raw.length; i++) {
+        const txt = raw[i];
+        if (!txt) continue;
+        const isScript = Boolean(t.visualConfig?.scriptWord && txt.toLowerCase() === t.visualConfig.scriptWord.toLowerCase());
+        layers.push({
+          id: `layer-${i}`,
+          text: txt,
+          role: i === 1 ? "title" : i === 2 ? "title" : i === 3 ? "subtitle" : "kicker",
+          fontFamily: isScript ? "Kaushan Script, Dancing Script, cursive" : defaultFont,
+          fontWeight: i === 1 || i === 2 ? "SemiBold" : "Regular",
+          fontSizePx: i === 1 ? 38 : i === 2 ? 30 : i === 3 ? 18 : 13,
+          isBold: i === 1 || i === 2,
+          isItalic: isScript || i === 3,
+          isUnderline: false,
+          isUppercase: !isScript && i !== 3,
+          textAlign: "center",
+          color: i === 1 ? "#111111" : i === 2 ? "#FFFFFF" : "#111111",
+          bgHighlight: i === 1 ? "#FFFFFF" : i === 2 ? accentCol : "transparent",
+          shape: i === 1 || i === 2 ? "rounded" : "none",
+          position: "over-band",
+          visible: true,
+          letterSpacing: "normal",
+          lineHeight: 1.15,
+          opacity: 1,
+        });
+      }
+    } else {
+      layers.push({
         id: "layer-title-1",
-        text: title1,
+        text: "Trendy Ideas",
         role: "title",
-        fontFamily: t.fonts?.[0] || "Josefin Sans, sans-serif",
-        fontWeight: "SemiBold",
-        fontSizePx: 42,
+        fontFamily: defaultFont,
+        fontWeight: "Bold",
+        fontSizePx: 38,
         isBold: true,
         isItalic: false,
         isUnderline: false,
@@ -360,62 +398,79 @@ export function PresetCustomizerEditor({
         shape: "rounded",
         position: "over-band",
         visible: true,
-      },
-      {
+        letterSpacing: "normal",
+        lineHeight: 1.15,
+        opacity: 1,
+      });
+      layers.push({
         id: "layer-title-2",
-        text: title2,
+        text: "For This Season",
         role: "title",
-        fontFamily: t.fonts?.[0] || "Josefin Sans, sans-serif",
+        fontFamily: defaultFont,
         fontWeight: "SemiBold",
-        fontSizePx: 36,
+        fontSizePx: 30,
         isBold: true,
         isItalic: false,
         isUnderline: false,
         isUppercase: true,
         textAlign: "center",
         color: "#FFFFFF",
-        bgHighlight: t.visualConfig?.accentColor || "#EE1A5B",
+        bgHighlight: accentCol,
         shape: "rounded",
         position: "over-band",
         visible: true,
-      },
-      {
+        letterSpacing: "normal",
+        lineHeight: 1.2,
+        opacity: 1,
+      });
+      layers.push({
         id: "layer-subtitle",
-        text: sub,
+        text: "You Can't Miss Out Right Now",
         role: "subtitle",
-        fontFamily: t.fonts?.[1] || "Josefin Sans, sans-serif",
+        fontFamily: defaultFont,
         fontWeight: "Regular",
-        fontSizePx: 20,
+        fontSizePx: 18,
         isBold: false,
         isItalic: true,
         isUnderline: false,
         isUppercase: false,
         textAlign: "center",
-        color: "#FFFFFF",
+        color: "#111111",
         bgHighlight: "transparent",
         shape: "none",
         position: "over-band",
         visible: true,
-      },
-      {
-        id: "layer-website",
-        text: "yourwebsite.com",
-        role: "website",
-        fontFamily: "Montserrat, sans-serif",
-        fontWeight: "Regular",
-        fontSizePx: 14,
-        isBold: false,
-        isItalic: false,
-        isUnderline: false,
-        isUppercase: false,
-        textAlign: "center",
-        color: "#FFFFFF",
-        bgHighlight: "transparent",
-        shape: "none",
-        position: "over-image",
-        visible: true,
-      },
-    ]);
+        letterSpacing: "normal",
+        lineHeight: 1.2,
+        opacity: 1,
+      });
+    }
+
+    // Always website watermark layer
+    layers.push({
+      id: "layer-website",
+      text: "yourwebsite.com",
+      role: "website",
+      fontFamily: "Montserrat, sans-serif",
+      fontWeight: "Regular",
+      fontSizePx: 13,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      isUppercase: false,
+      textAlign: "center",
+      color: "#FFFFFF",
+      bgHighlight: "transparent",
+      shape: "none",
+      position: "over-image",
+      visible: true,
+      letterSpacing: "wider",
+      lineHeight: 1.2,
+      opacity: 1,
+    });
+
+    setTextLayers(layers);
+    setSelectedLayerId(layers[0]?.id || "");
   }
 
   function handleSwitchTemplate(tId: string) {
@@ -656,7 +711,7 @@ export function PresetCustomizerEditor({
       snapToElements,
       slotAdjustments,
       customTextLayers: textLayers,
-      customLines: textLayers.filter((l) => l.role === "title" || l.role === "subtitle").map((l) => l.text),
+      customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
       customBadgeText: textLayers.find((l) => l.role === "badge")?.text,
       customBadgeShape: textLayers.find((l) => l.role === "badge")?.shape || "circle",
       customBadgePosition: textLayers.find((l) => l.role === "badge")?.position || "center-top",
@@ -1342,6 +1397,76 @@ export function PresetCustomizerEditor({
                   <span>✨ AI Text Assistant</span>
                 </button>
 
+                {/* OVERLAY PLACEMENT & CANVAS ALIGNMENT */}
+                <div className="p-3.5 rounded-xl bg-[#171d2b] border border-slate-700/80 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+                      <Sliders className="w-3.5 h-3.5 text-red-400" />
+                      <span>Overlay Placement</span>
+                    </h4>
+                    <span className="font-mono text-slate-400 text-[11px]">{overlayOffsetY}% from top</span>
+                  </div>
+
+                  {/* Vertical Position Presets */}
+                  <div className="grid grid-cols-5 gap-1">
+                    {[
+                      { label: "Top", val: 22 },
+                      { label: "Up-Mid", val: 36 },
+                      { label: "Center", val: 50 },
+                      { label: "Low-Mid", val: 64 },
+                      { label: "Bottom", val: 78 },
+                    ].map((btn) => (
+                      <button
+                        key={btn.label}
+                        type="button"
+                        onClick={() => setOverlayOffsetY(btn.val)}
+                        className={`py-1 rounded text-[10px] font-bold cursor-pointer transition-all ${
+                          Math.abs(overlayOffsetY - btn.val) <= 5
+                            ? "bg-red-600 text-white shadow-xs"
+                            : "bg-slate-900 text-slate-400 hover:text-white border border-slate-800"
+                        }`}
+                      >
+                        {btn.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Vertical Offset Slider */}
+                  <input
+                    type="range"
+                    min={12}
+                    max={88}
+                    value={overlayOffsetY}
+                    onChange={(e) => setOverlayOffsetY(Number(e.target.value))}
+                    className="w-full accent-red-500 cursor-pointer"
+                  />
+
+                  {/* Horizontal Alignment */}
+                  <div className="flex items-center justify-between pt-1 border-t border-slate-800 text-xs">
+                    <span className="text-slate-300 text-[11px]">Horizontal Align</span>
+                    <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+                      {[
+                        { id: "left", label: "Left" },
+                        { id: "center", label: "Center" },
+                        { id: "right", label: "Right" },
+                      ].map((al) => (
+                        <button
+                          key={al.id}
+                          type="button"
+                          onClick={() => setOverlayHorizontalAlign(al.id as any)}
+                          className={`px-2.5 py-0.5 rounded text-[10px] font-bold cursor-pointer ${
+                            overlayHorizontalAlign === al.id
+                              ? "bg-red-600 text-white"
+                              : "text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          {al.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Text Layers List (Screenshot 4) */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
@@ -1371,13 +1496,28 @@ export function PresetCustomizerEditor({
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
                           <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-                          <span className="text-xs font-bold text-white truncate max-w-[170px]">
+                          <span className="text-xs font-bold text-white truncate max-w-[150px]">
                             {layer.text || `Empty ${layer.role}`}
                           </span>
                         </div>
-                        <span className="text-[10px] text-slate-400 font-mono capitalize shrink-0">
-                          {layer.role}
-                        </span>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="text-[10px] text-slate-400 font-mono capitalize">
+                            {layer.role}
+                          </span>
+                          {textLayers.length > 2 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRemoveLayer(layer.id);
+                              }}
+                              className="p-1 text-slate-500 hover:text-red-400 cursor-pointer"
+                              title="Delete layer"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
+                        </div>
                       </div>
                     );
                   })}
@@ -1552,6 +1692,7 @@ export function PresetCustomizerEditor({
                           className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs cursor-pointer ${
                             activeLayer.isBold ? "bg-red-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
                           }`}
+                          title="Bold"
                         >
                           <Bold className="w-4 h-4" />
                         </button>
@@ -1561,6 +1702,7 @@ export function PresetCustomizerEditor({
                           className={`w-8 h-8 rounded-lg flex items-center justify-center italic text-xs cursor-pointer ${
                             activeLayer.isItalic ? "bg-red-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
                           }`}
+                          title="Italic"
                         >
                           <Italic className="w-4 h-4" />
                         </button>
@@ -1570,8 +1712,19 @@ export function PresetCustomizerEditor({
                           className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs cursor-pointer ${
                             activeLayer.isUnderline ? "bg-red-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
                           }`}
+                          title="Underline"
                         >
                           <Underline className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => updateActiveLayer({ isStrikethrough: !activeLayer.isStrikethrough })}
+                          className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs line-through cursor-pointer ${
+                            activeLayer.isStrikethrough ? "bg-red-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
+                          }`}
+                          title="Strikethrough"
+                        >
+                          S
                         </button>
                         <button
                           type="button"
@@ -1579,9 +1732,118 @@ export function PresetCustomizerEditor({
                           className={`w-8 h-8 rounded-lg flex items-center justify-center font-extrabold text-xs cursor-pointer ${
                             activeLayer.isUppercase ? "bg-red-600 text-white" : "bg-slate-800 text-slate-400 hover:text-white"
                           }`}
+                          title="Toggle Uppercase"
                         >
                           TT
                         </button>
+                      </div>
+
+                      {/* Extra Fine-Tuning Sliders: Spacing, Line Height, Opacity, Rotation */}
+                      <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-800/80">
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] text-slate-300">
+                            <span>Letter spacing</span>
+                            <span className="font-mono text-[10px] text-slate-400">{activeLayer.letterSpacing || "0px"}</span>
+                          </div>
+                          <input
+                            type="range"
+                            min={-1}
+                            max={10}
+                            value={activeLayer.letterSpacing ? parseInt(activeLayer.letterSpacing) : 0}
+                            onChange={(e) => updateActiveLayer({ letterSpacing: `${e.target.value}px` })}
+                            className="w-full accent-red-500 cursor-pointer"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] text-slate-300">
+                            <span>Line height</span>
+                            <span className="font-mono text-[10px] text-slate-400">{activeLayer.lineHeight || 1.15}</span>
+                          </div>
+                          <input
+                            type="range"
+                            min={0.8}
+                            max={2.0}
+                            step={0.05}
+                            value={activeLayer.lineHeight || 1.15}
+                            onChange={(e) => updateActiveLayer({ lineHeight: Number(e.target.value) })}
+                            className="w-full accent-red-500 cursor-pointer"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] text-slate-300">
+                            <span>Opacity</span>
+                            <span className="font-mono text-[10px] text-slate-400">{Math.round((activeLayer.opacity ?? 1) * 100)}%</span>
+                          </div>
+                          <input
+                            type="range"
+                            min={0.1}
+                            max={1}
+                            step={0.05}
+                            value={activeLayer.opacity ?? 1}
+                            onChange={(e) => updateActiveLayer({ opacity: Number(e.target.value) })}
+                            className="w-full accent-red-500 cursor-pointer"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] text-slate-300">
+                            <span>Rotation</span>
+                            <span className="font-mono text-[10px] text-slate-400">{activeLayer.rotation ?? 0}°</span>
+                          </div>
+                          <input
+                            type="range"
+                            min={-30}
+                            max={30}
+                            value={activeLayer.rotation ?? 0}
+                            onChange={(e) => updateActiveLayer({ rotation: Number(e.target.value) })}
+                            className="w-full accent-red-500 cursor-pointer"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Text Shadow Preset Selector */}
+                      <div className="space-y-1 pt-1">
+                        <span className="text-[11px] text-slate-300 block">Text Shadow</span>
+                        <div className="grid grid-cols-4 gap-1 text-[10px]">
+                          {[
+                            { label: "None", shadow: false, col: undefined },
+                            { label: "Soft", shadow: true, col: "rgba(0,0,0,0.5)" },
+                            { label: "Bold", shadow: true, col: "#111111" },
+                            { label: "Glow", shadow: true, col: "#EE1A5B" },
+                          ].map((sh) => (
+                            <button
+                              key={sh.label}
+                              type="button"
+                              onClick={() => updateActiveLayer({ textShadow: sh.shadow, shadowColor: sh.col })}
+                              className={`py-1 rounded font-bold cursor-pointer transition-all ${
+                                activeLayer.textShadow === sh.shadow && activeLayer.shadowColor === sh.col
+                                  ? "bg-red-600 text-white"
+                                  : "bg-slate-900 border border-slate-700 text-slate-400 hover:text-white"
+                              }`}
+                            >
+                              {sh.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Quick Palette Swatches */}
+                      <div className="space-y-1 pt-1">
+                        <span className="text-[11px] text-slate-300 block">Quick Color Swatches</span>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          {["#FFFFFF", "#111111", "#EE1A5B", "#F97316", "#F59E0B", "#10B981", "#0EA5E9", "#8B5CF6", "#D4AF37", "#6B7280"].map((hex) => (
+                            <button
+                              key={hex}
+                              type="button"
+                              onClick={() => updateActiveLayer({ color: hex })}
+                              className="w-5 h-5 rounded-full border border-white/30 cursor-pointer transition-transform hover:scale-125"
+                              style={{ backgroundColor: hex }}
+                              title={`Set text color to ${hex}`}
+                            />
+                          ))}
+                        </div>
                       </div>
 
                       {/* Text Color & Highlight Color Pickers */}

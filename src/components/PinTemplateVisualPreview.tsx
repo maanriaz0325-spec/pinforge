@@ -24,6 +24,7 @@ export interface TextLayerAdjustment {
   isBold?: boolean;
   isItalic?: boolean;
   isUnderline?: boolean;
+  isStrikethrough?: boolean;
   isUppercase?: boolean;
   textAlign?: "left" | "center" | "right";
   color?: string;
@@ -31,9 +32,15 @@ export interface TextLayerAdjustment {
   outlineColor?: string;
   outlineWidth?: number;
   shape?: "circle" | "rounded" | "square" | "pill" | "none";
+  containerShape?: "circle" | "rounded" | "square" | "pill" | "none";
   position?: "top-left" | "center-top" | "over-band" | "over-image";
   visible?: boolean;
   letterSpacing?: string;
+  lineHeight?: number;
+  opacity?: number;
+  rotation?: number;
+  textShadow?: boolean;
+  shadowColor?: string;
 }
 
 export interface VisualConfig {
@@ -86,6 +93,10 @@ export interface TemplatePreviewData {
     italic?: boolean;
     letterSpacing?: string;
   };
+  // Overlay Placement Overrides:
+  overlayVerticalPosition?: "top" | "upper-center" | "center" | "lower-center" | "bottom";
+  overlayOffsetY?: number; // 10 to 85 (%)
+  overlayHorizontalAlign?: "left" | "center" | "right";
   // Design Tab overrides:
   canvasRatio?: "2:3" | "3:4" | "4:5" | "9:16" | "1:1" | "1:2" | "custom";
   customWidth?: number;
@@ -351,6 +362,101 @@ export function PinTemplateVisualPreview({
     return null;
   };
 
+  // Dynamic Overlay Placement
+  const overlayOffsetY = template.overlayOffsetY !== undefined ? template.overlayOffsetY : (
+    template.overlayVerticalPosition === "top" ? 22 :
+    template.overlayVerticalPosition === "upper-center" ? 36 :
+    template.overlayVerticalPosition === "lower-center" ? 64 :
+    template.overlayVerticalPosition === "bottom" ? 78 : 50
+  );
+
+  const overlayHAlign = template.overlayHorizontalAlign || "center";
+  const alignClass =
+    overlayHAlign === "left" ? "items-start text-left pl-3" :
+    overlayHAlign === "right" ? "items-end text-right pr-3" :
+    "items-center text-center";
+
+  // Universal Dynamic Layer Text Renderer
+  const renderLayer = (
+    layerIdx: number,
+    fallbackText: string,
+    defaultStyle: {
+      font?: string;
+      color?: string;
+      bg?: string;
+      weight?: string | number;
+      sizePx?: number;
+      italic?: boolean;
+      underline?: boolean;
+      uppercase?: boolean;
+      letterSpacing?: string;
+      lineHeight?: number;
+      textAlign?: string;
+      textShadow?: string;
+    } = {},
+    className: string = ""
+  ) => {
+    const layer = template.customTextLayers?.[layerIdx];
+    if (layer && layer.visible === false) return null;
+
+    const text = layer?.text !== undefined && layer?.text !== "" ? layer.text : (lines[layerIdx] || fallbackText);
+    if (!text) return null;
+
+    const font = layer?.fontFamily || template.customFont || defaultStyle.font || primaryFont;
+    const color = layer?.color || template.customTextColor || defaultStyle.color || "#FFFFFF";
+    const bg = layer?.bgHighlight && layer.bgHighlight !== "transparent" ? layer.bgHighlight : defaultStyle.bg;
+
+    let weight: string | number = defaultStyle.weight || 700;
+    if (layer?.fontWeight) {
+      if (layer.fontWeight === "Black") weight = 900;
+      else if (layer.fontWeight === "ExtraBold") weight = 800;
+      else if (layer.fontWeight === "Bold") weight = 700;
+      else if (layer.fontWeight === "SemiBold") weight = 600;
+      else if (layer.fontWeight === "Medium") weight = 500;
+      else if (layer.fontWeight === "Regular") weight = 400;
+      else weight = layer.fontWeight;
+    } else if (layer?.isBold !== undefined) {
+      weight = layer.isBold ? 700 : 400;
+    }
+
+    const size = layer?.fontSizePx ? `${layer.fontSizePx}px` : (defaultStyle.sizePx ? `${defaultStyle.sizePx}px` : undefined);
+    const isItalic = layer?.isItalic !== undefined ? layer.isItalic : Boolean(defaultStyle.italic);
+    const isUnderline = layer?.isUnderline !== undefined ? layer.isUnderline : Boolean(defaultStyle.underline);
+    const isStrikethrough = Boolean(layer?.isStrikethrough);
+    const isUppercase = layer?.isUppercase !== undefined ? layer.isUppercase : (defaultStyle.uppercase !== false);
+    const textAlign = layer?.textAlign || defaultStyle.textAlign || "center";
+    const letterSpacing = layer?.letterSpacing || defaultStyle.letterSpacing || "normal";
+    const lineHeight = layer?.lineHeight || defaultStyle.lineHeight || 1.15;
+    const opacity = layer?.opacity !== undefined ? layer.opacity : 1;
+    const rotation = layer?.rotation ? `rotate(${layer.rotation}deg)` : undefined;
+    const shadow = layer?.textShadow && layer?.shadowColor ? `0 2px 4px ${layer.shadowColor}` : defaultStyle.textShadow;
+
+    return (
+      <span
+        onClick={() => template.onLayerClick?.(layer?.id || `layer-${layerIdx}`)}
+        className={`${className} transition-all pointer-events-auto cursor-pointer`}
+        style={{
+          fontFamily: font,
+          color: color,
+          backgroundColor: bg && bg !== "transparent" ? bg : undefined,
+          fontWeight: weight,
+          fontSize: size,
+          fontStyle: isItalic ? "italic" : "normal",
+          textDecoration: isUnderline ? "underline" : isStrikethrough ? "line-through" : "none",
+          textTransform: isUppercase ? "uppercase" : "none",
+          textAlign: textAlign as any,
+          letterSpacing,
+          lineHeight,
+          opacity,
+          transform: rotation,
+          textShadow: shadow,
+        }}
+      >
+        {text}
+      </span>
+    );
+  };
+
   return (
     <div
       className={`relative w-full ${aspectClass} overflow-hidden select-none shadow-md ${className}`}
@@ -479,47 +585,56 @@ export function PinTemplateVisualPreview({
       {/* ======================================================== */}
       {/* 3. STYLISH OVERLAY TYPOGRAPHY ARCHETYPES                 */}
       {/* ======================================================== */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center px-4 z-20 pointer-events-none">
+      <div
+        className={`absolute inset-x-0 flex flex-col ${alignClass} px-3 z-20 pointer-events-none transition-all duration-75`}
+        style={{
+          top: `${overlayOffsetY}%`,
+          transform: "translateY(-50%)",
+        }}
+      >
         {/* ============================================================== */}
         {/* ARCHETYPE: SCRIPT & BAR (Screenshots 1 & 2)                    */}
         {/* ============================================================== */}
         {blockStyle === "script-and-bar" && (
           <div className="w-full max-w-[94%] flex flex-col items-center text-center shadow-2xl relative">
             <div className="bg-white w-full py-1 px-4 flex items-center justify-center gap-2 border-b border-black/10">
-              <span
-                className="text-4xl sm:text-5xl font-black tracking-tight leading-none"
-                style={{
-                  color: accentColor,
-                  fontFamily: "Anton, Oswald, sans-serif",
-                  textShadow: "1px 1px 0 #111111, -1px -1px 0 #111111, 1px -1px 0 #111111, -1px 1px 0 #111111",
-                }}
-              >
-                {badgeText || lines[0] || "20"}
-              </span>
-              <span
-                className="text-3xl sm:text-4xl italic font-serif leading-none text-black"
-                style={{ fontFamily: "Kaushan Script, Caveat, cursive" }}
-              >
-                {scriptWord || lines[1] || "Trendy"}
-              </span>
+              {renderLayer(0, badgeText || lines[0] || "20", {
+                color: accentColor,
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 44,
+                textShadow: "1px 1px 0 #111111, -1px -1px 0 #111111, 1px -1px 0 #111111, -1px 1px 0 #111111",
+              }, "leading-none")}
+              {renderLayer(1, scriptWord || lines[1] || "Trendy", {
+                color: "#111111",
+                font: "Kaushan Script, Caveat, cursive",
+                italic: true,
+                sizePx: 36,
+                uppercase: false,
+              }, "leading-none")}
             </div>
 
             <div
               className="w-full py-2 px-3 shadow-md"
               style={{ backgroundColor: bandColor || accentColor }}
             >
-              <span
-                className="text-base sm:text-lg font-black text-white tracking-wide uppercase leading-tight block"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[2] || lines[1] || "COMBAT BOOT OUTFITS"}
-              </span>
+              {renderLayer(2, lines[2] || lines[1] || "COMBAT BOOT OUTFITS", {
+                color: "#FFFFFF",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 18,
+                uppercase: true,
+              }, "leading-tight block uppercase tracking-wide")}
             </div>
 
             <div className="bg-white w-full py-1.5 px-3">
-              <span className="text-[10px] sm:text-[11px] font-black text-black tracking-normal uppercase leading-tight block">
-                {lines[3] || lines[2] || "YOU CAN'T GET AROUND RIGHT NOW"}
-              </span>
+              {renderLayer(3, lines[3] || lines[2] || "YOU CAN'T GET AROUND RIGHT NOW", {
+                color: "#111111",
+                font: "Montserrat, sans-serif",
+                weight: 900,
+                sizePx: 11,
+                uppercase: true,
+              }, "leading-tight block uppercase tracking-normal")}
             </div>
           </div>
         )}
@@ -532,40 +647,44 @@ export function PinTemplateVisualPreview({
             <div className="bg-white w-full py-2.5 px-3 flex flex-col items-center">
               <div className="flex items-center justify-center gap-2 w-full mb-1">
                 <div className="h-[1.5px] bg-black/40 flex-1 max-w-[35px]" />
-                <span className="text-xs sm:text-sm font-black tracking-tight uppercase text-black">
-                  {lines[0] || "— 20 TRENDY WINTER —"}
-                </span>
+                {renderLayer(0, lines[0] || "— 20 TRENDY WINTER —", {
+                  color: "#111111",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 13,
+                  uppercase: true,
+                }, "tracking-tight uppercase")}
                 <div className="h-[1.5px] bg-black/40 flex-1 max-w-[35px]" />
               </div>
 
-              <div
-                className="text-3xl sm:text-4xl font-black uppercase tracking-tight leading-none my-0.5"
-                style={{
-                  color: accentColor,
-                  fontFamily: "Anton, Oswald, sans-serif",
-                }}
-              >
-                {lines[1] || "OUTFIT IDEAS"}
-              </div>
+              {renderLayer(1, lines[1] || "OUTFIT IDEAS", {
+                color: accentColor,
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 38,
+                uppercase: true,
+              }, "tracking-tight leading-none my-0.5")}
 
-              {lines[3] && (
-                <div
-                  className="text-3xl sm:text-4xl font-black uppercase tracking-tight leading-none mb-1"
-                  style={{
-                    color: accentColor,
-                    fontFamily: "Anton, Oswald, sans-serif",
-                  }}
-                >
-                  {lines[2]}
-                </div>
-              )}
+              {lines[2] && renderLayer(2, lines[2], {
+                color: accentColor,
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 38,
+                uppercase: true,
+              }, "tracking-tight leading-none mb-1")}
 
-              <span className="text-[9px] sm:text-[10px] font-black text-black/90 uppercase tracking-tight max-w-[90%] leading-tight pt-0.5">
-                {lines[3] || lines[2] || "YOU'LL WANT TO COPY BEFORE THE COLD REALLY HITS"}
-              </span>
+              {renderLayer(3, lines[3] || lines[2] || "YOU'LL WANT TO COPY BEFORE THE COLD REALLY HITS", {
+                color: "#111111",
+                font: "Montserrat, sans-serif",
+                weight: 900,
+                sizePx: 10,
+                uppercase: true,
+              }, "tracking-tight max-w-[90%] leading-tight pt-0.5")}
             </div>
           </div>
         )}
+
+
 
         {/* ============================================================== */}
         {/* ARCHETYPE: CIRCLE MEDALLION (Screenshot 5)                     */}
@@ -579,33 +698,40 @@ export function PinTemplateVisualPreview({
                 outline: "4px solid rgba(255,255,255,0.7)",
               }}
             >
-              <span
-                className="text-2xl sm:text-3xl font-black leading-none"
-                style={{ color: accentColor }}
-              >
-                {badgeText || "25"}
-              </span>
-              <span
-                className="text-xl sm:text-2xl italic font-serif leading-none text-black my-0.5"
-                style={{ fontFamily: "Great Vibes, Dancing Script, cursive" }}
-              >
-                {scriptWord || "Pretty"}
-              </span>
-              <span
-                className="text-base sm:text-lg font-black text-black leading-none uppercase tracking-tight"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[2] || "BALAYAGE"}
-              </span>
-              <span
-                className="text-xs sm:text-sm font-black leading-tight uppercase tracking-tight"
-                style={{ color: accentColor }}
-              >
-                {lines[3] || "HAIR IDEAS"}
-              </span>
-              <span className="text-[8px] font-bold text-black/80 uppercase tracking-widest pt-0.5">
-                {lines[4] || "TO SAVE NOW"}
-              </span>
+              {renderLayer(0, badgeText || "25", {
+                color: accentColor,
+                font: primaryFont,
+                weight: 900,
+                sizePx: 28,
+              }, "leading-none")}
+              {renderLayer(1, scriptWord || "Pretty", {
+                color: "#111111",
+                font: "Great Vibes, Dancing Script, cursive",
+                italic: true,
+                sizePx: 24,
+                uppercase: false,
+              }, "leading-none my-0.5")}
+              {renderLayer(2, lines[2] || "BALAYAGE", {
+                color: "#111111",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 18,
+                uppercase: true,
+              }, "leading-none uppercase tracking-tight")}
+              {renderLayer(3, lines[3] || "HAIR IDEAS", {
+                color: accentColor,
+                font: primaryFont,
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "leading-tight uppercase tracking-tight")}
+              {renderLayer(4, lines[4] || "TO SAVE NOW", {
+                color: "#333333",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 8,
+                uppercase: true,
+              }, "uppercase tracking-widest pt-0.5")}
             </div>
             <div
               className="px-4 py-1 rounded-full text-white font-black text-[10px] uppercase tracking-wider shadow-lg"
@@ -621,18 +747,27 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "minimalist-floating-card" && (
           <div className="bg-white/95 text-black p-5 shadow-2xl rounded-2xl w-full max-w-[85%] flex flex-col items-center text-center space-y-1.5 border border-black/5 backdrop-blur-xs">
-            <span className="text-[8px] sm:text-[9px] uppercase tracking-widest font-bold text-black/60 font-mono">
-              {kicker || "FASHION & STYLE EDIT"}
-            </span>
-            <span
-              className="text-2xl sm:text-3xl italic font-serif leading-none"
-              style={{ color: accentColor, fontFamily: "Great Vibes, Dancing Script, cursive" }}
-            >
-              {scriptWord || "Chic"}
-            </span>
-            <span className="text-sm sm:text-base font-black font-serif tracking-tight text-black leading-snug">
-              {lines[2] || lines[1] || "Capsule Wardrobe Essentials"}
-            </span>
+            {renderLayer(0, kicker || "FASHION & STYLE EDIT", {
+              color: "#666666",
+              font: "monospace",
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-widest font-mono uppercase")}
+            {renderLayer(1, scriptWord || "Chic", {
+              color: accentColor,
+              font: "Great Vibes, Dancing Script, cursive",
+              italic: true,
+              sizePx: 30,
+              uppercase: false,
+            }, "leading-none")}
+            {renderLayer(2, lines[2] || lines[1] || "Capsule Wardrobe Essentials", {
+              color: "#111111",
+              font: "Didot, Bodoni MT, serif",
+              weight: 900,
+              sizePx: 16,
+              uppercase: false,
+            }, "tracking-tight leading-snug")}
           </div>
         )}
 
@@ -642,26 +777,37 @@ export function PinTemplateVisualPreview({
         {blockStyle === "big-caps-band" && (
           <div className="bg-white text-black p-4 shadow-2xl rounded-none w-full max-w-[92%] flex flex-col items-center text-center space-y-1 border border-black/10">
             <div className="flex items-center justify-center gap-3 w-full">
-              <span
-                className="text-5xl sm:text-6xl font-black tracking-tighter leading-none"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {badgeText || lines[0] || "19"}
-              </span>
+              {renderLayer(0, badgeText || lines[0] || "19", {
+                color: "#111111",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 56,
+              }, "tracking-tighter leading-none")}
               <div className="flex flex-col items-start text-left">
-                <span className="text-xs sm:text-sm font-black tracking-widest uppercase text-black">
-                  {lines[1] || "SMALL"}
-                </span>
-                <span
-                  className="text-2xl sm:text-3xl font-black uppercase tracking-tight leading-none text-black"
-                  style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-                >
-                  {lines[2] || "APARTMENT"}
-                </span>
+                {renderLayer(1, lines[1] || "SMALL", {
+                  color: "#111111",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 12,
+                  uppercase: true,
+                }, "tracking-widest uppercase")}
+                {renderLayer(2, lines[2] || "APARTMENT", {
+                  color: "#111111",
+                  font: "Anton, Oswald, sans-serif",
+                  weight: 900,
+                  sizePx: 28,
+                  uppercase: true,
+                }, "tracking-tight leading-none uppercase")}
               </div>
             </div>
-            <div className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-black/80 pt-1 border-t border-black/10 w-full">
-              {lines[3] || "PATIOS TO MAXIMIZE SPACE"}
+            <div className="pt-1 border-t border-black/10 w-full">
+              {renderLayer(3, lines[3] || "PATIOS TO MAXIMIZE SPACE", {
+                color: "#333333",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 10,
+                uppercase: true,
+              }, "tracking-wider uppercase")}
             </div>
           </div>
         )}
@@ -676,27 +822,35 @@ export function PinTemplateVisualPreview({
                 className="w-12 h-12 rounded-full flex items-center justify-center font-black text-2xl text-white shadow-md shrink-0"
                 style={{ backgroundColor: accentColor || "#5A6B48" }}
               >
-                {badgeText || "21"}
+                {renderLayer(0, badgeText || "21", {
+                  color: "#FFFFFF",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 22,
+                }, "leading-none")}
               </div>
-              <span
-                className="text-2xl sm:text-3xl font-black uppercase tracking-tight leading-none text-black"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[1] || "CLEVER"}
-              </span>
+              {renderLayer(1, lines[1] || "CLEVER", {
+                color: "#111111",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 28,
+                uppercase: true,
+              }, "tracking-tight leading-none uppercase")}
             </div>
-            <div
-              className="text-base sm:text-lg font-black uppercase tracking-tight leading-none"
-              style={{ color: accentColor || "#5A6B48", fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[2] || "COOL IDEAS FOR"}
-            </div>
-            <div
-              className="text-lg sm:text-xl font-black uppercase tracking-tight leading-none text-black"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[3] || "SMALL PATIOS"}
-            </div>
+            {renderLayer(2, lines[2] || "COOL IDEAS FOR", {
+              color: accentColor || "#5A6B48",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 18,
+              uppercase: true,
+            }, "tracking-tight leading-none uppercase")}
+            {renderLayer(3, lines[3] || "SMALL PATIOS", {
+              color: "#111111",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 20,
+              uppercase: true,
+            }, "tracking-tight leading-none uppercase")}
           </div>
         )}
 
@@ -706,33 +860,38 @@ export function PinTemplateVisualPreview({
         {blockStyle === "color-strips" && (
           <div className="w-full max-w-[94%] flex flex-col shadow-2xl">
             <div className="bg-[#F6EFE9] py-1.5 px-3 flex items-center justify-center gap-2">
-              {badgeText && (
-                <span
-                  className="px-2 py-0.5 rounded text-[10px] font-black text-white"
-                  style={{ backgroundColor: accentColor || "#5C3D28" }}
-                >
-                  {badgeText}
-                </span>
-              )}
-              <span className="text-[11px] sm:text-xs font-black uppercase tracking-wide text-black">
-                {lines[0] || lines[1] || "WAYS TO USE"}
-              </span>
+              {renderLayer(0, lines[0] || lines[1] || "WAYS TO USE", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 12,
+                uppercase: true,
+              }, "tracking-wide uppercase")}
             </div>
             <div
               className="py-2 px-3 text-center shadow-inner"
               style={{ backgroundColor: bandColor || "#2D5A3A" }}
             >
-              <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-white block">
-                {lines[1] || lines[2] || "ROSEMARY OIL FOR"}
-              </span>
+              {renderLayer(1, lines[1] || lines[2] || "ROSEMARY OIL FOR", {
+                color: "#FFFFFF",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-wider uppercase block")}
             </div>
             <div className="bg-[#F6EFE9] py-1.5 px-3 text-center">
-              <span className="text-xs sm:text-sm font-black uppercase tracking-wide text-black block">
-                {lines[2] || lines[3] || "HAIR GROWTH"}
-              </span>
+              {renderLayer(2, lines[2] || lines[3] || "HAIR GROWTH", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-wide uppercase block")}
             </div>
           </div>
         )}
+
 
         {/* ============================================================== */}
         {/* ARCHETYPE: RUST BAND (Screenshot 7)                            */}
@@ -742,24 +901,27 @@ export function PinTemplateVisualPreview({
             className="w-full py-4 px-4 shadow-2xl text-center space-y-1"
             style={{ backgroundColor: bandColor || "#C05A2B" }}
           >
-            <span
-              className="text-lg sm:text-xl font-black uppercase tracking-tight text-white block leading-tight"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[0] || "TRANSFORM YOUR"}
-            </span>
-            <span
-              className="text-lg sm:text-xl font-black uppercase tracking-tight text-black block leading-tight"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[1] || "KITCHEN WITH"}
-            </span>
-            <span
-              className="text-lg sm:text-xl font-black uppercase tracking-tight text-white block leading-tight"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[2] || "UPCYCLED PALLETS"}
-            </span>
+            {renderLayer(0, lines[0] || "TRANSFORM YOUR", {
+              color: "#FFFFFF",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 20,
+              uppercase: true,
+            }, "tracking-tight block leading-tight uppercase")}
+            {renderLayer(1, lines[1] || "KITCHEN WITH", {
+              color: "#111111",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 20,
+              uppercase: true,
+            }, "tracking-tight block leading-tight uppercase")}
+            {renderLayer(2, lines[2] || "UPCYCLED PALLETS", {
+              color: "#FFFFFF",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 20,
+              uppercase: true,
+            }, "tracking-tight block leading-tight uppercase")}
           </div>
         )}
 
@@ -772,24 +934,39 @@ export function PinTemplateVisualPreview({
               className="w-9 h-9 rounded-full flex items-center justify-center font-black text-sm text-white shadow-md absolute -top-4.5 inset-x-0 mx-auto"
               style={{ backgroundColor: accentColor || "#E91E63" }}
             >
-              {badgeText || "25"}
+              {renderLayer(0, badgeText || "25", {
+                color: "#FFFFFF",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 14,
+              }, "leading-none")}
             </div>
             <div className="pt-2">
-              <span
-                className="text-2xl italic font-serif leading-none"
-                style={{ color: accentColor || "#E91E63", fontFamily: "Great Vibes, Dancing Script, cursive" }}
-              >
-                {scriptWord || "Stunning"}
-              </span>
+              {renderLayer(1, scriptWord || "Stunning", {
+                color: accentColor || "#E91E63",
+                font: "Great Vibes, Dancing Script, cursive",
+                italic: true,
+                sizePx: 24,
+                uppercase: false,
+              }, "italic leading-none")}
             </div>
-            <div
-              className="text-base sm:text-lg font-black uppercase tracking-tight leading-tight text-black"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[1] || lines[2] || "BALAYAGE HAIR COLOR IDEAS"}
+            <div>
+              {renderLayer(2, lines[1] || lines[2] || "BALAYAGE HAIR COLOR IDEAS", {
+                color: "#111111",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 17,
+                uppercase: true,
+              }, "tracking-tight leading-tight uppercase block")}
             </div>
-            <div className="text-[9px] font-black uppercase tracking-wide text-black/70">
-              {lines[3] || "FOR LONG LAYERED HAIR"}
+            <div>
+              {renderLayer(3, lines[3] || "FOR LONG LAYERED HAIR", {
+                color: "#555555",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 10,
+                uppercase: true,
+              }, "tracking-wide uppercase block")}
             </div>
             <div
               className="px-4 py-1 rounded-full text-white font-black text-[10px] uppercase tracking-wider shadow-md mt-1"
@@ -809,30 +986,42 @@ export function PinTemplateVisualPreview({
               className="w-10 h-10 rounded-full flex items-center justify-center font-black text-base text-black shadow-lg"
               style={{ backgroundColor: accentColor || "#EAB308" }}
             >
-              {badgeText || "25"}
+              {renderLayer(0, badgeText || "25", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 16,
+              }, "leading-none")}
             </div>
             <div className="bg-[#1F2937ee] text-white p-4 rounded-xs shadow-2xl w-full text-center space-y-1 border border-white/10 backdrop-blur-xs">
-              <span
-                className="text-2xl italic font-serif leading-none block"
-                style={{ color: accentColor || "#EAB308", fontFamily: "Great Vibes, cursive" }}
-              >
-                {scriptWord || "Dreamy"}
-              </span>
-              <span
-                className="text-lg sm:text-xl font-black uppercase tracking-tight leading-none text-white block"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[1] || "BALAYAGE"}
-              </span>
-              <span
-                className="text-sm font-black uppercase tracking-tight leading-none text-white block"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[2] || "HAIR COLOR IDEAS"}
-              </span>
-              <span className="text-[9px] font-bold uppercase tracking-wider block" style={{ color: accentColor || "#EAB308" }}>
-                {lines[3] || "FOR LONG LAYERED HAIR"}
-              </span>
+              {renderLayer(1, scriptWord || "Dreamy", {
+                color: accentColor || "#EAB308",
+                font: "Great Vibes, cursive",
+                italic: true,
+                sizePx: 24,
+                uppercase: false,
+              }, "italic leading-none block")}
+              {renderLayer(2, lines[1] || "BALAYAGE", {
+                color: "#FFFFFF",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 20,
+                uppercase: true,
+              }, "tracking-tight leading-none block uppercase")}
+              {renderLayer(3, lines[2] || "HAIR COLOR IDEAS", {
+                color: "#FFFFFF",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-tight leading-none block uppercase")}
+              {renderLayer(4, lines[3] || "FOR LONG LAYERED HAIR", {
+                color: accentColor || "#EAB308",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 9,
+                uppercase: true,
+              }, "tracking-wider block uppercase")}
               <div className="pt-1.5 flex justify-center">
                 <span className="px-3.5 py-0.5 rounded-full bg-white text-black font-black text-[9px] uppercase tracking-wider shadow-sm">
                   {ctaText || "SEE ALL THE LOOKS"}
@@ -848,22 +1037,34 @@ export function PinTemplateVisualPreview({
         {blockStyle === "navy-band-serif" && (
           <div className="bg-[#0F172A] text-white p-3.5 shadow-2xl w-full max-w-[94%] flex flex-col items-center text-center space-y-1 border-t-2 border-b-2 border-white/20">
             <div className="flex items-center justify-center gap-2">
-              <span className="px-1.5 py-0.5 rounded bg-red-600 text-white font-mono text-[10px] font-bold">
-                {badgeText || "12"}
-              </span>
-              <span
-                className="text-xl italic font-serif leading-none text-pink-400"
-                style={{ fontFamily: "Great Vibes, cursive" }}
-              >
-                {scriptWord || "Dreamy"}
-              </span>
+              {renderLayer(0, badgeText || "12", {
+                color: "#FFFFFF",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 11,
+              }, "px-1.5 py-0.5 rounded bg-red-600 font-mono")}
+              {renderLayer(1, scriptWord || "Dreamy", {
+                color: "#F472B6",
+                font: "Great Vibes, cursive",
+                italic: true,
+                sizePx: 20,
+                uppercase: false,
+              }, "italic leading-none")}
             </div>
-            <span className="text-sm sm:text-base font-black font-serif tracking-tight text-white uppercase leading-snug">
-              {lines[1] || lines[2] || "BUCKET LIST PLACES TO VISIT"}
-            </span>
-            <span className="text-[8px] font-bold uppercase tracking-widest text-slate-400">
-              {lines[3] || "THE ULTIMATE 2026 TRAVEL GUIDE"}
-            </span>
+            {renderLayer(2, lines[1] || lines[2] || "BUCKET LIST PLACES TO VISIT", {
+              color: "#FFFFFF",
+              font: "Didot, Bodoni MT, serif",
+              weight: 900,
+              sizePx: 15,
+              uppercase: true,
+            }, "tracking-tight uppercase leading-snug")}
+            {renderLayer(3, lines[3] || "THE ULTIMATE 2026 TRAVEL GUIDE", {
+              color: "#94A3B8",
+              font: primaryFont,
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-widest uppercase")}
           </div>
         )}
 
@@ -880,25 +1081,34 @@ export function PinTemplateVisualPreview({
             }}
           >
             <div className="flex items-center justify-center gap-2">
-              <span className="text-3xl font-black font-serif text-white">
-                {badgeText || "41"}
-              </span>
-              <span
-                className="text-2xl italic font-serif text-white leading-none"
-                style={{ fontFamily: "Great Vibes, cursive" }}
-              >
-                {scriptWord || "Farmhouse"}
-              </span>
+              {renderLayer(0, badgeText || "41", {
+                color: "#FFFFFF",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 30,
+              }, "leading-none")}
+              {renderLayer(1, scriptWord || "Farmhouse", {
+                color: "#FFFFFF",
+                font: "Great Vibes, cursive",
+                italic: true,
+                sizePx: 24,
+                uppercase: false,
+              }, "italic leading-none")}
             </div>
-            <span
-              className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white leading-none"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[1] || lines[2] || "BEDROOM"}
-            </span>
-            <span className="text-sm font-serif italic text-white/90">
-              {lines[2] || lines[3] || "Decor Ideas"}
-            </span>
+            {renderLayer(2, lines[1] || lines[2] || "BEDROOM", {
+              color: "#FFFFFF",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 22,
+              uppercase: true,
+            }, "tracking-tight uppercase leading-none")}
+            {renderLayer(3, lines[2] || lines[3] || "Decor Ideas", {
+              color: "#F3E8FF",
+              font: "Playfair Display, serif",
+              italic: true,
+              sizePx: 14,
+              uppercase: false,
+            }, "italic leading-normal")}
           </div>
         )}
 
@@ -914,30 +1124,33 @@ export function PinTemplateVisualPreview({
               outline: "4px solid rgba(255,255,255,0.5)",
             }}
           >
-            <span
-              className="text-3xl font-black leading-none mb-1"
-              style={{ color: accentColor || "#22D3EE" }}
-            >
-              {badgeText || "40"}
-            </span>
-            <span
-              className="text-base sm:text-lg font-black uppercase tracking-tight leading-tight"
-              style={{ color: accentColor || "#22D3EE", fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[1] || "STUNNING"}
-            </span>
-            <span
-              className="text-sm sm:text-base font-black uppercase tracking-tight leading-tight"
-              style={{ color: accentColor || "#22D3EE", fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[2] || "TV UNIT"}
-            </span>
-            <span
-              className="text-xs sm:text-sm font-black uppercase tracking-wide leading-tight"
-              style={{ color: accentColor || "#22D3EE", fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[3] || "MODERN DESIGNS"}
-            </span>
+            {renderLayer(0, badgeText || "40", {
+              color: accentColor || "#22D3EE",
+              font: primaryFont,
+              weight: 900,
+              sizePx: 32,
+            }, "leading-none mb-1")}
+            {renderLayer(1, lines[1] || "STUNNING", {
+              color: accentColor || "#22D3EE",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 18,
+              uppercase: true,
+            }, "tracking-tight leading-tight uppercase")}
+            {renderLayer(2, lines[2] || "TV UNIT", {
+              color: accentColor || "#22D3EE",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 16,
+              uppercase: true,
+            }, "tracking-tight leading-tight uppercase")}
+            {renderLayer(3, lines[3] || "MODERN DESIGNS", {
+              color: accentColor || "#22D3EE",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 13,
+              uppercase: true,
+            }, "tracking-wide leading-tight uppercase")}
           </div>
         )}
 
@@ -960,28 +1173,36 @@ export function PinTemplateVisualPreview({
                 color: bandColor || "#0F172A",
               }}
             >
-              {badgeText || "25"}
+              {renderLayer(0, badgeText || "25", {
+                color: bandColor || "#0F172A",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 14,
+              }, "leading-none")}
             </div>
             <div className="pt-2">
-              <span
-                className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-none block"
-                style={{ color: accentColor || "#A3E635", fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[1] || "COASTAL"}
-              </span>
-              <span
-                className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-none block"
-                style={{ color: accentColor || "#A3E635", fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {lines[2] || "BEDROOM"}
-              </span>
+              {renderLayer(1, lines[1] || "COASTAL", {
+                color: accentColor || "#A3E635",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 22,
+                uppercase: true,
+              }, "tracking-tight leading-none block uppercase")}
+              {renderLayer(2, lines[2] || "BEDROOM", {
+                color: accentColor || "#A3E635",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 22,
+                uppercase: true,
+              }, "tracking-tight leading-none block uppercase")}
             </div>
-            <span
-              className="text-lg italic font-serif leading-none"
-              style={{ color: "#38BDF8", fontFamily: "Great Vibes, cursive" }}
-            >
-              {scriptWord || "Ideas"}
-            </span>
+            {renderLayer(3, scriptWord || "Ideas", {
+              color: "#38BDF8",
+              font: "Great Vibes, cursive",
+              italic: true,
+              sizePx: 18,
+              uppercase: false,
+            }, "italic leading-none")}
           </div>
         )}
 
@@ -997,30 +1218,36 @@ export function PinTemplateVisualPreview({
               {kicker || "MUST-TRY"}
             </div>
             <div className="flex items-center justify-center gap-2 pt-1">
-              <span
-                className="text-4xl font-black tracking-tighter leading-none text-black"
-                style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-              >
-                {badgeText || "25"}
-              </span>
+              {renderLayer(0, badgeText || "25", {
+                color: "#111111",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 38,
+              }, "tracking-tighter leading-none")}
               <div className="flex flex-col items-start text-left">
-                <span
-                  className="text-base sm:text-lg font-black uppercase tracking-tight leading-none"
-                  style={{ color: accentColor || "#DC2626", fontFamily: "Anton, Oswald, sans-serif" }}
-                >
-                  {lines[1] || "BALAYAGE"}
-                </span>
-                <span
-                  className="text-sm font-black uppercase tracking-tight leading-none text-black"
-                  style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-                >
-                  {lines[2] || "HAIR IDEAS"}
-                </span>
+                {renderLayer(1, lines[1] || "BALAYAGE", {
+                  color: accentColor || "#DC2626",
+                  font: "Anton, Oswald, sans-serif",
+                  weight: 900,
+                  sizePx: 17,
+                  uppercase: true,
+                }, "tracking-tight leading-none uppercase")}
+                {renderLayer(2, lines[2] || "HAIR IDEAS", {
+                  color: "#111111",
+                  font: "Anton, Oswald, sans-serif",
+                  weight: 900,
+                  sizePx: 14,
+                  uppercase: true,
+                }, "tracking-tight leading-none uppercase")}
               </div>
             </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-black/70">
-              {lines[3] || "FOR LONG LAYERED HAIR"}
-            </span>
+            {renderLayer(3, lines[3] || "FOR LONG LAYERED HAIR", {
+              color: "#555555",
+              font: primaryFont,
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-wider uppercase block")}
             <div className="pt-1">
               <span className="px-3 py-0.5 rounded-full bg-black text-white font-black text-[9px] uppercase tracking-wider shadow-xs">
                 {ctaText || "GET THE IDEAS"}
@@ -1034,24 +1261,42 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "forge-linen-gold" && (
           <div className="bg-[#FDFBF7] text-[#111111] p-5 shadow-2xl rounded-xs w-full max-w-[88%] flex flex-col items-center text-center space-y-2 border-2 border-[#D4AF37] relative">
-            <span className="text-[9px] uppercase tracking-widest font-bold text-[#064E3B] font-mono">
-              {kicker || "MAISON DE BEAUTÉ"}
-            </span>
+            {renderLayer(0, kicker || "MAISON DE BEAUTÉ", {
+              color: "#064E3B",
+              font: "monospace",
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-widest font-mono uppercase")}
             <div className="w-10 h-10 rounded-full border-2 border-[#D4AF37] bg-white flex items-center justify-center font-black font-serif text-sm text-[#111111] shadow-xs">
-              {badgeText || "50"}
+              {renderLayer(1, badgeText || "50", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 14,
+              }, "leading-none")}
             </div>
-            <span
-              className="text-2xl italic font-serif leading-none text-[#D4AF37]"
-              style={{ fontFamily: "Playfair Display, Great Vibes, cursive" }}
-            >
-              {scriptWord || "Timeless"}
-            </span>
-            <span className="text-base sm:text-lg font-black font-serif uppercase tracking-tight text-[#111111] leading-tight">
-              {lines[2] || lines[3] || "HAUTE COUTURE LOOKS"}
-            </span>
-            <span className="text-[8px] font-bold uppercase tracking-widest text-black/60">
-              {lines[3] || lines[4] || "THE DEFINITIVE LUXURY CAPSULE 2026"}
-            </span>
+            {renderLayer(2, scriptWord || "Timeless", {
+              color: "#D4AF37",
+              font: "Playfair Display, Great Vibes, cursive",
+              italic: true,
+              sizePx: 24,
+              uppercase: false,
+            }, "italic leading-none")}
+            {renderLayer(3, lines[2] || lines[3] || "HAUTE COUTURE LOOKS", {
+              color: "#111111",
+              font: "Didot, Bodoni MT, serif",
+              weight: 900,
+              sizePx: 17,
+              uppercase: true,
+            }, "uppercase tracking-tight leading-tight block")}
+            {renderLayer(4, lines[3] || lines[4] || "THE DEFINITIVE LUXURY CAPSULE 2026", {
+              color: "#555555",
+              font: primaryFont,
+              weight: 700,
+              sizePx: 8,
+              uppercase: true,
+            }, "tracking-widest uppercase block")}
           </div>
         )}
 
@@ -1068,22 +1313,36 @@ export function PinTemplateVisualPreview({
             }}
           >
             <div className="flex items-center justify-between w-full border-b border-[#06B6D4]/30 pb-1">
-              <span className="text-[9px] font-mono font-bold tracking-widest text-[#06B6D4]">
-                {kicker || "2026 DROPS"}
-              </span>
-              <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#06B6D4] text-black">
-                {badgeText || "35+"}
-              </span>
+              {renderLayer(0, kicker || "2026 DROPS", {
+                color: "#06B6D4",
+                font: "monospace",
+                weight: 700,
+                sizePx: 9,
+                uppercase: true,
+              }, "font-mono tracking-widest")}
+              <div className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#06B6D4] text-black">
+                {renderLayer(1, badgeText || "35+", {
+                  color: "#000000",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 10,
+                }, "leading-none")}
+              </div>
             </div>
-            <span
-              className="text-xl sm:text-2xl font-black uppercase tracking-tight leading-none text-white pt-1"
-              style={{ fontFamily: "Anton, Oswald, sans-serif" }}
-            >
-              {lines[2] || "STREETWEAR AESTHETIC"}
-            </span>
-            <span className="text-[9px] font-bold uppercase tracking-wider text-[#EC4899]">
-              {lines[3] || "TRENDS DOMINATING TOKYO & NYC"}
-            </span>
+            {renderLayer(2, lines[2] || "STREETWEAR AESTHETIC", {
+              color: "#FFFFFF",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 22,
+              uppercase: true,
+            }, "tracking-tight leading-none uppercase block pt-1")}
+            {renderLayer(3, lines[3] || "TRENDS DOMINATING TOKYO & NYC", {
+              color: "#EC4899",
+              font: primaryFont,
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-wider uppercase block")}
           </div>
         )}
 
@@ -1092,21 +1351,34 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "forge-provence-lavender" && (
           <div className="bg-[#FDF4FF] text-[#1E1B4B] p-4 shadow-2xl rounded-2xl w-full max-w-[88%] flex flex-col items-center text-center space-y-1.5 border border-[#E9D5FF]">
-            <span className="text-[8px] uppercase tracking-widest font-bold text-[#8B5CF6] font-mono">
-              {kicker || "FRENCH LIVING"}
-            </span>
-            <span
-              className="text-2xl italic font-serif leading-none text-[#8B5CF6]"
-              style={{ fontFamily: "Great Vibes, cursive" }}
-            >
-              {scriptWord || "Charming"}
-            </span>
-            <span className="text-base font-black font-serif uppercase tracking-tight text-[#1E1B4B] leading-tight">
-              {lines[2] || "PROVENCE BEDROOMS"}
-            </span>
-            <span className="text-[9px] font-serif italic text-black/70">
-              {lines[3] || "RUSTIC SOUTHERN FRANCE ELEGANCE"}
-            </span>
+            {renderLayer(0, kicker || "FRENCH LIVING", {
+              color: "#8B5CF6",
+              font: "monospace",
+              weight: 700,
+              sizePx: 8,
+              uppercase: true,
+            }, "tracking-widest font-mono uppercase")}
+            {renderLayer(1, scriptWord || "Charming", {
+              color: "#8B5CF6",
+              font: "Great Vibes, cursive",
+              italic: true,
+              sizePx: 24,
+              uppercase: false,
+            }, "italic leading-none")}
+            {renderLayer(2, lines[2] || "PROVENCE BEDROOMS", {
+              color: "#1E1B4B",
+              font: "Didot, Bodoni MT, serif",
+              weight: 900,
+              sizePx: 16,
+              uppercase: true,
+            }, "tracking-tight leading-tight uppercase block")}
+            {renderLayer(3, lines[3] || "RUSTIC SOUTHERN FRANCE ELEGANCE", {
+              color: "#4C1D95",
+              font: "Playfair Display, serif",
+              italic: true,
+              sizePx: 9,
+              uppercase: false,
+            }, "italic")}
           </div>
         )}
 
@@ -1115,35 +1387,54 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "luxe-stepped-boxes" && (
           <div className="flex flex-col items-center text-center space-y-1.5 w-full max-w-[92%]">
-            <div className="bg-white text-black px-4 py-0.5 rounded-none shadow-md border border-black/5">
-              <span className="text-2xl sm:text-3xl font-black font-serif tracking-tight leading-none">
-                {badgeText || lines[0] || "50"}
-              </span>
+            <div className="bg-white px-4 py-0.5 rounded-none shadow-md border border-black/5">
+              {renderLayer(0, badgeText || lines[0] || "50", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 30,
+              }, "leading-none")}
             </div>
 
             <div className="space-y-1 flex flex-col items-center">
-              <div className="bg-white text-black px-3 py-0.5 shadow-sm rounded-none">
-                <span className="text-xs sm:text-sm font-black font-serif tracking-normal leading-tight uppercase">
-                  {lines[1] || "MEDIUM LENGTH"}
-                </span>
+              <div className="bg-white px-3 py-0.5 shadow-sm rounded-none">
+                {renderLayer(1, lines[1] || "MEDIUM LENGTH", {
+                  color: "#111111",
+                  font: "Didot, Bodoni MT, serif",
+                  weight: 900,
+                  sizePx: 13,
+                  uppercase: true,
+                }, "tracking-normal leading-tight uppercase")}
               </div>
-              <div className="bg-white text-black px-3 py-0.5 shadow-sm rounded-none">
-                <span className="text-xs sm:text-sm font-black font-serif tracking-normal leading-tight uppercase">
-                  {lines[2] || "HAIRSTYLE IDEAS"}
-                </span>
+              <div className="bg-white px-3 py-0.5 shadow-sm rounded-none">
+                {renderLayer(2, lines[2] || "HAIRSTYLE IDEAS", {
+                  color: "#111111",
+                  font: "Didot, Bodoni MT, serif",
+                  weight: 900,
+                  sizePx: 13,
+                  uppercase: true,
+                }, "tracking-normal leading-tight uppercase")}
               </div>
             </div>
 
             <div className="space-y-1 flex flex-col items-center pt-0.5">
-              <div className="bg-[#EFE6DB] text-[#222222] px-3.5 py-0.5 rounded-full shadow-xs border border-[#DFD5C8]">
-                <span className="text-[11px] sm:text-xs font-medium font-serif italic tracking-tight">
-                  {lines[3] || "That Work for"}
-                </span>
+              <div className="bg-[#EFE6DB] px-3.5 py-0.5 rounded-full shadow-xs border border-[#DFD5C8]">
+                {renderLayer(3, lines[3] || "That Work for", {
+                  color: "#222222",
+                  font: "Playfair Display, Didot, serif",
+                  italic: true,
+                  sizePx: 12,
+                  uppercase: false,
+                }, "italic tracking-tight")}
               </div>
-              <div className="bg-[#EFE6DB] text-[#222222] px-3.5 py-0.5 rounded-full shadow-xs border border-[#DFD5C8]">
-                <span className="text-[11px] sm:text-xs font-medium font-serif italic tracking-tight">
-                  {lines[4] || "Every Hair Type"}
-                </span>
+              <div className="bg-[#EFE6DB] px-3.5 py-0.5 rounded-full shadow-xs border border-[#DFD5C8]">
+                {renderLayer(4, lines[4] || "Every Hair Type", {
+                  color: "#222222",
+                  font: "Playfair Display, Didot, serif",
+                  italic: true,
+                  sizePx: 12,
+                  uppercase: false,
+                }, "italic tracking-tight")}
               </div>
             </div>
           </div>
@@ -1154,41 +1445,68 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "luxe-stacked-over-50" && (
           <div className="flex flex-col items-center text-center space-y-1.5 w-full max-w-[92%]">
-            <div className="bg-white text-black px-4 py-0.5 shadow-md border border-black/5">
-              <span className="text-2xl sm:text-3xl font-black font-serif tracking-tight leading-none">
-                {badgeText || lines[0] || "50"}
-              </span>
+            <div className="bg-white px-4 py-0.5 shadow-md border border-black/5">
+              {renderLayer(0, badgeText || lines[0] || "50", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 30,
+              }, "leading-none")}
             </div>
 
-            <div className="bg-white text-black px-3.5 py-0.5 shadow-sm">
-              <span className="text-xs sm:text-sm font-black font-serif tracking-normal uppercase">
-                {lines[1] || "SHORT"}
-              </span>
+            <div className="bg-white px-3.5 py-0.5 shadow-sm">
+              {renderLayer(1, lines[1] || "SHORT", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-normal uppercase")}
             </div>
-            <div className="bg-white text-black px-3.5 py-0.5 shadow-sm">
-              <span className="text-xs sm:text-sm font-black font-serif tracking-normal uppercase">
-                {lines[2] || "HAIRSTYLES"}
-              </span>
-            </div>
-
-            <span className="text-[11px] font-serif italic text-black/90 font-medium">
-              {lines[3] || "for Women"}
-            </span>
-
-            <div className="bg-[#EFE6DB] text-black px-4 py-0.5 shadow-xs border border-[#DFD5C8]">
-              <span className="text-xs sm:text-sm font-black font-serif tracking-wider uppercase">
-                {lines[4] || "OVER 50"}
-              </span>
+            <div className="bg-white px-3.5 py-0.5 shadow-sm">
+              {renderLayer(2, lines[2] || "HAIRSTYLES", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-normal uppercase")}
             </div>
 
-            <span className="text-[10px] font-serif italic text-black/80 font-medium">
-              {lines[5] || "That Look"}
-            </span>
+            {renderLayer(3, lines[3] || "for Women", {
+              color: "#222222",
+              font: "Playfair Display, serif",
+              italic: true,
+              sizePx: 12,
+              uppercase: false,
+            }, "italic font-medium")}
 
-            <div className="bg-white text-black px-3 py-0.5 shadow-sm">
-              <span className="text-[11px] sm:text-xs font-black font-serif tracking-normal uppercase">
-                {lines[6] || "ABSOLUTELY MODERN"}
-              </span>
+            <div className="bg-[#EFE6DB] px-4 py-0.5 shadow-xs border border-[#DFD5C8]">
+              {renderLayer(4, lines[4] || "OVER 50", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 14,
+                uppercase: true,
+              }, "tracking-wider uppercase")}
+            </div>
+
+            {renderLayer(5, lines[5] || "That Look", {
+              color: "#333333",
+              font: "Playfair Display, serif",
+              italic: true,
+              sizePx: 11,
+              uppercase: false,
+            }, "italic font-medium")}
+
+            <div className="bg-white px-3 py-0.5 shadow-sm">
+              {renderLayer(6, lines[6] || "ABSOLUTELY MODERN", {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 12,
+                uppercase: true,
+              }, "tracking-normal uppercase")}
             </div>
           </div>
         )}
@@ -1198,43 +1516,63 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "luxe-black-boxes" && (
           <div className="flex flex-col items-center text-center space-y-1.5 w-full max-w-[92%]">
-            <div className="bg-black text-white px-4 py-1 shadow-lg border border-white/20">
-              <span className="text-2xl sm:text-3xl font-black font-serif tracking-tight leading-none">
-                {badgeText || lines[0] || "50"}
-              </span>
+            <div className="bg-black px-4 py-1 shadow-lg border border-white/20">
+              {renderLayer(0, badgeText || lines[0] || "50", {
+                color: "#FFFFFF",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 32,
+              }, "leading-none")}
             </div>
 
-            <div className="bg-white text-black px-3 py-0.5 shadow-xs">
-              <span className="text-[10px] font-bold tracking-widest uppercase">
-                {lines[1] || "- TRENDY -"}
-              </span>
+            <div className="bg-white px-3 py-0.5 shadow-xs">
+              {renderLayer(1, lines[1] || "- TRENDY -", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 10,
+                uppercase: true,
+              }, "tracking-widest uppercase")}
             </div>
 
-            <div className="bg-white text-black px-5 py-1 shadow-md w-full max-w-[80%]">
-              <span
-                className="text-2xl sm:text-3xl font-black tracking-tighter leading-none block uppercase"
-                style={{ fontFamily: "Anton, sans-serif" }}
-              >
-                {lines[2] || "SHORT"}
-              </span>
+            <div className="bg-white px-5 py-1 shadow-md w-full max-w-[80%]">
+              {renderLayer(2, lines[2] || "SHORT", {
+                color: "#111111",
+                font: "Anton, sans-serif",
+                weight: 900,
+                sizePx: 32,
+                uppercase: true,
+              }, "tracking-tighter leading-none block uppercase")}
             </div>
 
-            <div className="bg-white text-black px-3 py-0.5 shadow-xs">
-              <span className="text-[11px] font-bold tracking-wider uppercase">
-                {lines[3] || "— HAIRSTYLES —"}
-              </span>
+            <div className="bg-white px-3 py-0.5 shadow-xs">
+              {renderLayer(3, lines[3] || "— HAIRSTYLES —", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 11,
+                uppercase: true,
+              }, "tracking-wider uppercase")}
             </div>
 
-            <div className="bg-black text-white px-4 py-0.5 shadow-md">
-              <span className="text-xs sm:text-sm font-black tracking-widest uppercase">
-                {lines[4] || "IDEAS"}
-              </span>
+            <div className="bg-black px-4 py-0.5 shadow-md">
+              {renderLayer(4, lines[4] || "IDEAS", {
+                color: "#FFFFFF",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 13,
+                uppercase: true,
+              }, "tracking-widest uppercase")}
             </div>
 
-            <div className="bg-white text-black px-3 py-0.5 shadow-xs">
-              <span className="text-[10px] font-bold tracking-wider uppercase">
-                {lines[5] || "FOR EVERY WOMAN"}
-              </span>
+            <div className="bg-white px-3 py-0.5 shadow-xs">
+              {renderLayer(5, lines[5] || "FOR EVERY WOMAN", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 10,
+                uppercase: true,
+              }, "tracking-wider uppercase")}
             </div>
           </div>
         )}
@@ -1249,32 +1587,50 @@ export function PinTemplateVisualPreview({
                 className="w-11 h-11 rounded-full flex items-center justify-center font-black text-xl text-white shadow-md shrink-0"
                 style={{ backgroundColor: badgeBg || accentColor }}
               >
-                <span className="leading-none">{badgeText || "32"}</span>
+                {renderLayer(0, badgeText || "32", {
+                  color: "#FFFFFF",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 20,
+                }, "leading-none")}
               </div>
-              <span
-                className="text-2xl sm:text-3xl italic font-serif leading-none text-black"
-                style={{ fontFamily: "Great Vibes, Dancing Script, cursive" }}
-              >
-                {scriptWord || "Chic"}
-              </span>
+              {renderLayer(1, scriptWord || "Chic", {
+                color: "#111111",
+                font: "Great Vibes, Dancing Script, cursive",
+                italic: true,
+                sizePx: 30,
+                uppercase: false,
+              }, "italic font-serif leading-none")}
             </div>
 
-            <div
-              className="text-2xl sm:text-3xl font-black tracking-tight leading-none uppercase"
-              style={{
+            <div>
+              {renderLayer(2, lines[2] || "MUSHROOM", {
                 color: accentColor,
-                fontFamily: "Anton, Oswald, sans-serif",
-              }}
-            >
-              {lines[2] || "MUSHROOM"}
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 30,
+                uppercase: true,
+              }, "tracking-tight leading-none uppercase block")}
             </div>
 
-            <div className="text-[11px] sm:text-xs font-black text-black leading-tight tracking-tight uppercase max-w-[95%]">
-              {lines[3] || "BROWN HAIR IDEAS YOU'LL LOVE"}
+            <div>
+              {renderLayer(3, lines[3] || "BROWN HAIR IDEAS YOU'LL LOVE", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 12,
+                uppercase: true,
+              }, "leading-tight tracking-tight uppercase block")}
             </div>
 
-            <div className="text-[8px] sm:text-[9px] text-black/70 tracking-widest font-semibold uppercase pt-0.5 border-t border-black/10 w-full">
-              {lines[4] || "EASY LOOKS TO SHOW YOUR STYLIST"}
+            <div className="pt-0.5 border-t border-black/10 w-full">
+              {renderLayer(4, lines[4] || "EASY LOOKS TO SHOW YOUR STYLIST", {
+                color: "#555555",
+                font: primaryFont,
+                weight: 600,
+                sizePx: 9,
+                uppercase: true,
+              }, "tracking-widest uppercase block")}
             </div>
           </div>
         )}
@@ -1285,37 +1641,39 @@ export function PinTemplateVisualPreview({
         {blockStyle === "viral-grid-cta" && (
           <div className="w-full max-w-[92%] flex flex-col items-center space-y-1.5">
             <div className="flex items-center justify-center gap-2">
-              <span
-                className="text-5xl font-black tracking-tighter leading-none"
-                style={{
-                  color: accentColor || "#C92A2A",
-                  fontFamily: "Anton, Oswald, sans-serif",
-                }}
-              >
-                {badgeText || "58"}
-              </span>
-              <span
-                className="text-3xl sm:text-4xl italic font-serif leading-none text-black drop-shadow-xs"
-                style={{ fontFamily: "Great Vibes, Dancing Script, cursive" }}
-              >
-                {scriptWord || "Gorgeous"}
-              </span>
+              {renderLayer(0, badgeText || "58", {
+                color: accentColor || "#C92A2A",
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 48,
+              }, "tracking-tighter leading-none")}
+              {renderLayer(1, scriptWord || "Gorgeous", {
+                color: "#111111",
+                font: "Great Vibes, Dancing Script, cursive",
+                italic: true,
+                sizePx: 36,
+                uppercase: false,
+              }, "italic leading-none drop-shadow-xs")}
             </div>
 
-            <div
-              className="text-lg sm:text-xl font-black uppercase tracking-tight text-center"
-              style={{
+            <div>
+              {renderLayer(2, lines[2] || "SHORT HOLIDAY", {
                 color: accentColor || "#C92A2A",
-                fontFamily: "Anton, Oswald, sans-serif",
-              }}
-            >
-              {lines[2] || "SHORT HOLIDAY"}
+                font: "Anton, Oswald, sans-serif",
+                weight: 900,
+                sizePx: 20,
+                uppercase: true,
+              }, "uppercase tracking-tight text-center block")}
             </div>
 
             <div className="bg-white text-black p-2 shadow-md rounded-none text-center w-full max-w-[85%]">
-              <span className="text-[10px] sm:text-[11px] font-bold leading-tight block uppercase">
-                {lines[3] || "HAIRSTYLES FOR WOMEN WITH BOBS AND PIXIES"}
-              </span>
+              {renderLayer(3, lines[3] || "HAIRSTYLES FOR WOMEN WITH BOBS AND PIXIES", {
+                color: "#111111",
+                font: primaryFont,
+                weight: 700,
+                sizePx: 11,
+                uppercase: true,
+              }, "leading-tight block uppercase")}
             </div>
 
             <div
@@ -1331,19 +1689,20 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: WHITE BLOCKS                                        */}
         {/* ============================================================== */}
         {blockStyle === "white-blocks" && (
-          <div className="space-y-1 flex flex-col items-center w-full max-w-[90%]">
+          <div className="flex flex-col items-center space-y-1.5 max-w-[90%] text-center">
             {lines.map((line, idx) => (
-              <span
+              <div
                 key={idx}
-                className="px-3 py-0.5 text-xs sm:text-sm font-black shadow-md rounded-[2px] uppercase tracking-tight"
-                style={{
-                  backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#FFFFFF",
-                  color: idx === 1 || idx === 2 ? accentColor : "#111111",
-                  fontFamily: primaryFont,
-                }}
+                className="bg-white/95 px-3 py-1 shadow-lg"
               >
-                {line}
-              </span>
+                {renderLayer(idx, line, {
+                  color: idx === 1 ? accentColor : "#111111",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 16,
+                  uppercase: true,
+                }, "tracking-tight uppercase")}
+              </div>
             ))}
           </div>
         )}
@@ -1352,19 +1711,20 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: BLACK BOXES                                         */}
         {/* ============================================================== */}
         {blockStyle === "black-boxes" && (
-          <div className="space-y-1 flex flex-col items-center w-full max-w-[90%]">
+          <div className="flex flex-col items-center space-y-1.5 max-w-[90%] text-center">
             {lines.map((line, idx) => (
-              <span
+              <div
                 key={idx}
-                className="px-3 py-0.5 text-xs sm:text-sm font-black shadow-lg rounded-[2px] uppercase tracking-wide"
-                style={{
-                  backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#111111",
-                  color: idx === 1 ? accentColor : "#FFFFFF",
-                  fontFamily: primaryFont,
-                }}
+                className="bg-black/95 px-3.5 py-1.5 shadow-xl border border-white/20"
               >
-                {line}
-              </span>
+                {renderLayer(idx, line, {
+                  color: idx === 1 ? accentColor : "#FFFFFF",
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 16,
+                  uppercase: true,
+                }, "tracking-tight uppercase")}
+              </div>
             ))}
           </div>
         )}
@@ -1373,35 +1733,39 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: COLOR BAND CARD                                     */}
         {/* ============================================================== */}
         {blockStyle === "color-band-card" && (
-          <div className="bg-white text-black p-3.5 shadow-2xl rounded-none w-full max-w-[90%] flex flex-col items-center text-center space-y-1.5 border-t-2 border-b-2 border-black/10">
-            <div className="flex items-center justify-between w-full border-b border-black/10 pb-1">
-              <span
-                className="text-[9px] uppercase tracking-widest font-black"
-                style={{ color: accentColor }}
-              >
-                {kicker}
-              </span>
-              <span
-                className="px-2 py-0.5 rounded-full text-[10px] font-bold text-white"
-                style={{ backgroundColor: badgeBg }}
-              >
-                {badgeText}
-              </span>
+          <div
+            className="w-full py-4 px-5 shadow-2xl flex flex-col items-center text-center space-y-1.5 relative border-y border-white/20"
+            style={{ backgroundColor: bandColor || "rgba(0,0,0,0.85)" }}
+          >
+            <div className="flex items-center gap-2">
+              {renderLayer(0, badgeText || lines[0] || "20+", {
+                color: accentColor,
+                font: primaryFont,
+                weight: 900,
+                sizePx: 18,
+              }, "tracking-tight")}
+              {renderLayer(1, scriptWord || lines[1] || "Trendy", {
+                color: "#FFFFFF",
+                font: "Kaushan Script, Caveat, cursive",
+                italic: true,
+                sizePx: 22,
+                uppercase: false,
+              }, "")}
             </div>
-
-            <div
-              className="text-base sm:text-lg font-black tracking-tight leading-tight uppercase"
-              style={{ color: "#111111", fontFamily: primaryFont }}
-            >
-              {lines.slice(0, 3).join(" ")}
-            </div>
-
-            <div
-              className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider text-white shadow-xs"
-              style={{ backgroundColor: accentColor }}
-            >
-              {ctaText}
-            </div>
+            {renderLayer(2, lines[2] || "OUTFIT INSPIRATION", {
+              color: "#FFFFFF",
+              font: "Anton, Oswald, sans-serif",
+              weight: 900,
+              sizePx: 22,
+              uppercase: true,
+            }, "tracking-wide leading-tight")}
+            {lines[3] && renderLayer(3, lines[3], {
+              color: "#EEEEEE",
+              font: primaryFont,
+              weight: 600,
+              sizePx: 11,
+              uppercase: false,
+            }, "leading-tight opacity-90")}
           </div>
         )}
 
@@ -1411,21 +1775,36 @@ export function PinTemplateVisualPreview({
         {blockStyle === "magazine-editorial" && (
           <div className="bg-[#FFFFFFf2] text-black p-4 shadow-2xl rounded-xs w-full max-w-[88%] flex flex-col items-center text-center space-y-2 border border-black/15 backdrop-blur-xs">
             <div className="w-full flex items-center justify-between border-b border-black/15 pb-1 text-[8px] font-bold tracking-widest uppercase text-black/70 font-mono">
-              <span>{kicker}</span>
+              {renderLayer(0, kicker || "EDITORIAL", {
+                color: "#444444",
+                font: "monospace",
+                weight: 700,
+                sizePx: 8,
+                uppercase: true,
+              }, "font-mono uppercase")}
               <span>ISSUE #{badgeText || "01"}</span>
             </div>
 
-            <div
-              className="text-sm sm:text-base font-black font-serif leading-snug tracking-tight uppercase"
-              style={{ color: "#111111" }}
-            >
-              {lines.slice(0, 3).join(" ")}
+            <div>
+              {renderLayer(1, lines.slice(0, 3).join(" "), {
+                color: "#111111",
+                font: "Didot, Bodoni MT, serif",
+                weight: 900,
+                sizePx: 16,
+                uppercase: true,
+              }, "leading-snug tracking-tight uppercase block")}
             </div>
 
             <div className="w-8 h-[2px] rounded-full" style={{ backgroundColor: accentColor }} />
 
-            <div className="text-[9px] font-serif italic text-black/80">
-              {lines[3] || "Exclusive Guide & Ideas"}
+            <div>
+              {renderLayer(2, lines[3] || "Exclusive Guide & Ideas", {
+                color: "#333333",
+                font: "Playfair Display, serif",
+                italic: true,
+                sizePx: 10,
+                uppercase: false,
+              }, "italic")}
             </div>
           </div>
         )}
@@ -1440,21 +1819,20 @@ export function PinTemplateVisualPreview({
               backgroundColor: bandColor !== "#FFFFFF" ? bandColor : "#1F1A17ee",
             }}
           >
-            <span
-              className="text-[9px] uppercase tracking-widest font-bold mb-1"
-              style={{ color: accentColor }}
-            >
-              {kicker}
-            </span>
-            <div
-              className="text-xs sm:text-sm font-black leading-snug uppercase tracking-tight"
-              style={{
-                fontFamily: primaryFont,
-                color: "#FFFFFF",
-              }}
-            >
-              {lines.join(" ")}
-            </div>
+            {renderLayer(0, kicker || "SPOTLIGHT", {
+              color: accentColor,
+              font: primaryFont,
+              weight: 700,
+              sizePx: 9,
+              uppercase: true,
+            }, "tracking-widest uppercase mb-1 block")}
+            {renderLayer(1, lines.join(" "), {
+              color: "#FFFFFF",
+              font: primaryFont,
+              weight: 900,
+              sizePx: 14,
+              uppercase: true,
+            }, "leading-snug uppercase tracking-tight block")}
           </div>
         )}
 
@@ -1463,24 +1841,20 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "script-accent" && (
           <div className="bg-white/95 text-black p-3.5 shadow-xl rounded-none w-full max-w-[88%] flex flex-col items-center text-center space-y-1 border border-black/10">
-            <span
-              className="text-2xl sm:text-3xl italic font-serif leading-none"
-              style={{
-                color: accentColor,
-                fontFamily: "Great Vibes, Dancing Script, cursive",
-              }}
-            >
-              {scriptWord}
-            </span>
-            <span
-              className="text-xs sm:text-sm font-black uppercase tracking-tight"
-              style={{
-                fontFamily: primaryFont,
-                color: "#111111",
-              }}
-            >
-              {lines.slice(0, 3).join(" ")}
-            </span>
+            {renderLayer(0, scriptWord || "Inspo", {
+              color: accentColor,
+              font: "Great Vibes, Dancing Script, cursive",
+              italic: true,
+              sizePx: 28,
+              uppercase: false,
+            }, "italic leading-none block")}
+            {renderLayer(1, lines.slice(0, 3).join(" "), {
+              color: "#111111",
+              font: primaryFont,
+              weight: 900,
+              sizePx: 14,
+              uppercase: true,
+            }, "tracking-tight uppercase block")}
           </div>
         )}
 
@@ -1489,20 +1863,26 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "brush-banner" && (
           <div className="flex flex-col items-center text-center space-y-1.5 w-full max-w-[90%]">
-            <div
-              className="text-xs sm:text-sm font-black uppercase tracking-tight drop-shadow-md bg-white text-black px-3 py-1 shadow-sm"
-              style={{ fontFamily: primaryFont }}
-            >
-              {lines.slice(0, 2).join(" ")}
+            <div className="bg-white text-black px-3 py-1 shadow-sm">
+              {renderLayer(0, lines.slice(0, 2).join(" "), {
+                color: "#111111",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 13,
+                uppercase: true,
+              }, "tracking-tight uppercase block")}
             </div>
             <div
-              className="px-4 py-1 font-black text-xs rounded-xs shadow-md transform -rotate-1 border border-black/10 text-white"
-              style={{
-                backgroundColor: accentColor,
-                fontFamily: primaryFont,
-              }}
+              className="px-4 py-1 rounded-xs shadow-md transform -rotate-1 border border-black/10 text-white"
+              style={{ backgroundColor: accentColor }}
             >
-              {lines[2] || scriptWord || "TRENDS 2026"}
+              {renderLayer(1, lines[2] || scriptWord || "TRENDS 2026", {
+                color: "#FFFFFF",
+                font: primaryFont,
+                weight: 900,
+                sizePx: 12,
+                uppercase: true,
+              }, "tracking-wide uppercase block")}
             </div>
           </div>
         )}
@@ -1513,19 +1893,55 @@ export function PinTemplateVisualPreview({
         {blockStyle === "sticker-outline" && (
           <div className="flex flex-col items-center text-center space-y-1 w-full max-w-[90%]">
             {lines.map((line, idx) => (
-              <span
-                key={idx}
-                className="text-xs sm:text-sm font-black uppercase tracking-tight px-2 py-0.5"
-                style={{
+              <div key={idx} className="px-2 py-0.5">
+                {renderLayer(idx, line, {
                   color: idx === 1 ? accentColor : "#FFFFFF",
-                  textShadow:
-                    "2px 2px 0 #111111, -2px -2px 0 #111111, 2px -2px 0 #111111, -2px 2px 0 #111111, 0 3px 6px rgba(0,0,0,0.8)",
-                  fontFamily: primaryFont,
-                }}
-              >
-                {line}
-              </span>
+                  font: primaryFont,
+                  weight: 900,
+                  sizePx: 15,
+                  uppercase: true,
+                  textShadow: "2px 2px 0 #111111, -2px -2px 0 #111111, 2px -2px 0 #111111, -2px 2px 0 #111111, 0 3px 6px rgba(0,0,0,0.8)",
+                }, "tracking-tight uppercase")}
+              </div>
             ))}
+          </div>
+        )}
+
+        {/* Additional Custom User Text Layers */}
+        {template.customTextLayers && template.customTextLayers.length > 4 && (
+          <div className="w-full flex flex-col items-center gap-1.5 mt-2 pointer-events-auto">
+            {template.customTextLayers.slice(4).map((layer, extraIdx) => {
+              if (layer.visible === false) return null;
+              return (
+                <div
+                  key={layer.id || extraIdx}
+                  onClick={() => template.onLayerClick?.(layer.id)}
+                  className="px-3 py-1 cursor-pointer transition-transform hover:scale-105"
+                  style={{
+                    backgroundColor: layer.bgHighlight && layer.bgHighlight !== "transparent" ? layer.bgHighlight : undefined,
+                    borderRadius: layer.containerShape === "circle" ? "9999px" : layer.containerShape === "pill" ? "9999px" : layer.containerShape === "rounded" ? "8px" : undefined,
+                    transform: layer.rotation ? `rotate(${layer.rotation}deg)` : undefined,
+                    opacity: layer.opacity !== undefined ? layer.opacity : 1,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: layer.fontFamily || primaryFont,
+                      color: layer.color || "#FFFFFF",
+                      fontWeight: layer.fontWeight === "Black" ? 900 : layer.fontWeight === "Bold" ? 700 : layer.fontWeight === "SemiBold" ? 600 : 500,
+                      fontSize: layer.fontSizePx ? `${layer.fontSizePx}px` : "14px",
+                      letterSpacing: layer.letterSpacing || "normal",
+                      lineHeight: layer.lineHeight || 1.2,
+                      textTransform: layer.isUppercase !== false ? "uppercase" : "none",
+                      fontStyle: layer.isItalic ? "italic" : "normal",
+                      textDecoration: layer.isUnderline ? "underline" : layer.isStrikethrough ? "line-through" : "none",
+                    }}
+                  >
+                    {layer.text}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
