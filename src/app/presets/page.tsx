@@ -22,6 +22,8 @@ import {
   Type,
   Loader2,
   Upload,
+  Heart,
+  Trash2,
 } from "lucide-react";
 import { PinTemplateVisualPreview } from "@/components/PinTemplateVisualPreview";
 import { PresetCustomizerEditor } from "@/components/PresetCustomizerEditor";
@@ -352,6 +354,24 @@ export default function PresetsShowcasePage() {
   const [selectedStudioLayout, setSelectedStudioLayout] = useState("all");
   const [selectedStudioStyle, setSelectedStudioStyle] = useState("all");
   const [studioSearch, setStudioSearch] = useState("");
+  const [featuredCollection, setFeaturedCollection] = useState<string>("all");
+  const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
+
+  function toggleFavorite(id: string, e: React.MouseEvent) {
+    e.stopPropagation();
+    setFavoritedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function handleCustomizeTemplate(templateId: string) {
+    setCustomizerTemplateId(templateId);
+    setMainTab("editor");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   const [selectedStudioDetail, setSelectedStudioDetail] = useState<StudioTemplate | null>(null);
 
   // 18 Reference Presets State
@@ -401,6 +421,18 @@ export default function PresetsShowcasePage() {
   // Filter Studio presets
   const filteredStudioTemplates = useMemo(() => {
     return studioTemplates.filter((t) => {
+      if (featuredCollection === "viral") {
+        if (!t.name.toLowerCase().includes("viral")) return false;
+      } else if (featuredCollection === "luxe") {
+        if (!t.name.toLowerCase().includes("luxe")) return false;
+      } else if (featuredCollection === "script-bar") {
+        if (!t.name.toLowerCase().includes("script & bar") && !t.name.toLowerCase().includes("script and bar")) return false;
+      } else if (featuredCollection === "high-ctr") {
+        if (!t.name.toLowerCase().includes("high ctr")) return false;
+      } else if (featuredCollection === "favorites") {
+        if (!favoritedIds.has(t.id)) return false;
+      }
+
       if (selectedStudioCat !== "all") {
         const cat = selectedStudioCat.toLowerCase();
         const match =
@@ -431,7 +463,7 @@ export default function PresetsShowcasePage() {
       }
       return true;
     });
-  }, [studioTemplates, selectedStudioCat, selectedStudioLayout, selectedStudioStyle, studioSearch]);
+  }, [studioTemplates, selectedStudioCat, selectedStudioLayout, selectedStudioStyle, studioSearch, featuredCollection, favoritedIds]);
 
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -599,6 +631,74 @@ export default function PresetsShowcasePage() {
             </div>
 
             {/* Studio Templates Grid */}
+            {featuredCollection === "viral" && (
+              <div className="p-4 rounded-xl bg-gradient-to-r from-red-950/40 to-slate-900 border border-red-800/40 flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-red-400" />
+                    <span>Viral Pin Collection</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Exact recreations of top-performing Pins — every box stays in place, just swap the photos and words.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-red-400 bg-red-950 px-2.5 py-1 rounded-full border border-red-800/60">
+                  {filteredStudioTemplates.length} Templates
+                </span>
+              </div>
+            )}
+
+            {featuredCollection === "luxe" && (
+              <div className="p-4 rounded-xl bg-gradient-to-r from-amber-950/30 to-slate-900 border border-amber-800/40 flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span>Luxe Hair & Editorial Collection</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Two-line caps, stacked numbers, modern black number boxes, and high-end beauty magazine layouts.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-amber-400 bg-amber-950 px-2.5 py-1 rounded-full border border-amber-800/60">
+                  {filteredStudioTemplates.length} Templates
+                </span>
+              </div>
+            )}
+
+            {featuredCollection === "script-bar" && (
+              <div className="p-4 rounded-xl bg-gradient-to-r from-purple-950/30 to-slate-900 border border-purple-800/40 flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-purple-400" />
+                    <span>Script & Bar Collection</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Vibrant outlined number badges, elegant script keyword kickers, bold contrast colored topic bars.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-purple-400 bg-purple-950 px-2.5 py-1 rounded-full border border-purple-800/60">
+                  {filteredStudioTemplates.length} Templates
+                </span>
+              </div>
+            )}
+
+            {featuredCollection === "high-ctr" && (
+              <div className="p-4 rounded-xl bg-gradient-to-r from-pink-950/30 to-slate-900 border border-pink-800/40 flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-pink-400" />
+                    <span>High CTR Ruled Lead-In & Band Collection</span>
+                  </h3>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Ruled lead-in headlines, huge pink caps, double ruled lines, and high-visibility contrast ribbons.
+                  </p>
+                </div>
+                <span className="text-xs font-mono font-bold text-pink-400 bg-pink-950 px-2.5 py-1 rounded-full border border-pink-800/60">
+                  {filteredStudioTemplates.length} Templates
+                </span>
+              </div>
+            )}
+
             {studioLoading ? (
               <div className="flex flex-col items-center justify-center py-20 text-slate-500">
                 <Loader2 className="w-8 h-8 animate-spin text-red-500 mb-3" />
@@ -621,118 +721,130 @@ export default function PresetsShowcasePage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredStudioTemplates.map((t) => (
-                  <div
-                    key={t.id}
-                    className="bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-all flex flex-col overflow-hidden shadow-lg group"
-                  >
-                    {/* Header */}
-                    <div className="p-3.5 border-b border-slate-800/80 flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 min-w-0 flex-wrap">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-800 text-white border border-slate-700 shrink-0">
-                          {t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId.includes("two") ? 2 : t.layoutId.includes("three") ? 3 : t.layoutId.includes("5") || t.layoutId.includes("2-3") ? 5 : t.layoutId.includes("6") || t.layoutId.includes("2-4") ? 6 : 4)} {(t.imageCount === 1 || t.layoutId === "single" ? "image" : "images")}
-                        </span>
-                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
-                          {t.aspectRatio}
-                        </span>
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-red-950/80 text-red-400 border border-red-800/60 font-semibold truncate">
-                          {t.primaryCategory}
-                        </span>
-                      </div>
-                      {t.visualConfig?.badge && (
-                        <span
-                          className="text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm text-white shrink-0"
-                          style={{ backgroundColor: t.visualConfig.badge.bg || "#EE1A5B" }}
-                        >
-                          Badge: {t.visualConfig.badge.text}
-                        </span>
-                      )}
-                    </div>
+                {filteredStudioTemplates.map((t) => {
+                  const isFavorited = favoritedIds.has(t.id);
+                  const imageCountDisplay = t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId?.includes("two") ? 2 : t.layoutId?.includes("three") ? 3 : t.layoutId?.includes("5") || t.layoutId?.includes("2-3") ? 5 : t.layoutId?.includes("6") || t.layoutId?.includes("2-4") ? 6 : 4);
+                  const ratioDisplay = t.aspectRatio || "1:2";
 
-                    {/* Visual Layout Container */}
-                    <div className="relative aspect-[2/3] bg-slate-950 overflow-hidden flex items-center justify-center border-b border-slate-800/80 p-2">
-                      <PinTemplateVisualPreview template={t} className="w-full h-full shadow-inner" />
+                  return (
+                    <div
+                      key={t.id}
+                      onClick={() => handleCustomizeTemplate(t.id)}
+                      className="bg-[#121620] rounded-2xl border border-slate-800/90 hover:border-slate-700 transition-all flex flex-col overflow-hidden shadow-xl group cursor-pointer"
+                    >
+                      {/* Visual Layout Preview Container */}
+                      <div className="relative aspect-[1/2] bg-[#0c0f16] overflow-hidden flex items-center justify-center border-b border-slate-800/80 p-2">
+                        <PinTemplateVisualPreview template={t} className="w-full h-full shadow-inner" />
 
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2.5 backdrop-blur-[2px] p-4">
+                        {/* Top-Right Circular Heart Favorite Button (matching AutoPinDesign) */}
                         <button
-                          onClick={() => setSelectedStudioDetail(t)}
-                          className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-xl border border-slate-600 transition-all cursor-pointer"
+                          type="button"
+                          onClick={(e) => toggleFavorite(t.id, e)}
+                          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-md flex items-center justify-center transition-transform hover:scale-110 z-20 cursor-pointer"
+                          title="Save to favorites"
                         >
-                          <Maximize2 className="w-3.5 h-3.5" />
-                          <span>Inspect</span>
+                          <Heart
+                            className={`w-4 h-4 ${
+                              isFavorited ? "fill-red-500 text-red-500" : "text-slate-700"
+                            }`}
+                          />
                         </button>
-                        <Link
-                          href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(
-                            t.headlinePreview || t.name
-                          )}`}
-                          className="px-3.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>Use In Studio</span>
-                        </Link>
-                      </div>
-                    </div>
 
-                    {/* Card Body */}
-                    <div className="p-4 flex-1 flex flex-col justify-between space-y-3 text-xs">
-                      <div className="space-y-1.5">
-                        <h3 className="text-sm font-bold text-white group-hover:text-red-400 transition-colors line-clamp-1">
-                          {t.name}
-                        </h3>
-                        <p className="text-slate-400 text-[11px] line-clamp-2 leading-relaxed">
-                          {t.description}
-                        </p>
-                      </div>
-
-                      {/* Design tags & Palette swatches */}
-                      <div className="space-y-2 pt-2 border-t border-slate-800/80">
-                        <div className="flex items-center justify-between text-[10px]">
-                          <span className="text-slate-400 font-mono">Archetype:</span>
-                          <span className="text-purple-300 font-semibold">
-                            {t.visualConfig?.blockStyle || "clean-overlay"}
-                          </span>
+                        {/* Hover Overlay with Action Buttons */}
+                        <div className="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2.5 backdrop-blur-[2px] p-4 z-10">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCustomizeTemplate(t.id);
+                            }}
+                            className="w-full max-w-[170px] py-2 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xl transition-all cursor-pointer"
+                          >
+                            <Sliders className="w-3.5 h-3.5" />
+                            <span>Customize & Edit</span>
+                          </button>
+                          <Link
+                            href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(
+                              t.headlinePreview || t.name
+                            )}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-full max-w-[170px] py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 shadow-xl border border-slate-700 transition-all cursor-pointer"
+                          >
+                            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                            <span>AI Generate</span>
+                          </Link>
                         </div>
+                      </div>
 
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5">
-                            {t.colors.slice(0, 4).map((c, i) => (
-                              <span
-                                key={i}
-                                className="w-3 h-3 rounded-full border border-slate-700"
-                                style={{ backgroundColor: c }}
-                                title={c}
-                              />
-                            ))}
+                      {/* Card Body matching AutoPinDesign */}
+                      <div className="p-3.5 flex-1 flex flex-col justify-between space-y-3">
+                        <div className="space-y-2">
+                          {/* Template Name */}
+                          <h3 className="text-xs font-bold text-white group-hover:text-red-400 transition-colors line-clamp-2 leading-snug">
+                            {t.name}
+                          </h3>
+
+                          {/* Dark Pill Badges matching screenshots */}
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#1c2230] text-slate-300 border border-slate-700/50">
+                              {imageCountDisplay} {imageCountDisplay === 1 ? "image" : "images"}
+                            </span>
+                            <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#1c2230] text-slate-300 border border-slate-700/50">
+                              {ratioDisplay}
+                            </span>
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#1c2230] text-slate-300 border border-slate-700/50">
+                              {t.primaryCategory}
+                            </span>
+                            {t.categories?.[0] && t.categories[0] !== t.primaryCategory && (
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#1c2230] text-slate-300 border border-slate-700/50">
+                                {t.categories[0]}
+                              </span>
+                            )}
                           </div>
-                          <span className="text-[10px] text-slate-400 font-mono">{t.fonts[0] || "Anton"}</span>
+                        </div>
+
+                        {/* Bottom Action Icons matching AutoPinDesign */}
+                        <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigator.clipboard?.writeText(t.name);
+                              }}
+                              className="p-1.5 text-slate-500 hover:text-slate-300 transition-colors rounded-md hover:bg-slate-800 cursor-pointer"
+                              title="Copy Template Name"
+                            >
+                              <Copy className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                              className="p-1.5 text-slate-500 hover:text-red-400 transition-colors rounded-md hover:bg-slate-800 cursor-pointer"
+                              title="Delete / Hide"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCustomizeTemplate(t.id);
+                            }}
+                            className="text-[11px] font-bold text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer"
+                          >
+                            <span>Customize</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </button>
                         </div>
                       </div>
-
-                      {/* Card Action Buttons */}
-                      <div className="pt-2 flex items-center justify-between gap-1.5 flex-wrap">
-                        <Link
-                          href={`/generate?preset=${encodeURIComponent(t.id)}&mode=upload`}
-                          className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[10px] font-semibold flex items-center gap-1 border border-slate-700 cursor-pointer"
-                          title="Upload your own photo & edit fonts/colors"
-                        >
-                          <Upload className="w-3 h-3 text-amber-400" />
-                          <span>Upload & Edit</span>
-                        </Link>
-
-                        <Link
-                          href={`/generate?preset=${encodeURIComponent(t.id)}&topic=${encodeURIComponent(
-                            t.headlinePreview || t.name
-                          )}`}
-                          className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-sm transition-all cursor-pointer"
-                        >
-                          <Sparkles className="w-3 h-3" />
-                          <span>AI Generate</span>
-                        </Link>
-                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

@@ -1301,7 +1301,7 @@ export function PresetCustomizerEditor({
                   }}
                 />
 
-                {/* Image Slots List (Image 1 · slot 1, etc. matching Screenshot 3) */}
+                {/* Image Slots List (Image 1 · slot 1 matching Screenshot 3) */}
                 <div className="space-y-2">
                   {Array.from({ length: slotCount }).map((_, idx) => {
                     const slotData = slotAdjustments[idx];
@@ -1314,47 +1314,36 @@ export function PresetCustomizerEditor({
                         onClick={() => setSelectedSlotIndex(idx)}
                         className={`p-3 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                           isSelected
-                            ? "bg-[#1d2333] border-red-500/80 shadow-md"
-                            : "bg-[#151b26] border-slate-800 hover:border-slate-700"
+                            ? "bg-[#181d28] border-red-500/90 shadow-md ring-1 ring-red-500/20"
+                            : "bg-[#10141d] border-slate-800/90 hover:border-slate-700"
                         }`}
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg overflow-hidden bg-slate-900 border border-slate-700 shrink-0 flex items-center justify-center">
+                          <div className="w-7 h-7 rounded-md overflow-hidden bg-slate-900 border border-slate-700/80 shrink-0 flex items-center justify-center">
                             {hasImage ? (
                               <img src={slotData.url} alt="Slot" className="w-full h-full object-cover" />
                             ) : (
-                              <ImageIcon className="w-4 h-4 text-slate-500" />
+                              <ImageIcon className="w-3.5 h-3.5 text-slate-500" />
                             )}
                           </div>
-                          <div>
-                            <span className="text-xs font-bold text-white block">
-                              Image {idx + 1} · slot {idx + 1}
-                            </span>
-                            <span className="text-[10px] text-slate-400">
-                              {hasImage ? "Photo assigned" : "Empty slot"}
-                            </span>
-                          </div>
+                          <span className="text-xs font-semibold text-white">
+                            Image {idx + 1} · slot {idx + 1}
+                          </span>
                         </div>
 
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                              hasImage
-                                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                                : "bg-slate-800 text-slate-400"
-                            }`}
-                          >
-                            {hasImage ? "Loaded" : "Empty"}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] text-slate-500 font-medium">
+                            {hasImage ? "Assigned" : "Empty"}
                           </span>
-                          {imageCount > 1 && (
+                          {slotCount > 1 && (
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleRemoveSlot(idx);
                               }}
-                              className="p-1 rounded text-slate-500 hover:text-red-400 hover:bg-slate-800 cursor-pointer transition-colors"
-                              title="Delete this image slot"
+                              className="p-1 text-slate-600 hover:text-red-400 transition-colors cursor-pointer"
+                              title={`Remove Slot ${idx + 1}`}
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -1364,6 +1353,9 @@ export function PresetCustomizerEditor({
                     );
                   })}
                 </div>
+                <p className="text-[11px] text-slate-500 mt-2">
+                  Select an image on the canvas to crop, replace, adjust or swap it.
+                </p>
 
                 {/* Active Selected Slot Inspector Panel */}
                 {selectedSlotIndex !== null && (
@@ -1672,15 +1664,14 @@ export function PresetCustomizerEditor({
                             : "bg-[#151b26] border-slate-800 hover:border-slate-700"
                         }`}
                       >
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-                          <span className="text-xs font-bold text-white truncate max-w-[150px]">
+                        <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                          <span className="text-xs font-semibold text-white truncate">
                             {layer.text || `Empty ${layer.role}`}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <span className="text-[10px] text-slate-400 font-mono capitalize">
-                            {layer.role}
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="text-[11px] text-slate-500 lowercase font-medium">
+                            {layer.role === "title" ? "title line" : layer.role}
                           </span>
                           {textLayers.length > 2 && (
                             <button
