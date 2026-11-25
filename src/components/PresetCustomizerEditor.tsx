@@ -711,9 +711,10 @@ export function PresetCustomizerEditor({
 
   function handleRemoveLayer(layerId: string) {
     if (textLayers.length <= 1) return;
-    setTextLayers((prev) => prev.filter((l) => l.id !== layerId));
+    const remaining = textLayers.filter((l) => l.id !== layerId);
+    setTextLayers(remaining);
     if (selectedLayerId === layerId) {
-      setSelectedLayerId(textLayers[0]?.id || "");
+      setSelectedLayerId(remaining[0]?.id || "");
     }
   }
 
@@ -841,6 +842,14 @@ export function PresetCustomizerEditor({
   // Composed Preview Object for PinTemplateVisualPreview
   const livePreviewData: TemplatePreviewData = useMemo(() => {
     const badgeL = textLayers.find((l) => l.role === "badge") || textLayers[0];
+    const websiteL = textLayers.find((l) => l.role === "website" || l.id === "layer-website");
+    const isWebsiteVisible = Boolean(
+      websiteL &&
+      websiteL.visible !== false &&
+      websiteL.text &&
+      websiteL.text.trim() !== ""
+    );
+
     return {
       ...template,
       imageCount,
@@ -862,6 +871,8 @@ export function PresetCustomizerEditor({
       overlayOffsetY,
       customTextLayers: textLayers,
       customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
+      customWebsite: isWebsiteVisible ? websiteL?.text : undefined,
+      showWebsite: isWebsiteVisible,
       customBadgeText: badgeL?.text || "20",
       customBadgeShape: badgeL?.shape || "circle",
       customBadgePosition: (badgeL?.position || "top-left") as any,
@@ -1810,15 +1821,35 @@ export function PresetCustomizerEditor({
                           <span className="text-[11px] text-slate-500 lowercase font-medium">
                             {layer.role === "title" ? "title line" : layer.role}
                           </span>
-                          {textLayers.length > 2 && (
+                          {/* Visibility Toggle Button */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTextLayers((prev) =>
+                                prev.map((l) => (l.id === layer.id ? { ...l, visible: l.visible === false ? true : false } : l))
+                              );
+                            }}
+                            className="p-1 text-slate-500 hover:text-slate-300 cursor-pointer transition-colors"
+                            title={layer.visible === false ? "Show element" : "Hide element"}
+                          >
+                            {layer.visible === false ? (
+                              <EyeOff className="w-3.5 h-3.5 text-slate-600" />
+                            ) : (
+                              <Eye className="w-3.5 h-3.5 text-slate-400" />
+                            )}
+                          </button>
+
+                          {/* Delete Layer Button */}
+                          {(textLayers.length > 1 || layer.role === "website") && (
                             <button
                               type="button"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleRemoveLayer(layer.id);
                               }}
-                              className="p-1 text-slate-500 hover:text-red-400 cursor-pointer"
-                              title="Delete layer"
+                              className="p-1 text-slate-500 hover:text-red-400 cursor-pointer transition-colors"
+                              title={`Delete ${layer.role || "layer"}`}
                             >
                               <Trash2 className="w-3.5 h-3.5" />
                             </button>
@@ -1827,6 +1858,39 @@ export function PresetCustomizerEditor({
                       </div>
                     );
                   })}
+
+                  {/* Quick Add Website Watermark if removed */}
+                  {!textLayers.some((l) => l.role === "website" || l.id === "layer-website") && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newLayer: TextLayerAdjustment = {
+                          id: "layer-website",
+                          text: "yourwebsite.com",
+                          role: "website",
+                          fontFamily: "Montserrat, sans-serif",
+                          fontWeight: "Regular",
+                          fontSizePx: 13,
+                          isBold: false,
+                          isItalic: false,
+                          isUnderline: false,
+                          isUppercase: false,
+                          textAlign: "center",
+                          color: "#FFFFFF",
+                          bgHighlight: "transparent",
+                          shape: "none",
+                          position: "over-image",
+                          visible: true,
+                        };
+                        setTextLayers((prev) => [...prev, newLayer]);
+                        setSelectedLayerId("layer-website");
+                      }}
+                      className="w-full py-2 px-3 rounded-xl border border-dashed border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-colors"
+                    >
+                      <Plus className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Add Website Watermark (e.g. yourwebsite.com)</span>
+                    </button>
+                  )}
                 </div>
 
                 {/* Selected Layer Typography Inspector (Screenshot 5) */}
@@ -2286,6 +2350,7 @@ export function PresetCustomizerEditor({
               <PinTemplateVisualPreview
                 template={livePreviewData}
                 className="w-full h-full"
+                showWebsite={livePreviewData.showWebsite}
               />
             </div>
 

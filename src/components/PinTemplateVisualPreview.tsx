@@ -89,6 +89,7 @@ export interface TemplatePreviewData {
   customScriptWord?: string;
   customCtaText?: string;
   customWebsite?: string;
+  showWebsite?: boolean;
   fontStyle?: {
     uppercase?: boolean;
     bold?: boolean;
@@ -188,7 +189,7 @@ function resolveImageCount(layoutId?: string, imageCount?: number): number {
 export function PinTemplateVisualPreview({
   template,
   className = "",
-  showWebsite = true,
+  showWebsite: propShowWebsite,
 }: {
   template: TemplatePreviewData;
   className?: string;
@@ -229,6 +230,26 @@ export function PinTemplateVisualPreview({
   const badgeShape = template.customBadgeShape || badgeLayer?.shape || defaultBadge?.shape || "circle";
   const badgePosition = template.customBadgePosition || badgeLayer?.position || "top-left";
 
+  // Website watermark configuration
+  const websiteLayer = template.customTextLayers?.find(
+    (l) => l.role === "website" || l.id === "layer-website"
+  );
+  const hasWebsiteInLayers = template.customTextLayers !== undefined
+    ? Boolean(websiteLayer && websiteLayer.visible !== false && websiteLayer.text && websiteLayer.text.trim() !== "")
+    : true;
+
+  const showWebsite =
+    template.showWebsite !== undefined
+      ? Boolean(template.showWebsite && hasWebsiteInLayers)
+      : propShowWebsite !== undefined
+      ? Boolean(propShowWebsite && hasWebsiteInLayers)
+      : hasWebsiteInLayers;
+
+  const website =
+    (websiteLayer && websiteLayer.text) ||
+    template.customWebsite ||
+    (template.customTextLayers ? "" : "pinforge.app");
+
   // Split headline lines or use user custom lines
   const rawLines =
     template.layerTexts && template.layerTexts.length > 0
@@ -242,7 +263,6 @@ export function PinTemplateVisualPreview({
   const kicker = template.customKicker || config.kicker || template.primaryCategory || "IDEAS & INSPO";
   const scriptWord = template.customScriptWord || config.scriptWord || "Chic";
   const ctaText = template.customCtaText || config.ctaText || "GET THE IDEAS";
-  const website = template.customWebsite || "pinforge.app";
 
   // Determines whether the integrated archetype handles the badge inline
   const isIntegratedArchetype =
@@ -2223,9 +2243,18 @@ export function PinTemplateVisualPreview({
       {/* ======================================================== */}
       {/* 4. FOOTER WEBSITE WATERMARK */}
       {/* ======================================================== */}
-      {showWebsite && (
-        <div className="absolute bottom-2 inset-x-0 flex justify-center z-20">
-          <span className="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-black/60 text-white/90 backdrop-blur-xs border border-white/10">
+      {showWebsite && website && website.trim() !== "" && (
+        <div
+          onClick={() => template.onLayerClick?.(websiteLayer?.id || "layer-website")}
+          className="absolute bottom-2 inset-x-0 flex justify-center z-20 cursor-pointer pointer-events-auto"
+        >
+          <span
+            className="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-black/60 text-white/90 backdrop-blur-xs border border-white/10 transition-transform hover:scale-105"
+            style={{
+              fontFamily: websiteLayer?.fontFamily,
+              color: websiteLayer?.color,
+            }}
+          >
             {website}
           </span>
         </div>
