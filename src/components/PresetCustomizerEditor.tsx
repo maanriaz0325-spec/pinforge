@@ -239,6 +239,32 @@ export function PresetCustomizerEditor({
   const [cornerRadius, setCornerRadius] = useState<number>(0);
   const [collageGap, setCollageGap] = useState<number>(template.collageGap ?? 8);
 
+  // Center Pin Design & Shape State (Mid Overlay Card & Band)
+  const [centerCardShape, setCenterCardShape] = useState<
+    "rounded" | "square" | "pill" | "cut-corner" | "circle" | "full-band" | "ticket"
+  >(
+    (template.centerCardShape as any) ||
+    (template.visualConfig?.blockStyle === "circle-medallion" ? "circle" : "rounded")
+  );
+  const [centerCardColor, setCenterCardColor] = useState<string>(
+    template.centerCardColor || "#FFFFFF"
+  );
+  const [centerCardOpacity, setCenterCardOpacity] = useState<number>(
+    template.centerCardOpacity !== undefined ? template.centerCardOpacity : 1
+  );
+  const [centerCardBorderColor, setCenterCardBorderColor] = useState<string>(
+    template.centerCardBorderColor || "#FFFFFF"
+  );
+  const [centerCardBorderWidth, setCenterCardBorderWidth] = useState<number>(
+    template.centerCardBorderWidth ?? 0
+  );
+  const [customBandColor, setCustomBandColor] = useState<string>(
+    template.customBandColor || template.visualConfig?.bandColor || "#FF2E93"
+  );
+  const [customAccentColor, setCustomAccentColor] = useState<string>(
+    template.customAccentColor || template.visualConfig?.accentColor || "#FF2E93"
+  );
+
   // -------------------------------------------------------------
   // TAB 2: IMAGES STATE (Per-Slot Separate Settings - Screenshot 3)
   // -------------------------------------------------------------
@@ -407,6 +433,19 @@ export function PresetCustomizerEditor({
     if (t.aspectRatio) setCanvasRatio(t.aspectRatio as any);
     if (t.visualConfig?.bandColor) setBgColor(t.visualConfig.bandColor);
     if (t.collageGap !== undefined) setCollageGap(t.collageGap);
+    if (t.centerCardShape) setCenterCardShape(t.centerCardShape);
+    else if (t.visualConfig?.blockStyle === "circle-medallion") setCenterCardShape("circle");
+    else setCenterCardShape("rounded");
+    if (t.centerCardColor) setCenterCardColor(t.centerCardColor);
+    if (t.centerCardOpacity !== undefined) setCenterCardOpacity(t.centerCardOpacity);
+    if (t.centerCardBorderColor) setCenterCardBorderColor(t.centerCardBorderColor);
+    if (t.centerCardBorderWidth !== undefined) setCenterCardBorderWidth(t.centerCardBorderWidth);
+    if (t.customBandColor || t.visualConfig?.bandColor) {
+      setCustomBandColor(t.customBandColor || t.visualConfig?.bandColor || "#FF2E93");
+    }
+    if (t.customAccentColor || t.visualConfig?.accentColor) {
+      setCustomAccentColor(t.customAccentColor || t.visualConfig?.accentColor || "#FF2E93");
+    }
     const resolvedCount = t.imageCount || (t.layoutId === "single" ? 1 : t.layoutId?.includes("two") ? 2 : t.layoutId?.includes("three") ? 3 : t.layoutId?.includes("5") ? 5 : t.layoutId?.includes("6") ? 6 : 4);
     setImageCount(resolvedCount);
     setCollagePattern(t.collagePattern || "default");
@@ -824,6 +863,13 @@ export function PresetCustomizerEditor({
             textLayers,
             overlayHorizontalAlign,
             overlayOffsetY,
+            centerCardShape,
+            centerCardColor,
+            centerCardOpacity,
+            centerCardBorderColor,
+            centerCardBorderWidth,
+            customBandColor,
+            customAccentColor,
           },
         }),
       });
@@ -869,6 +915,13 @@ export function PresetCustomizerEditor({
       slotAdjustments,
       overlayHorizontalAlign,
       overlayOffsetY,
+      centerCardShape,
+      centerCardColor,
+      centerCardOpacity,
+      centerCardBorderColor,
+      centerCardBorderWidth,
+      customBandColor,
+      customAccentColor,
       customTextLayers: textLayers,
       customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
       customWebsite: isWebsiteVisible ? websiteL?.text : undefined,
@@ -906,6 +959,13 @@ export function PresetCustomizerEditor({
     slotAdjustments,
     overlayHorizontalAlign,
     overlayOffsetY,
+    centerCardShape,
+    centerCardColor,
+    centerCardOpacity,
+    centerCardBorderColor,
+    centerCardBorderWidth,
+    customBandColor,
+    customAccentColor,
     textLayers,
   ]);
 
@@ -1241,6 +1301,206 @@ export function PresetCustomizerEditor({
                       max={32}
                       value={collageGap}
                       onChange={(e) => setCollageGap(Number(e.target.value))}
+                      className="w-full accent-red-500 cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                {/* Center Pin Design & Shape Settings (Mid Design Controls) */}
+                <div className="space-y-3.5 pt-3 border-t border-slate-800">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-red-400" />
+                      <span>Center Pin Design (Shape & Colors)</span>
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full bg-slate-800 text-[10px] text-slate-300 font-bold border border-slate-700 capitalize">
+                      {centerCardShape}
+                    </span>
+                  </div>
+
+                  {/* 1. Shape Selector */}
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-300 text-[11px] font-bold">Middle Design Shape:</span>
+                      <span className="text-[10px] text-slate-500">Pick container structure</span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {[
+                        { id: "rounded", label: "Rounded Card" },
+                        { id: "full-band", label: "Full Band" },
+                        { id: "square", label: "Square Box" },
+                        { id: "pill", label: "Pill Capsule" },
+                        { id: "circle", label: "Circle" },
+                        { id: "cut-corner", label: "Cut Corner" },
+                        { id: "ticket", label: "Ticket" },
+                      ].map((sh) => (
+                        <button
+                          key={sh.id}
+                          type="button"
+                          onClick={() => setCenterCardShape(sh.id as any)}
+                          className={`py-1.5 px-1 rounded-lg text-[10px] font-bold truncate transition-all cursor-pointer ${
+                            centerCardShape === sh.id
+                              ? "bg-red-600 text-white shadow-md shadow-red-900/30 scale-102"
+                              : "bg-[#171d2b] border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700"
+                          }`}
+                        >
+                          {sh.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 2. Center Card Background Color */}
+                  <div className="space-y-2 pt-1 border-t border-slate-800/60">
+                    <div className="flex items-center justify-between text-xs text-slate-300">
+                      <span className="font-bold text-[11px]">Card Background Color</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={centerCardColor.startsWith("#") ? centerCardColor : "#FFFFFF"}
+                          onChange={(e) => setCenterCardColor(e.target.value)}
+                          className="w-6 h-6 rounded cursor-pointer border border-slate-700 bg-transparent"
+                        />
+                        <span className="font-mono text-xs text-slate-400">{centerCardColor}</span>
+                      </div>
+                    </div>
+                    {/* Quick Swatches */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {[
+                        { name: "White", col: "#FFFFFF" },
+                        { name: "Linen", col: "#FAF7F2" },
+                        { name: "Beige", col: "#E7D8C9" },
+                        { name: "Dark Slate", col: "#0F172A" },
+                        { name: "Pitch Black", col: "#000000" },
+                        { name: "Soft Pink", col: "#FCE7F3" },
+                        { name: "Lavender", col: "#EDE9FE" },
+                        { name: "Navy", col: "#1E293B" },
+                        { name: "Transparent Glass", col: "rgba(255,255,255,0.85)" },
+                      ].map((sw) => (
+                        <button
+                          key={sw.name}
+                          type="button"
+                          title={sw.name}
+                          onClick={() => setCenterCardColor(sw.col)}
+                          className={`w-5 h-5 rounded-full border transition-transform hover:scale-110 ${
+                            centerCardColor === sw.col ? "ring-2 ring-red-500 scale-110 border-white" : "border-slate-700"
+                          }`}
+                          style={{ backgroundColor: sw.col }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 3. Highlight Band / Accent Stripe Color */}
+                  <div className="space-y-2 pt-1 border-t border-slate-800/60">
+                    <div className="flex items-center justify-between text-xs text-slate-300">
+                      <span className="font-bold text-[11px]">Highlight Stripe / Band Color</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={customBandColor.startsWith("#") ? customBandColor : "#FF2E93"}
+                          onChange={(e) => setCustomBandColor(e.target.value)}
+                          className="w-6 h-6 rounded cursor-pointer border border-slate-700 bg-transparent"
+                        />
+                        <span className="font-mono text-xs text-slate-400">{customBandColor}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {[
+                        "#FF2E93",
+                        "#0D9488",
+                        "#EA580C",
+                        "#9333EA",
+                        "#DC2626",
+                        "#111111",
+                        "#D97706",
+                        "#2563EB",
+                        "#5A6B48",
+                        "#FFFFFF",
+                      ].map((c) => (
+                        <button
+                          key={c}
+                          type="button"
+                          onClick={() => setCustomBandColor(c)}
+                          className={`w-5 h-5 rounded-full border transition-transform hover:scale-110 ${
+                            customBandColor === c ? "ring-2 ring-red-500 scale-110 border-white" : "border-slate-700"
+                          }`}
+                          style={{ backgroundColor: c }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 4. Accent / Highlight Color */}
+                  <div className="space-y-2 pt-1 border-t border-slate-800/60">
+                    <div className="flex items-center justify-between text-xs text-slate-300">
+                      <span className="font-bold text-[11px]">Secondary Accent Color</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={customAccentColor.startsWith("#") ? customAccentColor : "#FF2E93"}
+                          onChange={(e) => setCustomAccentColor(e.target.value)}
+                          className="w-6 h-6 rounded cursor-pointer border border-slate-700 bg-transparent"
+                        />
+                        <span className="font-mono text-xs text-slate-400">{customAccentColor}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {[
+                        "#FF2E93",
+                        "#EF4444",
+                        "#F59E0B",
+                        "#10B981",
+                        "#06B6D4",
+                        "#8B5CF6",
+                        "#EC4899",
+                        "#FFFFFF",
+                        "#111111",
+                      ].map((c) => (
+                        <button
+                          key={c}
+                          type="button"
+                          onClick={() => setCustomAccentColor(c)}
+                          className={`w-5 h-5 rounded-full border transition-transform hover:scale-110 ${
+                            customAccentColor === c ? "ring-2 ring-red-500 scale-110 border-white" : "border-slate-700"
+                          }`}
+                          style={{ backgroundColor: c }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 5. Center Card Opacity Slider */}
+                  <div className="space-y-1 pt-1 border-t border-slate-800/60">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-300 text-[11px]">Center Card Opacity</span>
+                      <span className="font-mono text-slate-400 text-[11px]">
+                        {Math.round(centerCardOpacity * 100)}%
+                      </span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0.3}
+                      max={1}
+                      step={0.05}
+                      value={centerCardOpacity}
+                      onChange={(e) => setCenterCardOpacity(Number(e.target.value))}
+                      className="w-full accent-red-500 cursor-pointer"
+                    />
+                  </div>
+
+                  {/* 6. Card Border Width Slider */}
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-300 text-[11px]">Card Border Width</span>
+                      <span className="font-mono text-slate-400 text-[11px]">{centerCardBorderWidth} px</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0}
+                      max={12}
+                      value={centerCardBorderWidth}
+                      onChange={(e) => setCenterCardBorderWidth(Number(e.target.value))}
                       className="w-full accent-red-500 cursor-pointer"
                     />
                   </div>
@@ -1779,6 +2039,34 @@ export function PresetCustomizerEditor({
                           }`}
                         >
                           {al.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Center Overlay Shape Quick Bar */}
+                  <div className="flex items-center justify-between pt-1.5 border-t border-slate-800 text-xs">
+                    <span className="text-slate-300 text-[11px]">Center Shape</span>
+                    <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800 overflow-x-auto max-w-[220px]">
+                      {[
+                        { id: "rounded", label: "Round" },
+                        { id: "full-band", label: "Band" },
+                        { id: "square", label: "Square" },
+                        { id: "pill", label: "Pill" },
+                        { id: "circle", label: "Circle" },
+                        { id: "cut-corner", label: "Cut" },
+                      ].map((sh) => (
+                        <button
+                          key={sh.id}
+                          type="button"
+                          onClick={() => setCenterCardShape(sh.id as any)}
+                          className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer whitespace-nowrap transition-colors ${
+                            centerCardShape === sh.id
+                              ? "bg-red-600 text-white"
+                              : "text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          {sh.label}
                         </button>
                       ))}
                     </div>

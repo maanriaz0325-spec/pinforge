@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 
 export interface ImageSlotAdjustment {
   url?: string;
@@ -100,6 +100,12 @@ export interface TemplatePreviewData {
   overlayVerticalPosition?: "top" | "upper-center" | "center" | "lower-center" | "bottom";
   overlayOffsetY?: number; // 10 to 85 (%)
   overlayHorizontalAlign?: "left" | "center" | "right";
+  // Center Pin Design overrides:
+  centerCardShape?: "rounded" | "square" | "pill" | "cut-corner" | "circle" | "full-band" | "ticket";
+  centerCardColor?: string;
+  centerCardOpacity?: number;
+  centerCardBorderColor?: string;
+  centerCardBorderWidth?: number;
   // Design Tab overrides:
   canvasRatio?: "2:3" | "3:4" | "4:5" | "9:16" | "1:1" | "1:2" | "custom";
   customWidth?: number;
@@ -219,6 +225,84 @@ export function PinTemplateVisualPreview({
   const accentColor = template.customAccentColor || config.accentColor || template.colors?.[1] || "#EE1A5B";
   const bandColor = template.customBandColor || config.bandColor || "#FFFFFF";
   const blockStyle = config.blockStyle || "color-band-card";
+
+  // Center Pin Design Settings (Mid overlay card shape, background color, band color & borders)
+  const centerCardShape =
+    template.centerCardShape ||
+    (blockStyle === "circle-medallion" || blockStyle === "olive-circle-distressed" || blockStyle === "big-colour-circle"
+      ? "circle"
+      : blockStyle === "color-band-card" || blockStyle === "big-caps-band" || blockStyle === "rust-band" || blockStyle === "navy-band-serif"
+      ? "full-band"
+      : "rounded");
+  const centerCardColor = template.centerCardColor || "#FFFFFF";
+  const centerCardOpacity = template.centerCardOpacity !== undefined ? template.centerCardOpacity : 1;
+  const centerCardBorderColor = template.centerCardBorderColor || "transparent";
+  const centerCardBorderWidth = template.centerCardBorderWidth ?? 0;
+
+  // Luminance detection for automatic smart text contrast
+  const isDarkCard = useMemo(() => {
+    if (!centerCardColor || centerCardColor === "transparent") return false;
+    const hex = centerCardColor.replace("#", "");
+    if (hex.length === 6) {
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      return lum < 0.5;
+    }
+    return false;
+  }, [centerCardColor]);
+
+  const cardTextColor = isDarkCard ? "#FFFFFF" : "#111111";
+  const cardMutedColor = isDarkCard ? "#D1D5DB" : "#4B5563";
+
+  // Dynamic CSS classes and inline style for center design shape
+  let centerShapeClass = "w-full max-w-[94%] rounded-2xl overflow-hidden shadow-2xl relative";
+  let centerShapeStyle: React.CSSProperties = {
+    opacity: centerCardOpacity,
+    border: centerCardBorderWidth > 0 ? `${centerCardBorderWidth}px solid ${centerCardBorderColor}` : undefined,
+  };
+
+  if (centerCardShape === "full-band") {
+    centerShapeClass = "w-full max-w-full rounded-none overflow-hidden shadow-2xl relative";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      width: "calc(100% + 1.5rem)",
+      marginLeft: "-0.75rem",
+      marginRight: "-0.75rem",
+      borderRadius: "0px",
+    };
+  } else if (centerCardShape === "square") {
+    centerShapeClass = "w-full max-w-[94%] rounded-none overflow-hidden shadow-2xl relative";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      borderRadius: "0px",
+    };
+  } else if (centerCardShape === "pill") {
+    centerShapeClass = "w-full max-w-[90%] rounded-full overflow-hidden shadow-2xl relative px-4 py-2";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      borderRadius: "9999px",
+    };
+  } else if (centerCardShape === "cut-corner") {
+    centerShapeClass = "w-full max-w-[94%] overflow-hidden shadow-2xl relative";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      clipPath: "polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px)",
+    };
+  } else if (centerCardShape === "circle") {
+    centerShapeClass = "w-56 h-56 rounded-full overflow-hidden shadow-2xl relative flex flex-col items-center justify-center p-3 mx-auto aspect-square";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      borderRadius: "9999px",
+    };
+  } else if (centerCardShape === "ticket") {
+    centerShapeClass = "w-full max-w-[94%] overflow-hidden shadow-2xl relative";
+    centerShapeStyle = {
+      ...centerShapeStyle,
+      clipPath: "polygon(0 0, 100% 0, 100% calc(50% - 8px), calc(100% - 8px) 50%, 100% calc(50% + 8px), 100% 100%, 0 100%, 0 calc(50% + 8px), 8px 50%, 0 calc(50% - 8px))",
+    };
+  }
 
   // Badge configuration
   const badgeLayer = template.customTextLayers?.find((l) => l.role === "badge") || template.customTextLayers?.[0];
@@ -919,8 +1003,11 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: SCRIPT & BAR (Screenshots 1 & 2)                    */}
         {/* ============================================================== */}
         {blockStyle === "script-and-bar" && (
-          <div className="w-full max-w-[94%] flex flex-col items-center text-center shadow-2xl relative">
-            <div className="bg-white w-full py-1 px-4 flex items-center justify-center gap-2 border-b border-black/10">
+          <div className={`${centerShapeClass} flex flex-col items-center text-center`} style={centerShapeStyle}>
+            <div
+              className="w-full py-1.5 px-4 flex items-center justify-center gap-2 border-b border-black/10 transition-colors"
+              style={{ backgroundColor: centerCardColor }}
+            >
               {renderLayer(0, badgeText || lines[0] || "20", {
                 color: accentColor,
                 font: "Anton, Oswald, sans-serif",
@@ -929,7 +1016,7 @@ export function PinTemplateVisualPreview({
                 textShadow: "1px 1px 0 #111111, -1px -1px 0 #111111, 1px -1px 0 #111111, -1px 1px 0 #111111",
               }, "leading-none")}
               {renderLayer(1, scriptWord || lines[1] || "Trendy", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Kaushan Script, Caveat, cursive",
                 italic: true,
                 sizePx: 36,
@@ -938,7 +1025,7 @@ export function PinTemplateVisualPreview({
             </div>
 
             <div
-              className="w-full py-2 px-3 shadow-md"
+              className="w-full py-2 px-3 shadow-md transition-colors"
               style={{ backgroundColor: bandColor || accentColor }}
             >
               {renderLayer(2, lines[2] || lines[1] || "COMBAT BOOT OUTFITS", {
@@ -950,9 +1037,12 @@ export function PinTemplateVisualPreview({
               }, "leading-tight block uppercase tracking-wide")}
             </div>
 
-            <div className="bg-white w-full py-1.5 px-3">
+            <div
+              className="w-full py-1.5 px-3 transition-colors"
+              style={{ backgroundColor: centerCardColor }}
+            >
               {renderLayer(3, lines[3] || lines[2] || "YOU CAN'T GET AROUND RIGHT NOW", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Montserrat, sans-serif",
                 weight: 900,
                 sizePx: 11,
@@ -966,18 +1056,21 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: RULED LEAD-IN (Screenshot 4)                        */}
         {/* ============================================================== */}
         {blockStyle === "ruled-lead-in" && (
-          <div className="w-full max-w-[92%] flex flex-col items-center text-center relative shadow-2xl">
-            <div className="bg-white w-full py-2.5 px-3 flex flex-col items-center">
+          <div className={`${centerShapeClass} flex flex-col items-center text-center`} style={centerShapeStyle}>
+            <div
+              className="w-full py-2.5 px-3 flex flex-col items-center transition-colors"
+              style={{ backgroundColor: centerCardColor }}
+            >
               <div className="flex items-center justify-center gap-2 w-full mb-1">
-                <div className="h-[1.5px] bg-black/40 flex-1 max-w-[35px]" />
+                <div className="h-[1.5px] flex-1 max-w-[35px]" style={{ backgroundColor: cardTextColor, opacity: 0.4 }} />
                 {renderLayer(0, lines[0] || "— 20 TRENDY WINTER —", {
-                  color: "#111111",
+                  color: cardTextColor,
                   font: primaryFont,
                   weight: 900,
                   sizePx: 13,
                   uppercase: true,
                 }, "tracking-tight uppercase")}
-                <div className="h-[1.5px] bg-black/40 flex-1 max-w-[35px]" />
+                <div className="h-[1.5px] flex-1 max-w-[35px]" style={{ backgroundColor: cardTextColor, opacity: 0.4 }} />
               </div>
 
               {renderLayer(1, lines[1] || "OUTFIT IDEAS", {
@@ -997,13 +1090,15 @@ export function PinTemplateVisualPreview({
               }, "tracking-tight leading-none mb-1")}
 
               {renderLayer(3, lines[3] || lines[2] || "YOU'LL WANT TO COPY BEFORE THE COLD REALLY HITS", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Montserrat, sans-serif",
                 weight: 900,
                 sizePx: 10,
                 uppercase: true,
               }, "tracking-tight max-w-[90%] leading-tight pt-0.5")}
             </div>
+            {/* Lower Accent Stripe */}
+            <div className="w-full h-1.5 transition-colors" style={{ backgroundColor: bandColor || accentColor }} />
           </div>
         )}
 
@@ -1015,10 +1110,12 @@ export function PinTemplateVisualPreview({
         {blockStyle === "circle-medallion" && (
           <div className="flex flex-col items-center text-center space-y-2">
             <div
-              className="w-48 h-48 sm:w-52 sm:h-52 rounded-full bg-white flex flex-col items-center justify-center p-3 shadow-2xl relative"
+              className={`${centerShapeClass} flex flex-col items-center justify-center p-3 transition-all`}
               style={{
-                border: `3px solid ${accentColor}`,
-                outline: "4px solid rgba(255,255,255,0.7)",
+                ...centerShapeStyle,
+                backgroundColor: centerCardColor,
+                border: `${centerCardBorderWidth > 0 ? centerCardBorderWidth : 3}px solid ${centerCardBorderColor !== "transparent" ? centerCardBorderColor : accentColor}`,
+                outline: `4px solid ${bandColor || "rgba(255,255,255,0.7)"}`,
               }}
             >
               {renderLayer(0, badgeText || "25", {
@@ -1028,14 +1125,14 @@ export function PinTemplateVisualPreview({
                 sizePx: 28,
               }, "leading-none")}
               {renderLayer(1, scriptWord || "Pretty", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Great Vibes, Dancing Script, cursive",
                 italic: true,
                 sizePx: 24,
                 uppercase: false,
               }, "leading-none my-0.5")}
               {renderLayer(2, lines[2] || "BALAYAGE", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Anton, Oswald, sans-serif",
                 weight: 900,
                 sizePx: 18,
@@ -1049,7 +1146,7 @@ export function PinTemplateVisualPreview({
                 uppercase: true,
               }, "leading-tight uppercase tracking-tight")}
               {renderLayer(4, lines[4] || "TO SAVE NOW", {
-                color: "#333333",
+                color: cardMutedColor,
                 font: primaryFont,
                 weight: 700,
                 sizePx: 8,
@@ -1057,8 +1154,8 @@ export function PinTemplateVisualPreview({
               }, "uppercase tracking-widest pt-0.5")}
             </div>
             <div
-              className="px-4 py-1 rounded-full text-white font-black text-[10px] uppercase tracking-wider shadow-lg"
-              style={{ backgroundColor: accentColor }}
+              className="px-4 py-1 rounded-full text-white font-black text-[10px] uppercase tracking-wider shadow-lg transition-colors"
+              style={{ backgroundColor: bandColor || accentColor }}
             >
               {ctaText || "SEE ALL THE IDEAS"}
             </div>
@@ -1069,9 +1166,15 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: MINIMALIST FLOATING CARD (Screenshot 5)             */}
         {/* ============================================================== */}
         {blockStyle === "minimalist-floating-card" && (
-          <div className="bg-white/95 text-black p-5 shadow-2xl rounded-2xl w-full max-w-[85%] flex flex-col items-center text-center space-y-1.5 border border-black/5 backdrop-blur-xs">
+          <div
+            className={`${centerShapeClass} p-5 flex flex-col items-center text-center space-y-1.5 transition-colors`}
+            style={{
+              ...centerShapeStyle,
+              backgroundColor: centerCardColor,
+            }}
+          >
             {renderLayer(0, kicker || "FASHION & STYLE EDIT", {
-              color: "#666666",
+              color: cardMutedColor,
               font: "monospace",
               weight: 700,
               sizePx: 9,
@@ -1085,7 +1188,7 @@ export function PinTemplateVisualPreview({
               uppercase: false,
             }, "leading-none")}
             {renderLayer(2, lines[2] || lines[1] || "Capsule Wardrobe Essentials", {
-              color: "#111111",
+              color: cardTextColor,
               font: "Didot, Bodoni MT, serif",
               weight: 900,
               sizePx: 16,
@@ -1098,10 +1201,16 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: BIG CAPS BAND (Screenshot 6)                        */}
         {/* ============================================================== */}
         {blockStyle === "big-caps-band" && (
-          <div className="bg-white text-black p-4 shadow-2xl rounded-none w-full max-w-[92%] flex flex-col items-center text-center space-y-1 border border-black/10">
+          <div
+            className={`${centerShapeClass} p-4 flex flex-col items-center text-center space-y-1 transition-colors`}
+            style={{
+              ...centerShapeStyle,
+              backgroundColor: centerCardColor,
+            }}
+          >
             <div className="flex items-center justify-center gap-3 w-full">
               {renderLayer(0, badgeText || lines[0] || "19", {
-                color: "#111111",
+                color: cardTextColor,
                 font: "Anton, Oswald, sans-serif",
                 weight: 900,
                 sizePx: 56,
@@ -2057,8 +2166,11 @@ export function PinTemplateVisualPreview({
         {/* ============================================================== */}
         {blockStyle === "color-band-card" && (
           <div
-            className="w-full py-4 px-5 shadow-2xl flex flex-col items-center text-center space-y-1.5 relative border-y border-white/20"
-            style={{ backgroundColor: bandColor || "rgba(0,0,0,0.85)" }}
+            className={`${centerShapeClass} py-4 px-5 flex flex-col items-center text-center space-y-1.5 transition-colors`}
+            style={{
+              ...centerShapeStyle,
+              backgroundColor: bandColor || centerCardColor || "rgba(0,0,0,0.85)",
+            }}
           >
             <div className="flex items-center gap-2">
               {renderLayer(0, badgeText || lines[0] || "20+", {
@@ -2096,7 +2208,13 @@ export function PinTemplateVisualPreview({
         {/* ARCHETYPE: MAGAZINE EDITORIAL                                  */}
         {/* ============================================================== */}
         {blockStyle === "magazine-editorial" && (
-          <div className="bg-[#FFFFFFf2] text-black p-4 shadow-2xl rounded-xs w-full max-w-[88%] flex flex-col items-center text-center space-y-2 border border-black/15 backdrop-blur-xs">
+          <div
+            className={`${centerShapeClass} p-4 flex flex-col items-center text-center space-y-2 backdrop-blur-xs transition-colors`}
+            style={{
+              ...centerShapeStyle,
+              backgroundColor: centerCardColor,
+            }}
+          >
             <div className="w-full flex items-center justify-between border-b border-black/15 pb-1 text-[8px] font-bold tracking-widest uppercase text-black/70 font-mono">
               {renderLayer(0, kicker || "EDITORIAL", {
                 color: "#444444",
