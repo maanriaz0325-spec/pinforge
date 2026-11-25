@@ -1083,22 +1083,37 @@ export default function PresetsShowcasePage() {
                         loading="lazy"
                       />
 
-                      {/* Hover Overlay with Inspect & Fullscreen button */}
-                      <div className="absolute inset-0 bg-slate-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3 backdrop-blur-[2px]">
+                      {/* Hover Overlay with Inspect, Customize & Generator button */}
+                      <div className="absolute inset-0 bg-slate-950/70 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2.5 p-4 backdrop-blur-[2px]">
                         <button
-                          onClick={() => setInspectPreset(preset)}
-                          className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-xl border border-slate-600 transition-all cursor-pointer"
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCustomizeTemplate(preset.id);
+                          }}
+                          className="w-full py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 shadow-xl transition-all cursor-pointer"
                         >
-                          <Maximize2 className="w-3.5 h-3.5" />
-                          <span>Inspect Details</span>
+                          <Sliders className="w-3.5 h-3.5" />
+                          <span>🎨 Customize Preset</span>
                         </button>
-                        <Link
-                          href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
-                          className="px-3.5 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-xl transition-all cursor-pointer"
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          <span>Use In Generator</span>
-                        </Link>
+
+                        <div className="flex items-center gap-2 w-full">
+                          <button
+                            type="button"
+                            onClick={() => setInspectPreset(preset)}
+                            className="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium flex items-center justify-center gap-1 shadow-md border border-slate-600 transition-all cursor-pointer"
+                          >
+                            <Maximize2 className="w-3 h-3" />
+                            <span>Details</span>
+                          </button>
+                          <Link
+                            href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
+                            className="flex-1 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-lg text-xs font-medium flex items-center justify-center gap-1 shadow-md border border-slate-600 transition-all cursor-pointer"
+                          >
+                            <Sparkles className="w-3 h-3 text-red-400" />
+                            <span>Generate</span>
+                          </Link>
+                        </div>
                       </div>
                     </div>
 
@@ -1132,7 +1147,7 @@ export default function PresetsShowcasePage() {
                       </div>
 
                       {/* Card Action Buttons */}
-                      <div className="pt-2 flex items-center justify-between gap-2">
+                      <div className="pt-2 flex items-center justify-between gap-2 border-t border-slate-800/80">
                         <button
                           onClick={() => handleCopyId(preset.id)}
                           className="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-[11px] font-mono flex items-center gap-1.5 border border-slate-700 cursor-pointer"
@@ -1150,13 +1165,26 @@ export default function PresetsShowcasePage() {
                           )}
                         </button>
 
-                        <Link
-                          href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
-                          className="px-3.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-[11px] font-semibold flex items-center gap-1 shadow-sm transition-all cursor-pointer"
-                        >
-                          <span>Use Preset</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
+                        <div className="flex items-center gap-1.5">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCustomizeTemplate(preset.id);
+                            }}
+                            className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-[11px] font-bold flex items-center gap-1 shadow-md shadow-red-900/30 transition-all cursor-pointer"
+                          >
+                            <Sliders className="w-3 h-3" />
+                            <span>Customize</span>
+                          </button>
+                          <Link
+                            href={`/generate?preset=${preset.id}&topic=${encodeURIComponent(previewTopic || preset.defaultTopic)}`}
+                            className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white rounded-lg text-[11px] flex items-center border border-slate-700 transition-all cursor-pointer"
+                            title="Open in AI Generator"
+                          >
+                            <ArrowRight className="w-3.5 h-3.5" />
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>

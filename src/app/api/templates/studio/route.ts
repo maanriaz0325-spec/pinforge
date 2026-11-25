@@ -1,31 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import templatesData from "@/server/data/apd_templates.json";
+import { REFERENCE_18_TEMPLATES, StudioTemplate } from "@/server/data/reference18_templates";
 
-export interface StudioTemplate {
-  id: string;
-  name: string;
-  description: string;
-  primaryCategory: string;
-  categories: string[];
-  designTypes: string[];
-  width: number;
-  height: number;
-  aspectRatio: string;
-  layoutId: string;
-  collageGap: number;
-  fonts: string[];
-  colors: string[];
-  layerTexts: string[];
-  headlinePreview: string;
-  visualConfig?: {
-    badge?: { text: string; shape: string; bg: string; color: string } | null;
-    blockStyle?: string;
-    bandColor?: string;
-    accentColor?: string;
-    scriptWord?: string | null;
-    photoTheme?: string;
-  };
-}
+export type { StudioTemplate };
 
 export async function GET(req: NextRequest) {
   try {
@@ -35,7 +12,12 @@ export async function GET(req: NextRequest) {
     const ratio = searchParams.get("ratio");
     const query = searchParams.get("q")?.toLowerCase();
 
-    let filtered: StudioTemplate[] = templatesData as StudioTemplate[];
+    const combined: StudioTemplate[] = [
+      ...REFERENCE_18_TEMPLATES,
+      ...(templatesData as StudioTemplate[]),
+    ];
+
+    let filtered: StudioTemplate[] = combined;
 
     if (category && category !== "all") {
       const catLower = category.toLowerCase();
@@ -65,9 +47,9 @@ export async function GET(req: NextRequest) {
 
     // Category summary counts
     const categoryCounts: Record<string, number> = {
-      All: (templatesData as StudioTemplate[]).length,
+      All: combined.length,
     };
-    (templatesData as StudioTemplate[]).forEach((t) => {
+    combined.forEach((t) => {
       categoryCounts[t.primaryCategory] = (categoryCounts[t.primaryCategory] || 0) + 1;
       t.categories.forEach((c) => {
         categoryCounts[c] = (categoryCounts[c] || 0) + 1;

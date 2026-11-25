@@ -63,6 +63,7 @@ export interface VisualConfig {
 export interface TemplatePreviewData {
   id: string;
   name: string;
+  description?: string;
   layoutId?: string;
   aspectRatio?: string;
   imageCount?: number;
@@ -72,6 +73,7 @@ export interface TemplatePreviewData {
   layerTexts?: string[];
   headlinePreview?: string;
   primaryCategory?: string;
+  categories?: string[];
   visualConfig?: VisualConfig;
   // Dynamic user customization overrides:
   customImages?: string[];

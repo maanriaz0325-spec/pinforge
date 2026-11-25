@@ -1003,16 +1003,26 @@ export function PresetCustomizerEditor({
           <select
             value={template.id}
             onChange={(e) => handleSwitchTemplate(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-red-500 max-w-[240px] truncate"
+            className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-semibold focus:outline-none focus:border-red-500 max-w-[260px] truncate cursor-pointer"
           >
-            <option value={template.id}>{template.name}</option>
-            {studioTemplates
-              .filter((t) => t.id !== template.id)
-              .map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.primaryCategory}: {t.name}
-                </option>
-              ))}
+            <optgroup label="🌟 18 Custom Reference Presets">
+              {studioTemplates
+                .filter((t) => t.categories?.includes("Reference 18") || t.id === "christmas_slate_listicle" || t.id === "purple_script_ribbon" || t.id.startsWith("classic_") || t.id.startsWith("modern_") || t.id.startsWith("santorini_"))
+                .map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.name}
+                  </option>
+                ))}
+            </optgroup>
+            <optgroup label="✨ AutoPinDesign Studio Presets">
+              {studioTemplates
+                .filter((t) => !t.categories?.includes("Reference 18") && t.id !== "christmas_slate_listicle" && t.id !== "purple_script_ribbon" && !t.id.startsWith("classic_") && !t.id.startsWith("modern_") && !t.id.startsWith("santorini_"))
+                .map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.primaryCategory}: {t.name}
+                  </option>
+                ))}
+            </optgroup>
           </select>
         </div>
       </div>
