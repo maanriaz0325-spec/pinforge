@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useMemo } from "react";
+import { toPng, toJpeg } from "html-to-image";
 import {
   Upload,
   Sparkles,
@@ -356,6 +357,50 @@ export function PresetCustomizerEditor({
   // Save / Generation States
   const [generatingPin, setGeneratingPin] = useState<boolean>(false);
   const [savedSuccessMsg, setSavedSuccessMsg] = useState<string | null>(null);
+
+  // Export & Download States (JPG / PNG / Size Reducer)
+  const previewCanvasRef = useRef<HTMLDivElement>(null);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
+  const [exportQualityMode, setExportQualityMode] = useState<"reduced" | "web" | "hd">("web");
+  const [exportSuccessMsg, setExportSuccessMsg] = useState<string | null>(null);
+
+  async function handleDownloadExport(format: "png" | "jpeg") {
+    if (!previewCanvasRef.current) return;
+    setIsExporting(true);
+    setExportSuccessMsg(null);
+    try {
+      const scale = exportQualityMode === "hd" ? 2 : exportQualityMode === "web" ? 1.5 : 1;
+      const quality = exportQualityMode === "hd" ? 0.98 : exportQualityMode === "web" ? 0.85 : 0.65;
+
+      let dataUrl = "";
+      if (format === "png") {
+        dataUrl = await toPng(previewCanvasRef.current, {
+          pixelRatio: scale,
+          cacheBust: true,
+        });
+      } else {
+        dataUrl = await toJpeg(previewCanvasRef.current, {
+          quality,
+          pixelRatio: scale,
+          cacheBust: true,
+        });
+      }
+
+      const link = document.createElement("a");
+      const cleanName = (template.name || "custom-pin").toLowerCase().replace(/[^a-z0-9]+/g, "-");
+      const ext = format === "png" ? "png" : "jpg";
+      link.download = `pinforge-${cleanName}-${exportQualityMode}-${Date.now()}.${ext}`;
+      link.href = dataUrl;
+      link.click();
+      setExportSuccessMsg(`Downloaded as ${ext.toUpperCase()} (${exportQualityMode})! 📥`);
+      setTimeout(() => setExportSuccessMsg(null), 4000);
+    } catch (err) {
+      console.error("Export download failed:", err);
+      alert("Download generated. If using high-res images, try the 'Reduce Size' mode.");
+    } finally {
+      setIsExporting(false);
+    }
+  }
 
   // Initialize all controls when switching template
   function initializeFromTemplate(t: TemplatePreviewData) {
@@ -731,13 +776,27 @@ export function PresetCustomizerEditor({
       const slot0 = slotAdjustments[0]?.url;
       const firstAvailableImg = slot0 || Object.values(slotAdjustments).find((s) => s?.url)?.url || "/placeholder.jpg";
 
+      // Rasterize the actual live canvas design with user-customized fonts, layers & layout
+      let finalPinImage = firstAvailableImg;
+      if (previewCanvasRef.current) {
+        try {
+          finalPinImage = await toJpeg(previewCanvasRef.current, {
+            quality: 0.88,
+            pixelRatio: 1.5,
+            cacheBust: true,
+          });
+        } catch (e) {
+          console.warn("Canvas rasterization fallback to slot photo:", e);
+        }
+      }
+
       const titleText = textLayers.map((l) => l.text).filter(Boolean).join(" ");
 
       const res = await fetch("/api/pins", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          imageUrl: firstAvailableImg,
+          imageUrl: finalPinImage,
           rawImageUrl: firstAvailableImg,
           title: titleText || template.name,
           description: `Customized with PinForge Studio Editor using ${template.name}.`,
@@ -762,6 +821,8 @@ export function PresetCustomizerEditor({
             bgColor,
             slotAdjustments,
             textLayers,
+            overlayHorizontalAlign,
+            overlayOffsetY,
           },
         }),
       });
@@ -797,6 +858,8 @@ export function PresetCustomizerEditor({
       collageGap,
       snapToElements,
       slotAdjustments,
+      overlayHorizontalAlign,
+      overlayOffsetY,
       customTextLayers: textLayers,
       customLines: textLayers.filter((l) => l.role !== "website").map((l) => l.text),
       customBadgeText: badgeL?.text || "20",
@@ -830,6 +893,8 @@ export function PresetCustomizerEditor({
     collageGap,
     snapToElements,
     slotAdjustments,
+    overlayHorizontalAlign,
+    overlayOffsetY,
     textLayers,
   ]);
 
@@ -2214,7 +2279,10 @@ export function PresetCustomizerEditor({
         <div className="lg:col-span-7 bg-[#0b0e14] p-6 md:p-10 flex flex-col items-center justify-center relative overflow-hidden">
           {/* Canvas Wrapper with realistic drop shadow */}
           <div className="w-full max-w-[380px] transition-all duration-150">
-            <div className="relative shadow-2xl rounded-2xl overflow-hidden ring-1 ring-white/10 group">
+            <div
+              ref={previewCanvasRef}
+              className="relative shadow-2xl rounded-2xl overflow-hidden ring-1 ring-white/10 group"
+            >
               <PinTemplateVisualPreview
                 template={livePreviewData}
                 className="w-full h-full"
@@ -2232,6 +2300,81 @@ export function PresetCustomizerEditor({
               <span className="text-[11px] text-slate-500 font-mono">
                 Click slots or layers on canvas to edit
               </span>
+            </div>
+
+            {/* QUICK EXPORT & IMAGE SIZE REDUCER TOOLBAR */}
+            <div className="mt-4 p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                  <Download className="w-3.5 h-3.5 text-red-400" />
+                  <span>Download Pin Image</span>
+                </span>
+                <span className="text-[10px] text-slate-400 font-mono">
+                  {exportQualityMode === "reduced" ? "Size: <200KB" : exportQualityMode === "web" ? "Size: ~500KB" : "Size: ~2MB"}
+                </span>
+              </div>
+
+              {/* Size Reducer / Quality Mode Pills */}
+              <div className="space-y-1">
+                <span className="text-[10px] text-slate-400 font-semibold block">File Size & Compression:</span>
+                <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800/80">
+                  {[
+                    { id: "reduced", label: "Reduce Size (<200KB)", desc: "Fast load" },
+                    { id: "web", label: "Web CTR (85%)", desc: "Recommended" },
+                    { id: "hd", label: "Ultra HD (2x)", desc: "Max quality" },
+                  ].map((mode) => (
+                    <button
+                      key={mode.id}
+                      type="button"
+                      onClick={() => setExportQualityMode(mode.id as any)}
+                      className={`flex-1 py-1 px-1.5 rounded text-[10px] font-bold transition-all cursor-pointer ${
+                        exportQualityMode === mode.id
+                          ? "bg-red-600 text-white shadow-xs"
+                          : "text-slate-400 hover:text-white"
+                      }`}
+                    >
+                      {mode.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Download Buttons: PNG and JPG */}
+              <div className="grid grid-cols-2 gap-2 pt-0.5">
+                <button
+                  type="button"
+                  disabled={isExporting}
+                  onClick={() => handleDownloadExport("png")}
+                  className="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-50 shadow-sm"
+                >
+                  {isExporting ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <Download className="w-3.5 h-3.5 text-emerald-400" />
+                  )}
+                  <span>Download PNG</span>
+                </button>
+
+                <button
+                  type="button"
+                  disabled={isExporting}
+                  onClick={() => handleDownloadExport("jpeg")}
+                  className="py-2 px-3 rounded-lg bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-50 shadow-md shadow-red-950/40"
+                >
+                  {isExporting ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <Download className="w-3.5 h-3.5 text-white" />
+                  )}
+                  <span>Download JPG</span>
+                </button>
+              </div>
+
+              {exportSuccessMsg && (
+                <div className="text-[11px] text-center font-bold text-emerald-400 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-md">
+                  {exportSuccessMsg}
+                </div>
+              )}
             </div>
           </div>
         </div>

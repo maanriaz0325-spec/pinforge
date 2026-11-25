@@ -380,6 +380,88 @@ export function PinTemplateVisualPreview({
     overlayHAlign === "right" ? "items-end text-right pr-3" :
     "items-center text-center";
 
+  // Floating position groups for any detached layers
+  const topLeftLayers = (template.customTextLayers || []).filter(
+    (l) => l.position === "top-left" && l.visible !== false
+  );
+  const centerTopLayers = (template.customTextLayers || []).filter(
+    (l) => l.position === "center-top" && l.visible !== false
+  );
+  const overImageLayers = (template.customTextLayers || []).filter(
+    (l) => l.position === "over-image" && l.visible !== false
+  );
+
+  // Helper to render detached/floating or extra custom layers
+  const renderCustomLayerElement = (layer: TextLayerAdjustment) => {
+    if (layer.visible === false) return null;
+    const font = layer.fontFamily || primaryFont;
+    const color = layer.color || "#FFFFFF";
+    const bg = layer.bgHighlight && layer.bgHighlight !== "transparent" ? layer.bgHighlight : undefined;
+
+    let weight: string | number = 700;
+    if (layer.fontWeight) {
+      if (layer.fontWeight === "Black") weight = 900;
+      else if (layer.fontWeight === "ExtraBold") weight = 800;
+      else if (layer.fontWeight === "Bold") weight = 700;
+      else if (layer.fontWeight === "SemiBold") weight = 600;
+      else if (layer.fontWeight === "Medium") weight = 500;
+      else if (layer.fontWeight === "Regular") weight = 400;
+      else weight = layer.fontWeight;
+    } else if (layer.isBold !== undefined) {
+      weight = layer.isBold ? 700 : 400;
+    }
+
+    const size = layer.fontSizePx ? `${layer.fontSizePx}px` : "16px";
+    const isItalic = Boolean(layer.isItalic);
+    const isUnderline = Boolean(layer.isUnderline);
+    const isStrikethrough = Boolean(layer.isStrikethrough);
+    const isUppercase = layer.isUppercase !== false;
+    const textAlign = layer.textAlign || "center";
+    const letterSpacing = layer.letterSpacing || "normal";
+    const lineHeight = layer.lineHeight || 1.15;
+    const opacity = layer.opacity !== undefined ? layer.opacity : 1;
+    const rotation = layer.rotation ? `rotate(${layer.rotation}deg)` : undefined;
+    const shadow = layer.textShadow && layer.shadowColor ? `0 2px 4px ${layer.shadowColor}` : undefined;
+
+    const shape = layer.shape || layer.containerShape;
+    let shapeClass = "";
+    if (shape === "circle") {
+      shapeClass = "rounded-full aspect-square min-w-[38px] min-h-[38px] inline-flex items-center justify-center p-2 border-2 border-white/80 shadow-xl";
+    } else if (shape === "pill") {
+      shapeClass = "rounded-full px-4 py-1.5 inline-flex items-center justify-center border-2 border-white/80 shadow-xl";
+    } else if (shape === "rounded") {
+      shapeClass = "rounded-xl px-3 py-2 inline-flex items-center justify-center border-2 border-white/80 shadow-xl";
+    } else if (shape === "square") {
+      shapeClass = "rounded-none aspect-square min-w-[38px] min-h-[38px] inline-flex items-center justify-center p-2 border-2 border-white/80 shadow-xl";
+    }
+
+    return (
+      <div
+        key={layer.id}
+        onClick={() => template.onLayerClick?.(layer.id)}
+        className={`${shapeClass} cursor-pointer select-none transition-all hover:scale-105 pointer-events-auto shadow-2xl`}
+        style={{
+          fontFamily: font,
+          color: color,
+          backgroundColor: bg || (shape && shape !== "none" ? (accentColor || "#EE1A5B") : undefined),
+          fontWeight: weight,
+          fontSize: size,
+          fontStyle: isItalic ? "italic" : "normal",
+          textDecoration: isUnderline ? "underline" : isStrikethrough ? "line-through" : "none",
+          textTransform: isUppercase ? "uppercase" : "none",
+          textAlign: textAlign as any,
+          letterSpacing,
+          lineHeight,
+          opacity,
+          transform: rotation,
+          textShadow: shadow,
+        }}
+      >
+        <span>{layer.text}</span>
+      </div>
+    );
+  };
+
   // Universal Dynamic Layer Text Renderer
   const renderLayer = (
     layerIdx: number,
@@ -400,15 +482,19 @@ export function PinTemplateVisualPreview({
     } = {},
     className: string = ""
   ) => {
-    const layer = template.customTextLayers?.[layerIdx];
-    if (layer && layer.visible === false) return null;
+    // In controlled mode: check if user provided customTextLayers
+    if (template.customTextLayers) {
+      const layer = template.customTextLayers[layerIdx];
+      // 1. If this layer was deleted or hidden, do NOT render fallback!
+      if (!layer || layer.visible === false) return null;
 
-    // If layer 0 is the badge and it has been detached to an external position (top-left, center-top, over-image),
-    // don't duplicate it inside the central text band
-    if (layerIdx === 0 && (layer?.role === "badge" || badgeLayer?.id === layer?.id) && isIntegratedArchetype && badgePosition !== "over-band") {
-      return null;
+      // 2. If this layer is detached to top-left, center-top, or over-image, do NOT render in central band!
+      if (layer.position && layer.position !== "over-band") {
+        return null;
+      }
     }
 
+    const layer = template.customTextLayers?.[layerIdx];
     const text = layer?.text !== undefined && layer?.text !== "" ? layer.text : (lines[layerIdx] || fallbackText);
     if (!text) return null;
 
@@ -434,7 +520,14 @@ export function PinTemplateVisualPreview({
     const isUnderline = layer?.isUnderline !== undefined ? layer.isUnderline : Boolean(defaultStyle.underline);
     const isStrikethrough = Boolean(layer?.isStrikethrough);
     const isUppercase = layer?.isUppercase !== undefined ? layer.isUppercase : (defaultStyle.uppercase !== false);
-    const textAlign = layer?.textAlign || defaultStyle.textAlign || "center";
+    
+    // Horizontal text align: priority is layer textAlign, then global overlayHorizontalAlign, then defaultStyle
+    const textAlign = layer?.textAlign || template.overlayHorizontalAlign || defaultStyle.textAlign || "center";
+    const selfAlignClass =
+      textAlign === "left" ? "self-start text-left" :
+      textAlign === "right" ? "self-end text-right" :
+      "self-center text-center";
+
     const letterSpacing = layer?.letterSpacing || defaultStyle.letterSpacing || "normal";
     const lineHeight = layer?.lineHeight || defaultStyle.lineHeight || 1.15;
     const opacity = layer?.opacity !== undefined ? layer.opacity : 1;
@@ -456,7 +549,7 @@ export function PinTemplateVisualPreview({
     return (
       <span
         onClick={() => template.onLayerClick?.(layer?.id || `layer-${layerIdx}`)}
-        className={`${className} ${shapeClass} transition-all pointer-events-auto cursor-pointer`}
+        className={`${className} ${shapeClass} ${selfAlignClass} transition-all pointer-events-auto cursor-pointer`}
         style={{
           fontFamily: font,
           color: color,
@@ -724,35 +817,72 @@ export function PinTemplateVisualPreview({
       </div>
 
       {/* ======================================================== */}
-      {/* 2. NUMBER BADGE (SHAPE & POSITION)                       */}
+      {/* 2. NUMBER BADGE & DETACHED FLOATING LAYERS (SHAPE & POS) */}
       {/* ======================================================== */}
-      {hasBadge && (!isIntegratedArchetype || badgePosition !== "over-band") && (
-        <div
-          onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
-          className={`absolute z-30 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
-            badgePosition === "center-top"
-              ? "top-4 left-1/2 -translate-x-1/2"
-              : badgePosition === "over-band"
-              ? "bottom-[42%] left-1/2 -translate-x-1/2"
-              : badgePosition === "over-image"
-              ? "top-5 right-5"
-              : "top-4 left-4"
-          } ${
-            badgeShape === "circle"
-              ? "w-12 h-12 rounded-full border-2 border-white/80"
-              : badgeShape === "pill"
-              ? "px-4 py-1.5 rounded-full border-2 border-white/80 text-xs sm:text-sm"
-              : badgeShape === "rounded"
-              ? "w-12 h-12 rounded-2xl border-2 border-white/80"
-              : "w-11 h-11 rounded-none border-2 border-white/80"
-          }`}
-          style={{
-            backgroundColor: badgeBg || accentColor || "#EE1A5B",
-            color: badgeColor,
-          }}
-        >
-          <span className="text-sm sm:text-base tracking-tighter leading-none">{badgeText}</span>
+      {/* A) Detached layers positioned at "top-left" */}
+      {topLeftLayers.length > 0 ? (
+        <div className="absolute top-4 left-4 z-30 flex flex-col items-start gap-1.5 pointer-events-auto">
+          {topLeftLayers.map((l) => renderCustomLayerElement(l))}
         </div>
+      ) : (
+        !template.customTextLayers && hasBadge && (!isIntegratedArchetype || badgePosition !== "over-band") && badgePosition === "top-left" && (
+          <div
+            onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
+            className={`absolute z-30 top-4 left-4 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
+              badgeShape === "circle" ? "w-12 h-12 rounded-full border-2 border-white/80" :
+              badgeShape === "pill" ? "px-4 py-1.5 rounded-full border-2 border-white/80 text-xs sm:text-sm" :
+              badgeShape === "rounded" ? "w-12 h-12 rounded-2xl border-2 border-white/80" :
+              "w-11 h-11 rounded-none border-2 border-white/80"
+            }`}
+            style={{ backgroundColor: badgeBg || accentColor || "#EE1A5B", color: badgeColor }}
+          >
+            <span className="text-sm sm:text-base tracking-tighter leading-none">{badgeText}</span>
+          </div>
+        )
+      )}
+
+      {/* B) Detached layers positioned at "center-top" */}
+      {centerTopLayers.length > 0 ? (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1.5 pointer-events-auto">
+          {centerTopLayers.map((l) => renderCustomLayerElement(l))}
+        </div>
+      ) : (
+        !template.customTextLayers && hasBadge && (!isIntegratedArchetype || badgePosition !== "over-band") && badgePosition === "center-top" && (
+          <div
+            onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
+            className={`absolute z-30 top-4 left-1/2 -translate-x-1/2 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
+              badgeShape === "circle" ? "w-12 h-12 rounded-full border-2 border-white/80" :
+              badgeShape === "pill" ? "px-4 py-1.5 rounded-full border-2 border-white/80 text-xs sm:text-sm" :
+              badgeShape === "rounded" ? "w-12 h-12 rounded-2xl border-2 border-white/80" :
+              "w-11 h-11 rounded-none border-2 border-white/80"
+            }`}
+            style={{ backgroundColor: badgeBg || accentColor || "#EE1A5B", color: badgeColor }}
+          >
+            <span className="text-sm sm:text-base tracking-tighter leading-none">{badgeText}</span>
+          </div>
+        )
+      )}
+
+      {/* C) Detached layers positioned at "over-image" */}
+      {overImageLayers.length > 0 ? (
+        <div className="absolute bottom-14 right-4 z-30 flex flex-col items-end gap-1.5 pointer-events-auto">
+          {overImageLayers.map((l) => renderCustomLayerElement(l))}
+        </div>
+      ) : (
+        !template.customTextLayers && hasBadge && (!isIntegratedArchetype || badgePosition !== "over-band") && badgePosition === "over-image" && (
+          <div
+            onClick={() => template.onLayerClick?.(badgeLayer?.id || "layer-badge")}
+            className={`absolute z-30 top-5 right-5 flex items-center justify-center font-black shadow-2xl transition-all cursor-pointer pointer-events-auto ${
+              badgeShape === "circle" ? "w-12 h-12 rounded-full border-2 border-white/80" :
+              badgeShape === "pill" ? "px-4 py-1.5 rounded-full border-2 border-white/80 text-xs sm:text-sm" :
+              badgeShape === "rounded" ? "w-12 h-12 rounded-2xl border-2 border-white/80" :
+              "w-11 h-11 rounded-none border-2 border-white/80"
+            }`}
+            style={{ backgroundColor: badgeBg || accentColor || "#EE1A5B", color: badgeColor }}
+          >
+            <span className="text-sm sm:text-base tracking-tighter leading-none">{badgeText}</span>
+          </div>
+        )
       )}
 
       {/* ======================================================== */}
@@ -2080,41 +2210,12 @@ export function PinTemplateVisualPreview({
           </div>
         )}
 
-        {/* Additional Custom User Text Layers */}
+        {/* Additional Custom User Text Layers (Added by user, position === 'over-band') */}
         {template.customTextLayers && template.customTextLayers.length > 4 && (
           <div className="w-full flex flex-col items-center gap-1.5 mt-2 pointer-events-auto">
-            {template.customTextLayers.slice(4).filter((l) => l.role !== "website").map((layer, extraIdx) => {
-              if (layer.visible === false) return null;
-              return (
-                <div
-                  key={layer.id || extraIdx}
-                  onClick={() => template.onLayerClick?.(layer.id)}
-                  className="px-3 py-1 cursor-pointer transition-transform hover:scale-105"
-                  style={{
-                    backgroundColor: layer.bgHighlight && layer.bgHighlight !== "transparent" ? layer.bgHighlight : undefined,
-                    borderRadius: layer.containerShape === "circle" ? "9999px" : layer.containerShape === "pill" ? "9999px" : layer.containerShape === "rounded" ? "8px" : undefined,
-                    transform: layer.rotation ? `rotate(${layer.rotation}deg)` : undefined,
-                    opacity: layer.opacity !== undefined ? layer.opacity : 1,
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: layer.fontFamily || primaryFont,
-                      color: layer.color || "#FFFFFF",
-                      fontWeight: layer.fontWeight === "Black" ? 900 : layer.fontWeight === "Bold" ? 700 : layer.fontWeight === "SemiBold" ? 600 : 500,
-                      fontSize: layer.fontSizePx ? `${layer.fontSizePx}px` : "14px",
-                      letterSpacing: layer.letterSpacing || "normal",
-                      lineHeight: layer.lineHeight || 1.2,
-                      textTransform: layer.isUppercase !== false ? "uppercase" : "none",
-                      fontStyle: layer.isItalic ? "italic" : "normal",
-                      textDecoration: layer.isUnderline ? "underline" : layer.isStrikethrough ? "line-through" : "none",
-                    }}
-                  >
-                    {layer.text}
-                  </span>
-                </div>
-              );
-            })}
+            {template.customTextLayers.slice(4).filter((l) => l.role !== "website" && (!l.position || l.position === "over-band") && l.visible !== false).map((layer) => (
+              renderCustomLayerElement(layer)
+            ))}
           </div>
         )}
       </div>
